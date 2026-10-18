@@ -257,30 +257,37 @@
 }
 
 /* ==========================================================================
-   5. GRID & ITEM CARDS (THEME ZIBLL DESIGN SYSTEM)
+   5. GRID & ITEM CARDS (THEME ZIBLL DESIGN SYSTEM - THU NHỎ TINH GỌN)
    ========================================================================== */
 .znd-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 16px;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 12px;
 }
 
 .znd-card {
     background: var(--main-bg-color, #fff);
     border: 1px solid var(--main-border-color, rgba(50, 50, 50, 0.08));
     border-radius: var(--main-radius, 8px);
-    padding: 16px;
+    padding: 10px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     transition: all 0.2s ease;
     position: relative;
-    box-shadow: 0 2px 4px var(--main-shadow, rgba(0, 0, 0, 0.02));
+    box-shadow: 0 1px 3px var(--main-shadow, rgba(0, 0, 0, 0.02));
+    cursor: pointer;
+    user-select: none;
 }
 
 .znd-card:hover {
     border-color: var(--focus-color, #ff6f06);
-    box-shadow: 0 4px 14px var(--focus-shadow, rgba(255, 111, 6, 0.12));
+    box-shadow: 0 3px 10px var(--focus-shadow, rgba(255, 111, 6, 0.12));
+}
+
+.znd-card.is-previewing {
+    border-color: var(--focus-color, #ff6f06);
+    box-shadow: 0 0 0 2px var(--focus-color, #ff6f06), 0 4px 12px var(--focus-shadow, rgba(255, 111, 6, 0.18));
 }
 
 .znd-card.is-equipped {
@@ -292,70 +299,101 @@
     content: '\f058';
     font-family: FontAwesome;
     position: absolute;
-    top: 8px;
-    right: 10px;
+    top: 6px;
+    right: 8px;
     color: var(--green-color, #18a52a);
-    font-size: 16px;
+    font-size: 14px;
 }
 
 .znd-card-icon-preview,
 .znd-card-color-sample {
-    height: 70px;
+    height: 52px;
     display: flex;
     align-items: center;
     justify-content: center;
     background: var(--muted-border-color, rgba(136, 136, 136, 0.05));
     border-radius: var(--mini-radius, 4px);
-    margin-bottom: 12px;
-    padding: 10px;
+    margin-bottom: 8px;
+    padding: 6px;
+    transition: background 0.15s ease;
+}
+
+.znd-card:hover .znd-card-icon-preview,
+.znd-card:hover .znd-card-color-sample {
+    background: var(--focus-color-opacity1, rgba(255, 111, 6, 0.06));
 }
 
 .znd-card-icon-preview .znd-nick-icon {
-    width: 42px;
-    height: 42px;
+    width: 32px;
+    height: 32px;
 }
 
 .znd-sample-text {
-    font-size: 16px;
+    font-size: 13px;
     font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
 }
 
 .znd-card-title {
-    margin: 0 0 4px 0;
-    font-size: 15px;
+    margin: 0 0 3px 0;
+    font-size: 13px;
     font-weight: 700;
     color: var(--key-color, #333);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .znd-card-desc {
-    margin: 0 0 10px 0;
-    font-size: 12px;
+    margin: 0 0 6px 0;
+    font-size: 11px;
     color: var(--muted-color, #777);
-    line-height: 1.4;
-    min-height: 34px;
+    line-height: 1.35;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    height: 16px;
 }
 
 .znd-card-tags {
     display: flex;
-    gap: 6px;
+    gap: 4px;
     flex-wrap: wrap;
-    margin-bottom: 14px;
+    margin-bottom: 8px;
+}
+
+.znd-card-tags .badg {
+    font-size: 10.5px;
+    padding: 2px 5px;
+    border-radius: 4px;
+    line-height: 1.3;
 }
 
 /* Nút hành động trong Card theo chuẩn class .but của Zibll */
 .znd-card-actions {
     display: flex;
-    gap: 8px;
+    gap: 6px;
     align-items: center;
+    margin-top: auto;
+    width: 100%;
 }
 
 .znd-card-actions .znd-btn {
+    width: 100%;
     flex: 1;
     text-align: center;
-}
-
-.znd-card-actions .znd-btn-preview {
-    flex: 0 0 auto;
+    font-size: 11.5px;
+    padding: 4px 6px;
+    height: 28px;
+    line-height: 18px;
+    border-radius: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .znd-btn-unequip:hover {
@@ -367,31 +405,84 @@
    6. TỦ ĐỒ (WARDROBE)
    ========================================================================== */
 .znd-section-title {
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 700;
     color: var(--key-color, #333);
-    margin: 0 0 12px 0;
+    margin: 0 0 10px 0;
     display: flex;
     align-items: center;
 }
 
 .znd-empty-box {
     text-align: center;
-    padding: 40px 20px;
+    padding: 30px 15px;
     background: var(--muted-border-color, rgba(136, 136, 136, 0.05));
     border-radius: var(--main-radius, 8px);
 }
 
 .znd-empty-box h4 {
-    margin: 16px 0 6px 0;
-    font-size: 16px;
+    margin: 12px 0 4px 0;
+    font-size: 15px;
     color: var(--key-color, #333);
 }
 
-/* Responsive */
-@media (max-width: 640px) {
+/* Responsive: 2 CỘT GỌN TRÊN DI ĐỘNG & TABLET DỌC */
+@media (max-width: 767px) {
     .znd-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 8px !important;
+    }
+
+    .znd-card {
+        padding: 8px !important;
+    }
+
+    .znd-card-icon-preview,
+    .znd-card-color-sample {
+        height: 48px !important;
+        margin-bottom: 6px !important;
+    }
+
+    .znd-card-icon-preview .znd-nick-icon {
+        width: 28px !important;
+        height: 28px !important;
+    }
+
+    .znd-card-title {
+        font-size: 12px !important;
+    }
+
+    .znd-card-desc {
+        font-size: 10px !important;
+        height: 14px !important;
+        margin-bottom: 4px !important;
+    }
+
+    .znd-card-tags {
+        margin-bottom: 6px !important;
+        gap: 3px !important;
+    }
+
+    .znd-card-tags .badg {
+        font-size: 10px !important;
+        padding: 1px 4px !important;
+    }
+
+    .znd-card-actions .znd-btn {
+        font-size: 11px !important;
+        padding: 3px 4px !important;
+        height: 26px !important;
+        line-height: 18px !important;
+    }
+}
+
+@media (max-width: 360px) {
+    .znd-grid {
+        gap: 5px !important;
+    }
+
+    .znd-card {
+        padding: 6px !important;
     }
 }
 

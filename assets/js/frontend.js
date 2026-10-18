@@ -362,20 +362,24 @@
             });
 
             // =====================================================================
-            // 3. XEM THỬ DIỆN MẠO (LIVE PREVIEW)
+            // 3. XEM THỬ DIỆN MẠO (LIVE PREVIEW KHI BẤM VÀO CARD)
             // =====================================================================
-            $(document).on('click', '.znd-btn-preview, .znd-card', function (e) {
+            $(document).on('click', '.znd-card', function (e) {
                 // Không trigger nếu click vào nút mua/trang bị/tháo
                 if ($(e.target).closest('.znd-btn-buy, .znd-btn-equip, .znd-btn-unequip').length) {
                     return;
                 }
 
-                var $card = $(this).closest('.znd-card');
+                var $card = $(this);
                 var type  = $card.data('type');
                 var name  = $card.data('name');
                 var anim  = $card.data('anim');
 
                 var $wrapper = $card.closest('.znd-shop-wrapper');
+
+                // Đánh dấu card đang được xem thử
+                $wrapper.find('.znd-card[data-type="' + type + '"]').removeClass('is-previewing');
+                $card.addClass('is-previewing');
 
                 if (type === 'icon') {
                     var svg = $card.data('item-svg') || $card.find('.znd-card-icon-preview .znd-nick-icon').html();

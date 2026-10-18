@@ -2,7 +2,7 @@
 
 > **Plugin tùy biến màu sắc và icon hiển thị đầu nickname thời thượng dành cho thành viên Theme Zibll.**
 
-![Version](https://img.shields.io/badge/version-v1.0.16-blue.svg)
+![Version](https://img.shields.io/badge/version-v1.0.17-blue.svg)
 ![WordPress](https://img.shields.io/badge/WordPress-5.6%2B-blue.svg)
 ![PHP](https://img.shields.io/badge/PHP-7.2%2B-green.svg)
 
@@ -96,6 +96,15 @@ Plugin cung cấp hệ thống Cửa hàng (Shop) và Tủ đồ (Wardrobe) cá 
 ---
 
 ## Lịch sử thay đổi
+
+### v1.0.17 — 2026-10-19
+- Bỏ nút Thử và tối ưu kích thước card hiển thị tinh gọn nhiều mục (PC & Di động):
+  - Loại bỏ hoàn toàn nút "Thử" thừa thãi trong cả hai tab Cửa hàng Icon và Màu sắc nick, tối ưu không gian nút bấm chính ("Mua ngay" / "Trang bị").
+  - Kích hoạt trải nghiệm xem thử 1 chạm thông minh: Nhấp vào bất kỳ vùng nào trên card (hoặc icon/màu sắc) sẽ lập tức áp dụng ngay lên hộp xem trước Live Preview ở đầu trang, kèm hiệu ứng viền sáng `is-previewing` nổi bật.
+  - Tối ưu hóa lưới hiển thị (Grid):
+    - Máy tính (PC): Chuyển sang kích thước cột `minmax(160px, 1fr)` với khoảng cách `gap: 12px`, cho phép hiển thị từ 4 đến 5 vật phẩm trên mỗi hàng (thay vì chỉ 2-3 cột to cồng kềnh trước đây).
+    - Thiết bị di động (Mobile): Cố định hiển thị 2 cột cân đối (`repeat(2, 1fr)`) với khoảng cách `gap: 8px` tinh tế, thay vì 1 cột đơn chiếm trọn màn hình, giúp thành viên lướt xem được gấp đôi số lượng vật phẩm trong tầm mắt.
+  - Tinh gọn các chi tiết card: Thu nhỏ chiều cao khung icon từ 70px xuống 52px, bo gọn kích thước chữ và nhãn giá để bố cục vừa vặn, thanh lịch chuẩn UX Theme Zibll.
 
 ### v1.0.16 — 2026-10-19
 - Chỉ hiển thị biểu tượng mở Shop khi người dùng đã đăng nhập (PC & Thiết bị di động):

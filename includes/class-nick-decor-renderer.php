@@ -537,7 +537,8 @@ class ZND_Renderer {
                          data-type="icon"
                          data-name="<?php echo esc_attr($item['name']); ?>"
                          data-anim="<?php echo esc_attr(!empty($item['animation']) ? $item['animation'] : ''); ?>"
-                         data-item-svg="<?php echo esc_attr($item['svg']); ?>">
+                         data-item-svg="<?php echo esc_attr($item['svg']); ?>"
+                         title="<?php esc_attr_e('Nhấp vào để xem thử trên tên bạn', 'zibll-nick-decor'); ?>">
 
                         <div class="znd-card-icon-preview">
                             <span class="znd-nick-icon <?php echo $anim_class; ?>">
@@ -557,10 +558,6 @@ class ZND_Renderer {
                         </div>
 
                         <div class="znd-card-actions">
-                            <button type="button" class="but but-sm hollow radius znd-btn znd-btn-preview" title="<?php esc_attr_e('Xem thử trên tên bạn', 'zibll-nick-decor'); ?>">
-                                <i class="fa fa-eye mr3"></i><?php esc_html_e('Thử', 'zibll-nick-decor'); ?>
-                            </button>
-
                             <?php if ($is_equipped): ?>
                                 <button type="button" class="but but-sm c-green radius znd-btn znd-btn-unequip" data-znd-act="unequip" data-type="icon">
                                     <i class="fa fa-check-circle mr3"></i><?php esc_html_e('Đang dùng (Tháo)', 'zibll-nick-decor'); ?>
@@ -596,7 +593,8 @@ class ZND_Renderer {
                          data-type="color"
                          data-name="<?php echo esc_attr($item['name']); ?>"
                          data-anim="<?php echo esc_attr(!empty($item['animation']) ? $item['animation'] : ''); ?>"
-                         data-css="znd-color-<?php echo esc_attr($id); ?>">
+                         data-css="znd-color-<?php echo esc_attr($id); ?>"
+                         title="<?php esc_attr_e('Nhấp vào để xem thử trên tên bạn', 'zibll-nick-decor'); ?>">
 
                         <div class="znd-card-color-sample">
                             <span class="znd-sample-text znd-color-<?php echo esc_attr($id); ?> <?php echo $anim_class; ?>">
@@ -616,10 +614,6 @@ class ZND_Renderer {
                         </div>
 
                         <div class="znd-card-actions">
-                            <button type="button" class="but but-sm hollow radius znd-btn znd-btn-preview" title="<?php esc_attr_e('Xem thử trên tên bạn', 'zibll-nick-decor'); ?>">
-                                <i class="fa fa-eye mr3"></i><?php esc_html_e('Thử', 'zibll-nick-decor'); ?>
-                            </button>
-
                             <?php if ($is_equipped): ?>
                                 <button type="button" class="but but-sm c-green radius znd-btn znd-btn-unequip" data-znd-act="unequip" data-type="color">
                                     <i class="fa fa-check-circle mr3"></i><?php esc_html_e('Đang dùng (Tháo)', 'zibll-nick-decor'); ?>
