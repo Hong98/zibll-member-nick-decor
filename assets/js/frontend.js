@@ -55,55 +55,94 @@
         // Tự động chèn một hàng mới dưới cùng trong User Dropdown Box Theme Zibll (giữ nguyên 4 icon/hàng)
         injectUserMenuButton: function () {
             try {
-                var insertBtn = function () {
-                    // Xóa nút trong các hàng 4 icon hiện tại để bảo toàn đúng 4 icon mỗi hàng
-                    $('.header-user-href:not(.znd-user-row) .znd-user-href-btn').remove();
-                    $('.header-user-href').removeClass('has-znd-btn');
-                    $('.znd-user-menu-bottom').remove();
+                var sectionHtml = '<div class="znd-user-shortcuts-section mt10 translate-ignore notranslate">' +
+                                  '<div class="relative opacity5 mb10"><i class="line-form-line"></i></div>' +
+                                  '<div class="znd-user-row">' +
+                                  '<a href="javascript:;" data-action="zibll_nick_decor_modal" class="open-nick-decor-modal znd-user-href-btn" title="Cửa hàng màu & Icon nick">' +
+                                  '<div class="badg mb6 toggle-radius c-theme"><i class="fa fa-paint-brush"></i></div>' +
+                                  '<div class="c-theme translate-ignore">Màu & Icon</div>' +
+                                  '</a>' +
+                                  '</div>' +
+                                  '</div>';
 
-                    $('.sub-user-box').each(function () {
-                        var $box = $(this);
+                var isAdjusting = false;
+                var ensureAtBottom = function () {
+                    if (isAdjusting) return;
+                    isAdjusting = true;
+                    try {
+                        // Xóa các nút thừa / rác nếu có trong các hàng 4 icon hiện tại
+                        $('.header-user-href .znd-user-href-btn').remove();
+                        $('.header-user-href').removeClass('has-znd-btn');
+                        $('.znd-user-menu-bottom').remove();
 
-                        // Cấu trúc một hàng mới chuẩn Theme Zibll với màu c-theme đồng bộ với màu chủ đề website
-                        var sectionHtml = '<div class="znd-user-shortcuts-section mt10 translate-ignore notranslate">' +
-                                          '<div class="relative opacity5 mb10"><i class="line-form-line"></i></div>' +
-                                          '<div class="header-user-href znd-user-row">' +
-                                          '<a href="javascript:;" data-action="zibll_nick_decor_modal" class="open-nick-decor-modal znd-user-href-btn" title="Cửa hàng màu & Icon nick">' +
-                                          '<div class="badg mb6 toggle-radius c-theme"><i class="fa fa-paint-brush"></i></div>' +
-                                          '<div class="c-theme translate-ignore">Màu & Icon</div>' +
-                                          '</a>' +
-                                          '</div>' +
-                                          '</div>';
+                        var $subUserBoxes = $('.user-name .sub-user-box, .navbar .sub-user-box, .mobile-navbar .sub-user-box, .sub-user-box');
 
-                        var $existing = $box.find('.znd-user-shortcuts-section');
-                        if (!$existing.length) {
-                            // Chèn sau section phím tắt quản trị zac (nếu có) hoặc sau hàng icon cuối cùng
-                            var $zac = $box.find('.zac-admin-shortcuts-section');
-                            if ($zac.length) {
-                                $zac.after(sectionHtml);
+                        $subUserBoxes.each(function () {
+                            var $box = $(this);
+                            var $center = $box.find('.text-center').first();
+                            if (!$center.length) {
+                                $center = $box;
+                            }
+
+                            // Nếu zac-admin-shortcuts-section bị kẹt bên trong znd-user-shortcuts-section, giải phóng nó ra container
+                            var $nestedZac = $box.find('.znd-user-shortcuts-section .zac-admin-shortcuts-section');
+                            if ($nestedZac.length) {
+                                $center.append($nestedZac);
+                            }
+
+                            var $zac = $box.find('.zac-admin-shortcuts-section').first();
+                            var $znd = $box.find('.znd-user-shortcuts-section').first();
+
+                            if (!$znd.length) {
+                                $znd = $(sectionHtml);
                             } else {
-                                var $lastHref = $box.find('.header-user-href').last();
-                                if ($lastHref.length) {
-                                    $lastHref.after(sectionHtml);
-                                } else {
-                                    $box.append(sectionHtml);
+                                // Tuyệt đối không để class header-user-href trong znd để tránh zac nhận nhầm là last header-user-href
+                                $znd.find('.header-user-href').removeClass('header-user-href');
+                            }
+
+                            // Nếu có hàng phím tắt quản trị zac, hàng Màu & Icon BẮT BUỘC phải nằm ngay sau nó (ở dưới cùng)
+                            if ($zac.length) {
+                                if ($zac.next('.znd-user-shortcuts-section')[0] !== $znd[0]) {
+                                    $zac.after($znd);
+                                }
+                            } else {
+                                // Nếu chưa có zac, hàng Màu & Icon nằm ở cuối cùng của container
+                                if ($center.children().last()[0] !== $znd[0]) {
+                                    $center.append($znd);
                                 }
                             }
-                        } else {
-                            // Đảm bảo hàng mới luôn nằm dưới cùng sau zac-admin-shortcuts-section nếu zac chèn sau
-                            var $zacSection = $box.find('.zac-admin-shortcuts-section');
-                            if ($zacSection.length && $existing.index() < $zacSection.index()) {
-                                $zacSection.after($existing);
-                            }
-                        }
-                    });
+                        });
+                    } finally {
+                        isAdjusting = false;
+                    }
                 };
 
-                insertBtn();
-                // Lắng nghe khi hover hoặc click menu tài khoản để chèn nút an toàn
-                $(document).on('mouseenter click', '.navbar-avatar, .sub-user-box', function () {
-                    insertBtn();
+                // Chạy ngay khi DOM sẵn sàng
+                ensureAtBottom();
+
+                // Chạy định kỳ ở các mốc thời gian đón đầu zac-frontend.js hoặc các plugin khác render muộn
+                [30, 80, 150, 300, 600, 1000, 2000].forEach(function (ms) {
+                    setTimeout(ensureAtBottom, ms);
                 });
+
+                // Lắng nghe tương tác chuột khi hover hoặc click vào menu người dùng
+                $(document).on('mouseenter mouseover show.bs.dropdown click', '.navbar-avatar, .user-name, .sub-user-box, [data-toggle="dropdown"]', function () {
+                    ensureAtBottom();
+                });
+
+                // Sử dụng MutationObserver để tự động định vị lại ngay tức thì khi DOM của .sub-user-box biến động
+                if (window.MutationObserver) {
+                    var observerTimeout = null;
+                    var observer = new MutationObserver(function () {
+                        if (isAdjusting) return;
+                        clearTimeout(observerTimeout);
+                        observerTimeout = setTimeout(ensureAtBottom, 20);
+                    });
+
+                    $('.sub-user-box').each(function () {
+                        observer.observe(this, { childList: true, subtree: true });
+                    });
+                }
             } catch (e) {
                 console.warn('ZND injectUserMenuButton error:', e);
             }

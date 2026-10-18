@@ -2,7 +2,7 @@
 
 > **Plugin tùy biến màu sắc và icon hiển thị đầu nickname thời thượng dành cho thành viên Theme Zibll.**
 
-![Version](https://img.shields.io/badge/version-v1.0.7-blue.svg)
+![Version](https://img.shields.io/badge/version-v1.0.8-blue.svg)
 ![WordPress](https://img.shields.io/badge/WordPress-5.6%2B-blue.svg)
 ![PHP](https://img.shields.io/badge/PHP-7.2%2B-green.svg)
 
@@ -96,6 +96,12 @@ Plugin cung cấp hệ thống Cửa hàng (Shop) và Tủ đồ (Wardrobe) cá 
 ---
 
 ## Lịch sử thay đổi
+
+### v1.0.8 — 2026-10-18
+- Sửa lỗi định vị: Đảm bảo hàng mở shop luôn nằm dưới cùng sau tất cả các hàng icon và phím tắt quản trị (Admin Shortcuts):
+  - Khắc phục triệt để xung đột thứ tự chèn giữa plugin và phím tắt quản trị ZAC bằng cách loại bỏ hoàn toàn class `header-user-href` khỏi hàng của plugin.
+  - Tích hợp cơ chế neo chắc chắn (`ensureAtBottom`), tự động nhận diện và chuyển hàng mở shop xuống ngay sau hàng phím tắt quản trị khi có mặt.
+  - Sử dụng `MutationObserver` kết hợp các khoảng thời gian chờ (timing intervals) để tự động duy trì vị trí dưới cùng ngay lập tức ngay cả khi các module khác render trễ.
 
 ### v1.0.7 — 2026-10-18
 - Thêm một hàng mới riêng biệt ở dưới cùng cho icon mở shop trong menu người dùng (User Dropdown Box):
