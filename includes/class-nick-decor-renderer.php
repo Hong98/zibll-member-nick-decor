@@ -396,7 +396,7 @@ class ZND_Renderer {
         $user_id = get_current_user_id();
         ?>
         <!-- Zibll Member Nickname & Badge Pro Modal -->
-        <div class="modal fade flex jc" id="znd-shop-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal fade" id="znd-shop-modal" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document" style="max-width: 860px; width: 100%;">
                 <div class="modal-content">
                     <?php if (function_exists('zib_get_modal_colorful_header')): ?>

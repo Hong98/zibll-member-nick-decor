@@ -76,9 +76,14 @@
 /* ==========================================================================
    2. MODAL DIALOG (CỬA HÀNG & TỦ ĐỒ THEME ZIBLL)
    ========================================================================== */
+#znd-shop-modal:not(.in) {
+    display: none !important;
+}
+
 #znd-shop-modal .modal-dialog {
     max-width: 860px;
     width: 100%;
+    margin: 30px auto;
 }
 
 #znd-shop-modal .modal-content {

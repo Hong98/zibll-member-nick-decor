@@ -2,7 +2,7 @@
 
 > **Plugin tùy biến màu sắc và icon hiển thị đầu nickname thời thượng dành cho thành viên Theme Zibll.**
 
-![Version](https://img.shields.io/badge/version-v1.0.13-blue.svg)
+![Version](https://img.shields.io/badge/version-v1.0.14-blue.svg)
 ![WordPress](https://img.shields.io/badge/WordPress-5.6%2B-blue.svg)
 ![PHP](https://img.shields.io/badge/PHP-7.2%2B-green.svg)
 
@@ -96,6 +96,12 @@ Plugin cung cấp hệ thống Cửa hàng (Shop) và Tủ đồ (Wardrobe) cá 
 ---
 
 ## Lịch sử thay đổi
+
+### v1.0.14 — 2026-10-19
+- Sửa lỗi nghiêm trọng xung đột CSS khiến trang web bị khóa không tương tác hay bấm vào đâu được:
+  - Loại bỏ hoàn toàn class `flex jc` khỏi thẻ modal (`#znd-shop-modal`), ngăn chặn xung đột với class utility `.flex { display: flex; }` của Theme Zibll vốn khiến modal bị kích hoạt hiển thị toàn màn hình ngay khi tải trang và nuốt trọn mọi sự kiện nhấp chuột của người dùng.
+  - Bổ sung quy tắc CSS bảo vệ `#znd-shop-modal:not(.in) { display: none !important; }`, đảm bảo modal luôn luôn bị ẩn hoàn toàn khi chưa mở và chỉ kích hoạt khi có class `.in` từ Bootstrap.
+  - Căn giữa dialog cân đối với `margin: 30px auto` chuẩn hệ thống Bootstrap Modal của Theme Zibll.
 
 ### v1.0.13 — 2026-10-19
 - Đồng bộ hoàn toàn giao diện và cơ chế Cửa hàng (Shop) theo chuẩn nguyên bản Theme Zibll:
