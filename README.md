@@ -1,0 +1,109 @@
+# Zibll Member Nickname & Badge Pro
+
+> **Plugin tùy biến màu sắc và icon hiển thị đầu nickname thời thượng dành cho thành viên Theme Zibll.**
+
+![Version](https://img.shields.io/badge/version-v1.0.0-blue.svg)
+![WordPress](https://img.shields.io/badge/WordPress-5.6%2B-blue.svg)
+![PHP](https://img.shields.io/badge/PHP-7.2%2B-green.svg)
+
+---
+
+## Giới thiệu
+
+**Zibll Member Nickname & Badge Pro** là giải pháp toàn diện giúp gia tăng tính gắn kết của thành viên và tối ưu hóa hệ thống kinh tế điểm/tiền tệ trên website WordPress sử dụng **Theme Zibll**.
+
+Plugin cung cấp hệ thống Cửa hàng (Shop) và Tủ đồ (Wardrobe) cá nhân hóa, cho phép thành viên dùng **Điểm thưởng (Points/Xu)** hoặc **Số dư tài khoản (Balance/VNĐ)** để mua sắm và trang bị các kiểu màu nickname độc đáo cùng biểu tượng icon hiển thị ngay trước nickname của mình.
+
+---
+
+## Tính năng nổi bật
+
+### 1. Trọn bộ 16 icon hiển thị đầu nick tạo sẵn sắc nét
+- Thiết kế chuẩn vector SVG siêu nhẹ, tự động co giãn theo kích thước chữ (`1.15em`).
+- Hiển thị nổi bật ngay trước tên thành viên ở mọi nơi: bài viết, bình luận, diễn đàn BBS, trang cá nhân, widget thành viên...
+- Đi kèm các hiệu ứng chuyển động mượt mà:
+  - 👑 **Vương miện hoàng gia** (Hiệu ứng Shimmer ánh kim)
+  - 💎 **Kim cương chí tôn** (Hiệu ứng Glow phát sáng)
+  - 🔥 **Ngọn lửa rực cháy** (Hiệu ứng Pulse bùng cháy)
+  - ⚡ **Tia sét thần sấm** (Hiệu ứng chớp điện)
+  - 🪽 **Cánh thiên thần** (Hiệu ứng Float bồng bềnh)
+  - 🚀 **Tàu không gian Cyber** (Hiệu ứng Float)
+  - 🛡️ **Khiên hiệp sĩ** (Hiệu ứng bảo hộ)
+  - ⭐ **Ngôi sao vinh quang** (Hiệu ứng Shimmer)
+  - 🏆 **Cúp vô địch** (Hiệu ứng Glow quán quân)
+  - 🍀 **Cỏ 4 lá may mắn** (Hiệu ứng Pulse tài lộc)
+  - 💖 **Trái tim Neon** (Hiệu ứng Pulse nhịp đập)
+  - 🐲 **Rồng lửa huyền thoại** (Hiệu ứng Glow)
+  - ⚔️ **Song kiếm hiệp sĩ** (Hiệu ứng ánh thép)
+  - 🪄 **Đũa phép ma thuật** (Hiệu ứng tinh tú)
+  - 🎵 **Nốt nhạc thần tiên** (Hiệu ứng âm nhạc)
+  - 🐱 **Mèo quý tộc** (Hiệu ứng cute đội vương miện)
+
+### 2. Trọn bộ 12 màu nick Gradient & Glow cao cấp
+- Đa dạng phong cách từ Gradient chuyển màu hiện đại đến phát sáng viền chữ:
+  - 🌈 **Cầu vồng rực rỡ**: Dải màu 7 sắc cầu vồng chuyển động trượt liên tục (`Rainbow Animation`).
+  - 🌟 **Hoàng gia kim sắc**: Màu vàng kim loại ánh kim vương giả.
+  - 🔮 **Cyberpunk Neon**: Tím hồng Neon công nghệ tương lai.
+  - 💎 **Xanh lam đại dương**: Ngọc bích xanh sâu thẳm.
+  - 🔥 **Lửa đỏ rực cháy**: Đỏ cam bùng nổ nhiệt huyết.
+  - 🍃 **Ngọc lục bảo**: Xanh ngọc lục bảo quý phái.
+  - 🌸 **Hồng hoa anh đào**: Hồng phấn Sakura thơ mộng.
+  - ⚡ **Tím điện tử Storm**: Tím pha xanh neon cá tính.
+  - ☀️ **Hoàng hôn nhiệt đới**: Cam đào hoàng hôn lãng mạn.
+  - 🌌 **Dải ngân hà Cosmic**: Vũ trụ ánh sao huyền ảo.
+  - 🍃 **Bạc hà Neon Mint**: Xanh mint tươi mới.
+  - 💎 **Đỏ Ruby phát sáng**: Đỏ huyết phượng hoàng phát sáng huyền bí.
+- Tương thích hoàn hảo với cả nền sáng (Light mode) và nền tối (Dark mode) của Theme Zibll.
+
+### 3. Hộp xem trước thời gian thực (Live Preview)
+- Thành viên chỉ cần nhấp vào bất kỳ màu hoặc icon nào trong Shop là có thể xem trước diện mạo nickname của mình ngay lập tức trên đầu cửa sổ trước khi quyết định mua.
+
+### 4. Tích hợp sâu vào hệ thống kinh tế Theme Zibll
+- Hỗ trợ thanh toán linh hoạt bằng **Điểm thưởng tích lũy (Points / Xu)** hoặc **Số dư tài khoản ví (Balance / VNĐ)**.
+- Tự động trừ tiền và ghi nhận lịch sử giao dịch rõ ràng.
+- Tùy chỉnh thời hạn sử dụng: **Vĩnh viễn** hoặc theo số ngày (7 ngày, 30 ngày, 90 ngày, 1 năm).
+
+### 5. Giao diện Cửa hàng & Tủ đồ đa năng
+- **Modal Cửa hàng**: Mở nhanh bằng nút bấm hoặc liên kết với hiệu ứng mờ kính (Glassmorphism), tự động ngăn cuộn trang và tuân thủ cơ chế đóng an toàn khi nhấp ra ngoài.
+- **Trang cá nhân (Author Page)**: Tích hợp tab "Màu & Icon" trực tiếp vào thanh điều hướng cá nhân của thành viên.
+- **Shortcode tiện dụng**: Nhúng shop vào bất kỳ trang hoặc bài viết nào với mã `[zibll_nick_shop]`.
+
+### 6. Quản trị thông minh trong Cài đặt Theme Zibll (Codestar Framework)
+- Vị trí menu được định vị **ngay bên dưới menu "Dịch thuật JS"**.
+- Quản lý danh sách Icon và Màu nick: Dễ dàng thêm, sửa, xóa, đổi giá, đổi thời hạn.
+- Khu vực Quản lý thành viên: Tra cứu theo ID/Username, cấp tặng hoặc thu hồi vật phẩm của thành viên trong 1 click.
+
+---
+
+## Hướng dẫn sử dụng
+
+### 1. Kích hoạt plugin
+- Truy cập **Quản trị WordPress > Plugins > Đã cài đặt**, tìm **Zibll Member Nickname & Badge Pro** và nhấn **Kích hoạt**.
+- Plugin sẽ tự động điền sẵn trọn bộ 16 icon và 12 bảng màu vào hệ thống.
+
+### 2. Cấu hình
+- Truy cập **Zibll Theme Settings (Cài đặt theme Zibll)**, tìm đến mục **Màu & Icon đầu nick** (ngay dưới menu *Dịch thuật JS*):
+  - **Cài đặt chung**: Chọn loại tiền tệ (Điểm thưởng hoặc Số dư ví), cấu hình quyền hạn, vị trí hiển thị.
+  - **Quản lý icon đầu nick**: Tùy chỉnh giá bán, thời hạn hoặc bổ sung icon mới.
+  - **Quản lý màu nick**: Tùy chỉnh mã màu CSS hoặc hiệu ứng chữ.
+  - **Tủ đồ & Thành viên**: Tra cứu và quản lý trang bị của thành viên.
+  - **Tùy biến CSS & Hướng dẫn**: Bổ sung CSS riêng cho website.
+
+### 3. Nhúng và hiển thị
+- Để nhúng Cửa hàng vào một trang riêng (ví dụ trang *Cửa hàng ngoại trang*): Tạo một trang mới và dán shortcode `[zibll_nick_shop]`.
+- Để tạo nút mở nhanh Modal Shop ở bất kỳ đâu trên theme: Gán class `open-nick-decor-modal` hoặc thuộc tính `data-action="zibll_nick_decor_modal"` vào thẻ `<a>` hoặc `<button>`.
+
+---
+
+## Lịch sử thay đổi
+
+### v1.0.0 — 2026-10-18
+- Khởi tạo plugin Zibll Member Nickname & Badge Pro.
+- Thêm menu quản trị Codestar Framework nằm ngay bên dưới menu "Dịch thuật JS" trong Cài đặt Theme Zibll.
+- Tích hợp 16 icon đầu nick tạo sẵn dạng vector SVG sắc nét với các hiệu ứng animation (Pulse, Glow, Float, Shimmer, Spin).
+- Tích hợp 12 bảng màu nick Gradient & Glow cao cấp (Cầu vồng động, Hoàng gia kim sắc, Cyber Neon, Xanh lam ngọc,...).
+- Hệ thống Cửa hàng & Tủ đồ cá nhân cho thành viên với hộp xem trước trực tiếp (Live Preview).
+- Hỗ trợ thanh toán linh hoạt bằng Điểm thưởng (Points/Xu) hoặc Số dư ví (Balance/VNĐ) của Theme Zibll.
+- Tích hợp Modal Shop thông minh tuân thủ chuẩn kiểm tra mousedown & mouseup khi nhấp ra ngoài.
+- Tích hợp tab Màu & Icon vào trang cá nhân thành viên và shortcode [zibll_nick_shop].
+- Giao diện quản trị tra cứu thành viên, cấp tặng hoặc thu hồi vật phẩm.

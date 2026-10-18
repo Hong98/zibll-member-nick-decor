@@ -1,0 +1,23 @@
+/**
+ * Zibll Member Nickname & Badge Pro - Admin Styles
+ */
+
+.znd-admin-user-manager input[type="text"] {
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    padding: 8px 12px;
+}
+
+.znd-admin-user-manager select {
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    padding: 6px 10px;
+    height: 38px;
+}
+
+.znd-admin-user-manager .button {
+    height: 38px;
+    line-height: 36px;
+    padding: 0 16px;
+    border-radius: 6px;
+}
