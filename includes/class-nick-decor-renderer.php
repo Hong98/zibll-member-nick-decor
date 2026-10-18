@@ -482,9 +482,38 @@ class ZND_Renderer {
                         <strong id="znd-current-balance" class="c-yellow font-bold em11 ml3"><?php echo number_format($balance); ?></strong>
                         <span class="muted-color ml3"><?php echo esc_html($currency_name); ?></span>
                     </div>
-                    <?php if (function_exists('zibpay_get_points_pay_link')): ?>
+                    <?php
+                    $currency_type = function_exists('_pz') ? _pz('znd_currency', 'points') : 'points';
+                    $charge_button = '';
+                    $charge_text   = '<i class="fa fa-plus-circle mr3"></i>' . __('Nạp thêm', 'zibll-nick-decor');
+                    $charge_class  = 'but but-sm c-yellow radius znd-btn-charge';
+
+                    if ($currency_type === 'balance') {
+                        if (function_exists('zibpay_get_balance_charge_link')) {
+                            $charge_button = zibpay_get_balance_charge_link($charge_class, $charge_text);
+                        }
+                        if (empty($charge_button) && function_exists('zibpay_get_points_pay_link')) {
+                            $charge_button = zibpay_get_points_pay_link($charge_class, $charge_text);
+                        }
+                        if (empty($charge_button) && function_exists('zib_get_user_center_url')) {
+                            $charge_button = '<a href="' . esc_url(zib_get_user_center_url('balance')) . '" target="_blank" class="' . esc_attr($charge_class) . '">' . $charge_text . '</a>';
+                        }
+                    } else {
+                        if (function_exists('zibpay_get_points_pay_link')) {
+                            $charge_button = zibpay_get_points_pay_link($charge_class, $charge_text);
+                        }
+                        if (empty($charge_button) && function_exists('zibpay_get_balance_charge_link')) {
+                            $charge_button = zibpay_get_balance_charge_link($charge_class, $charge_text);
+                        }
+                        if (empty($charge_button) && function_exists('zib_get_user_center_url')) {
+                            $charge_button = '<a href="' . esc_url(zib_get_user_center_url('points')) . '" target="_blank" class="' . esc_attr($charge_class) . '">' . $charge_text . '</a>';
+                        }
+                    }
+
+                    if (!empty($charge_button)):
+                    ?>
                     <div class="znd-charge-btn">
-                        <?php echo zibpay_get_points_pay_link('but but-sm c-yellow radius', '<i class="fa fa-plus-circle mr3"></i>' . __('Nạp thêm', 'zibll-nick-decor')); ?>
+                        <?php echo $charge_button; ?>
                     </div>
                     <?php endif; ?>
                 </div>

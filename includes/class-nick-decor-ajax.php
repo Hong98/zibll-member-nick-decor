@@ -22,6 +22,9 @@ class ZND_Ajax {
         add_action('wp_ajax_znd_unequip_item', array(__CLASS__, 'ajax_unequip_item'));
         add_action('wp_ajax_nopriv_znd_unequip_item', array(__CLASS__, 'ajax_need_login'));
 
+        add_action('wp_ajax_znd_get_user_balance', array(__CLASS__, 'ajax_get_user_balance'));
+        add_action('wp_ajax_nopriv_znd_get_user_balance', array(__CLASS__, 'ajax_need_login'));
+
         // AJAX Admin quản lý thành viên
         add_action('wp_ajax_znd_admin_search_user', array(__CLASS__, 'ajax_admin_search_user'));
         add_action('wp_ajax_znd_admin_grant_item', array(__CLASS__, 'ajax_admin_grant_item'));
@@ -303,5 +306,26 @@ class ZND_Ajax {
 
         ZND_User::admin_revoke_item($user_id, $type, $item_id);
         wp_send_json_success(array('message' => __('Đã thu hồi vật phẩm thành công!', 'zibll-nick-decor')));
+    }
+
+    /**
+     * Lấy số dư hiện tại của thành viên (dùng để tự động làm mới sau khi nạp)
+     */
+    public static function ajax_get_user_balance() {
+        self::check_nonce();
+
+        $user_id = get_current_user_id();
+        if (!$user_id) {
+            wp_send_json_error(array('message' => __('Vui lòng đăng nhập!', 'zibll-nick-decor')));
+        }
+
+        $balance       = ZND_User::get_user_currency_balance($user_id);
+        $currency_name = ZND_User::get_currency_name();
+
+        wp_send_json_success(array(
+            'balance'           => $balance,
+            'balance_formatted' => number_format($balance),
+            'currency_name'     => $currency_name,
+        ));
     }
 }

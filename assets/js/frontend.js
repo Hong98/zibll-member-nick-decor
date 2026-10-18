@@ -32,6 +32,27 @@
             }
         },
 
+        // Tự động làm mới số dư hiện tại của thành viên qua AJAX
+        refreshUserBalance: function () {
+            if (!this.isUserLoggedIn() || typeof znd_vars === 'undefined') return;
+
+            $.ajax({
+                url: znd_vars.ajax_url,
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    action: 'znd_get_user_balance',
+                    nonce: znd_vars.nonce
+                },
+                success: function (res) {
+                    if (res && res.success && res.data && typeof res.data.balance !== 'undefined') {
+                        var formatted = res.data.balance_formatted || Number(res.data.balance).toLocaleString();
+                        $('#znd-current-balance').text(formatted);
+                    }
+                }
+            });
+        },
+
         // Mở Modal (Tích hợp cơ chế Bootstrap Modal của Theme Zibll)
         openModal: function () {
             var $modal = $('#znd-shop-modal');
@@ -362,6 +383,47 @@
             }).on('shown.bs.modal', function () {
                 $('body').addClass('znd-modal-open');
                 $(this).css('display', 'flex');
+            });
+
+            // =====================================================================
+            // 1.1. XỬ LÝ NÚT NẠP THÊM & MODAL NẠP TIỀN CỦA THEME ZIBLL (REFRESH_MODAL)
+            // =====================================================================
+            // Đảm bảo click nút Nạp thêm luôn kích hoạt refresh_modal của Theme Zibll
+            $(document).on('click', '.znd-charge-btn a[data-toggle="RefreshModal"]', function (e) {
+                var $btn = $(this);
+                var remote = $btn.attr('data-remote');
+                if (typeof window.refresh_modal === 'function' && remote) {
+                    e.preventDefault();
+                    window.refresh_modal({
+                        class: $btn.attr('data-class') || 'modal-mini full-sm',
+                        height: $btn.attr('data-height') || 330,
+                        mobile_from_bottom: !!$btn.attr('mobile-bottom'),
+                        new: $btn.attr('new'),
+                        touch_close: !$btn.attr('no-touch'),
+                        remote: remote
+                    });
+                    return false;
+                }
+            });
+
+            // Khi modal nạp tiền của Zibll mở: Đảm bảo z-index luôn cao nhất và backdrop nằm trên Shop Modal
+            $(document).on('show.bs.modal shown.bs.modal', '#refresh_modal, .modal[id^="refresh_modal"]', function () {
+                var $modal = $(this);
+                $modal.css({
+                    'z-index': 100070,
+                    'display': 'flex'
+                });
+                setTimeout(function () {
+                    $('.modal-backdrop.in, .modal-backdrop.show').last().css('z-index', 100065);
+                }, 10);
+            });
+
+            // Khi modal nạp tiền đóng lại: Khôi phục cuộn cho Shop Modal và tự động cập nhật số dư mới nhất
+            $(document).on('hidden.bs.modal', '#refresh_modal, .modal[id^="refresh_modal"]', function () {
+                if ($('#znd-shop-modal').hasClass('in') || $('#znd-shop-modal').is(':visible')) {
+                    $('body').addClass('modal-open znd-modal-open');
+                    self.refreshUserBalance();
+                }
             });
 
             // =====================================================================

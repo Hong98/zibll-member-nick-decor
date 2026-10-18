@@ -84,6 +84,22 @@
     z-index: 100040 !important;
 }
 
+/* Đảm bảo popup nạp tiền của Theme Zibll (refresh_modal) và modal con luôn nổi bật trên Shop Modal */
+#refresh_modal,
+.modal[id^="refresh_modal"],
+body > .modal:not(#znd-shop-modal).in,
+body > .modal:not(#znd-shop-modal).show {
+    z-index: 100070 !important;
+}
+
+/* Backdrop cho popup nạp tiền và modal con */
+.modal-backdrop.in ~ .modal-backdrop.in,
+.modal-backdrop.in + .modal-backdrop.in,
+.modal-backdrop.show ~ .modal-backdrop.show,
+.modal-backdrop.show + .modal-backdrop.show {
+    z-index: 100065 !important;
+}
+
 /* Ẩn trượt êm thanh footer tabbar của Theme Zibll khi mở modal Nick Decor */
 body.znd-modal-open .footer-tabbar,
 body.modal-open .footer-tabbar {

@@ -2,7 +2,7 @@
 
 > **Plugin tùy biến màu sắc và icon hiển thị đầu nickname thời thượng dành cho thành viên Theme Zibll.**
 
-![Version](https://img.shields.io/badge/version-v1.0.21-blue.svg)
+![Version](https://img.shields.io/badge/version-v1.0.22-blue.svg)
 ![WordPress](https://img.shields.io/badge/WordPress-5.6%2B-blue.svg)
 ![PHP](https://img.shields.io/badge/PHP-7.2%2B-green.svg)
 
@@ -96,6 +96,15 @@ Plugin cung cấp hệ thống Cửa hàng (Shop) và Tủ đồ (Wardrobe) cá 
 ---
 
 ## Lịch sử thay đổi
+
+### v1.0.22 — 2026-10-19
+- Sửa lỗi nút Nạp thêm không hiện popup nạp tiền và hỗ trợ nạp đa tiền tệ:
+  - Khắc phục xung đột thứ tự xếp chồng (`z-index`): Bổ sung quy tắc CSS và xử lý JavaScript nâng `z-index: 100070 !important` cho popup nạp tiền Theme Zibll (`#refresh_modal`) và `z-index: 100065 !important` cho backdrop thứ hai, giải quyết triệt để lỗi popup nạp tiền bị chìm phía sau modal Cửa hàng (`#znd-shop-modal`).
+  - Hỗ trợ đa tiền tệ linh hoạt (Điểm thưởng `points` & Số dư ví `balance`):
+    - Tự động nhận diện cấu hình tiền tệ đang áp dụng của Cửa hàng để gọi chính xác hàm nạp tương ứng của Zibll (`zibpay_get_balance_charge_link` cho Số dư ví / VNĐ hoặc `zibpay_get_points_pay_link` cho Điểm thưởng).
+    - Tích hợp cơ chế fallback liên kết thông minh: Nếu website tắt nạp trực tiếp qua popup, hệ thống tự động chuyển tiếp mượt mà đến trang nạp ví / nạp điểm cá nhân (`zib_get_user_center_url`), đảm bảo nút luôn hoạt động tin cậy trong mọi cấu hình.
+  - Tự động đồng bộ số dư thời gian thực: Bổ sung endpoint AJAX `znd_get_user_balance`, tự động cập nhật số dư mới nhất vào thanh trạng thái ngay khi thành viên hoàn tất nạp tiền và đóng popup mà không cần tải lại trang.
+  - Khôi phục trải nghiệm cuộn trang mượt mà cho modal Cửa hàng khi đóng popup nạp tiền lồng nhau.
 
 ### v1.0.21 — 2026-10-19
 - Thiết kế lại các tab điều hướng đồng bộ hoàn hảo theo chuẩn Theme Zibll và đổi tên ngắn gọn:
