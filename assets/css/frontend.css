@@ -606,27 +606,31 @@ body.dark-theme .znd-empty-box h4 { color: #f1f5f9; }
 }
 
 /* ==========================================================================
-   7. ICON MỞ SHOP Ở HÀNG CUỐI CÙNG MENU NGƯỜI DÙNG THEME ZIBLL (.sub-user-box)
+   7. HÀNG MỚI DƯỚI CÙNG CHO ICON MỞ SHOP THEME ZIBLL (.sub-user-box)
    ========================================================================== */
-.sub-user-box .header-user-href.has-znd-btn {
+.znd-user-shortcuts-section {
+    margin-top: 10px;
+}
+
+.sub-user-box .znd-user-row {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: flex-start;
 }
 
-.sub-user-box .header-user-href.has-znd-btn > a {
-    min-width: 0 !important;
-    flex: 1 1 0;
-    padding-left: 2px;
-    padding-right: 2px;
+.sub-user-box .znd-user-row > a {
+    width: 25%;
+    min-width: 58px;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2px 0;
     text-align: center;
-}
-
-.sub-user-box .header-user-href .znd-user-href-btn {
     text-decoration: none !important;
 }
 
-.sub-user-box .header-user-href .znd-user-href-btn .badg {
+.sub-user-box .znd-user-row .badg {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -636,16 +640,16 @@ body.dark-theme .znd-empty-box h4 { color: #f1f5f9; }
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.sub-user-box .header-user-href .znd-user-href-btn .badg i {
+.sub-user-box .znd-user-row .badg i {
     font-size: 15px;
 }
 
-.sub-user-box .header-user-href .znd-user-href-btn:hover .badg {
+.sub-user-box .znd-user-row > a:hover .badg {
     transform: scale(1.1);
     box-shadow: 0 4px 12px var(--focus-color-opacity2, rgba(32, 145, 244, 0.25));
 }
 
-.sub-user-box .header-user-href .znd-user-href-btn .translate-ignore {
+.sub-user-box .znd-user-row .translate-ignore {
     font-size: 12px;
     font-weight: 500;
     line-height: 1.3;
