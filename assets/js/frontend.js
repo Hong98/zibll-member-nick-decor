@@ -7,11 +7,29 @@
     'use strict';
 
     var ZND = {
+        // Kiểm tra xem người dùng đã đăng nhập hay chưa (hỗ trợ cả khi bật cache HTML)
+        isUserLoggedIn: function () {
+            if (typeof znd_vars !== 'undefined' && (znd_vars.is_logged_in === true || znd_vars.is_logged_in === 1 || znd_vars.is_logged_in === '1')) {
+                return true;
+            }
+            if ($('body').hasClass('logged-in')) {
+                return true;
+            }
+            return false;
+        },
+
         init: function () {
             this.bindEvents();
-            this.cleanHeaderTooltip();
-            this.injectUserMenuButton();
-            this.injectMobileButtons();
+
+            // CHỈ hiển thị biểu tượng mở Shop khi người dùng đã đăng nhập (PC & di động)
+            if (this.isUserLoggedIn()) {
+                this.cleanHeaderTooltip();
+                this.injectUserMenuButton();
+                this.injectMobileButtons();
+            } else {
+                // Nếu chưa đăng nhập, dọn dẹp sạch toàn bộ các icon/nút mở shop trên giao diện (phòng ngừa page cache)
+                $('.open-nick-decor-modal, .znd-user-shortcuts-section, .znd-mobile-header-btn, .znd-mobile-drawer-btn').remove();
+            }
         },
 
         // Mở Modal (Tích hợp cơ chế Bootstrap Modal của Theme Zibll)
@@ -93,6 +111,12 @@
 
         // Tự động chèn một hàng mới dưới cùng trong User Dropdown Box Theme Zibll (giữ nguyên 4 icon/hàng)
         injectUserMenuButton: function () {
+            var self = this;
+            if (!self.isUserLoggedIn()) {
+                $('.znd-user-shortcuts-section, .znd-user-href-btn').remove();
+                return;
+            }
+
             try {
                 var sectionHtml = '<div class="znd-user-shortcuts-section mt10 translate-ignore notranslate">' +
                                   '<div class="relative opacity5 mb10"><i class="line-form-line"></i></div>' +
@@ -107,6 +131,10 @@
                 var isAdjusting = false;
                 var ensureAtBottom = function () {
                     if (isAdjusting) return;
+                    if (!self.isUserLoggedIn()) {
+                        $('.znd-user-shortcuts-section, .znd-user-href-btn').remove();
+                        return;
+                    }
                     isAdjusting = true;
                     try {
                         // Xóa các nút thừa / rác nếu có trong các hàng 4 icon hiện tại
@@ -189,6 +217,12 @@
 
         // Bổ sung icon mở shop trên thiết bị di động (Mobile Header & Mobile Drawer)
         injectMobileButtons: function () {
+            var self = this;
+            if (!self.isUserLoggedIn()) {
+                $('.znd-mobile-header-btn, .znd-mobile-drawer-btn').remove();
+                return;
+            }
+
             try {
                 var titleText = 'Cửa hàng màu & Icon nick';
                 var isOptionEnabled = function (val, defaultVal) {
@@ -200,6 +234,11 @@
                 var enableMobileDrawer = (typeof znd_vars !== 'undefined') ? isOptionEnabled(znd_vars.enable_mobile_drawer_btn, true) : true;
 
                 var insertMobile = function () {
+                    if (!self.isUserLoggedIn()) {
+                        $('.znd-mobile-header-btn, .znd-mobile-drawer-btn').remove();
+                        return;
+                    }
+
                     // 1. Mobile Header bar (.navbar-header)
                     if (enableMobileHeader) {
                         var $navbarHeader = $('.navbar-header');
@@ -263,6 +302,16 @@
             $(document).on('click', '[data-znd-action="modal"], [data-action="zibll_nick_decor_modal"], .open-nick-decor-modal', function (e) {
                 e.preventDefault();
                 e.stopPropagation();
+
+                // Chỉ cho phép mở modal khi đã đăng nhập
+                if (!self.isUserLoggedIn()) {
+                    self.showToast((typeof znd_vars !== 'undefined' && znd_vars.i18n && znd_vars.i18n.login_require) || 'Vui lòng đăng nhập để mở tủ đồ và mua sắm!', 'warning');
+                    if ($('.signin-loader').length) {
+                        $('.signin-loader').first().trigger('click');
+                    }
+                    return;
+                }
+
                 self.openModal();
             });
 

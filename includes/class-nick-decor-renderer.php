@@ -280,6 +280,11 @@ class ZND_Renderer {
             return $radius_but;
         }
 
+        // Chỉ hiển thị biểu tượng mở Shop khi người dùng đã đăng nhập
+        if (!is_user_logged_in()) {
+            return $radius_but;
+        }
+
         $show_btn = function_exists('_pz') ? _pz('znd_enable_user_menu_btn', true) : true;
         if (!$show_btn) {
             return $radius_but;

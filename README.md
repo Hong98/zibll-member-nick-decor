@@ -2,7 +2,7 @@
 
 > **Plugin tùy biến màu sắc và icon hiển thị đầu nickname thời thượng dành cho thành viên Theme Zibll.**
 
-![Version](https://img.shields.io/badge/version-v1.0.15-blue.svg)
+![Version](https://img.shields.io/badge/version-v1.0.16-blue.svg)
 ![WordPress](https://img.shields.io/badge/WordPress-5.6%2B-blue.svg)
 ![PHP](https://img.shields.io/badge/PHP-7.2%2B-green.svg)
 
@@ -96,6 +96,13 @@ Plugin cung cấp hệ thống Cửa hàng (Shop) và Tủ đồ (Wardrobe) cá 
 ---
 
 ## Lịch sử thay đổi
+
+### v1.0.16 — 2026-10-19
+- Chỉ hiển thị biểu tượng mở Shop khi người dùng đã đăng nhập (PC & Thiết bị di động):
+  - Phía máy chủ (PHP): Bổ sung kiểm tra `is_user_logged_in()` trong bộ lọc `filter_nav_radius_button`, đảm bảo khách vãng lai chưa đăng nhập không nhìn thấy icon cọ vẽ trên thanh Header PC.
+  - Phía trình duyệt (JavaScript): Kiểm tra trạng thái đăng nhập qua `isUserLoggedIn()` trước khi khởi tạo `injectUserMenuButton` và `injectMobileButtons`. Ngăn chặn chèn nút vào User Dropdown Box (`.sub-user-box`), thanh Header di động (`.navbar-header`) và Menu trượt (`.mobile-navbar`) cho khách chưa đăng nhập.
+  - Phòng vệ đa tầng (CSS): Bổ sung quy tắc ẩn triệt để `body:not(.logged-in) .open-nick-decor-modal, body:not(.logged-in) .znd-user-shortcuts-section, body:not(.logged-in) .znd-mobile-header-btn, body:not(.logged-in) .znd-mobile-drawer-btn { display: none !important; }`, bảo đảm giao diện không bao giờ hiện icon mở shop dù bị dính Page Cache từ trước.
+  - Trải nghiệm người dùng (UX): Tự động hiển thị thông báo yêu cầu đăng nhập và kích hoạt popup đăng nhập của Zibll nếu người dùng chưa đăng nhập nhấp vào bất kỳ nút mở shop nào.
 
 ### v1.0.15 — 2026-10-19
 - Khắc phục triệt để lỗi không mua được và popup shop bị lệch không ở giữa màn hình:

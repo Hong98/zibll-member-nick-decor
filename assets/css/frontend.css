@@ -499,4 +499,16 @@
     }
 }
 
+/* ==========================================================================
+   9. ẨN HOÀN TOÀN ICON MỞ SHOP KHI CHƯA ĐĂNG NHẬP (PHÒNG NGỪA PAGE CACHE)
+   ========================================================================== */
+body:not(.logged-in) .open-nick-decor-modal,
+body:not(.logged-in) .znd-user-shortcuts-section,
+body:not(.logged-in) .znd-mobile-header-btn,
+body:not(.logged-in) .znd-mobile-drawer-btn,
+body:not(.logged-in) .znd-user-row {
+    display: none !important;
+}
+
+
 
