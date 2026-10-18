@@ -33,6 +33,17 @@
             }
         },
 
+        // Chuẩn hoá và cô lập ID gradient duy nhất khi render SVG động phía client
+        prepareSvg: function (svgHtml) {
+            if (!svgHtml || typeof svgHtml !== 'string') return svgHtml || '';
+            var uid = 'js_' + Math.random().toString(36).substring(2, 9);
+            return svgHtml.replace(/\b(id=["'])(znd_g_[^"']+)(["'])/gi, function (m, p1, p2, p3) {
+                return p1 + p2 + '_' + uid + p3;
+            }).replace(/\b(url\(#)(znd_g_[^)\s]+)(\))/gi, function (m, p1, p2, p3) {
+                return p1 + p2 + '_' + uid + p3;
+            });
+        },
+
         // Tự động kiểm tra và gắn class has-znd-icon cho các container chứa tên có icon nick
         autoExpandIconContainers: function () {
             $('.sub-user-box').each(function () {
@@ -498,7 +509,8 @@
 
                 // 2. Cập nhật Live Preview ở trên đầu
                 if (type === 'icon') {
-                    var svg = $card.data('item-svg') || $card.find('.znd-card-icon-preview .znd-nick-icon').html();
+                    var rawSvg = $card.data('item-svg') || $card.find('.znd-card-icon-preview .znd-nick-icon').html();
+                    var svg = self.prepareSvg(rawSvg);
                     var animClass = anim ? ' znd-anim-' + anim : '';
                     $wrapper.find('#znd-preview-icon').html('<span class="' + animClass + '">' + svg + '</span>');
                     $wrapper.find('#znd-preview-desc').text('Đang thử icon: ' + name);
@@ -523,9 +535,10 @@
 
                 // Preview icon / màu trong drawer
                 if (type === 'icon') {
-                    var svg = $card.data('item-svg') || $card.find('.znd-card-icon-preview .znd-nick-icon').html();
+                    var rawSvg = $card.data('item-svg') || $card.find('.znd-card-icon-preview .znd-nick-icon').html();
+                    var drawerSvg = self.prepareSvg(rawSvg);
                     var animClass = anim ? ' znd-anim-' + anim : '';
-                    $drawer.find('#znd-drawer-preview').html('<span class="znd-nick-icon ' + animClass + '">' + svg + '</span>');
+                    $drawer.find('#znd-drawer-preview').html('<span class="znd-nick-icon ' + animClass + '">' + drawerSvg + '</span>');
                 } else {
                     var cssClass = $card.data('css');
                     var animClass = anim ? ' znd-anim-' + anim : '';

@@ -25,7 +25,7 @@ class ZND_Defaults {
                 'animation'   => 'shimmer',
                 'vip_level'   => 0,
                 'status'      => true,
-                'svg'         => '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="znd-svg"><defs><linearGradient id="znd_g_crown" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#FFE259"/><stop offset="50%" stop-color="#FFA751"/><stop offset="100%" stop-color="#FF5E3A"/></linearGradient></defs><path d="M2.5 19h19a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1h-19a1 1 0 0 1-1-1v-1a1 1 0 0 1 1-1zm0-14l4.5 7 5-9 5 9 4.5-7L22 17H2L2.5 5z" fill="url(#znd_g_crown)"/><circle cx="12" cy="14" r="1.5" fill="#FFF"/><circle cx="6.5" cy="14.5" r="1.2" fill="#FFF"/><circle cx="17.5" cy="14.5" r="1.2" fill="#FFF"/></svg>',
+                'svg'         => '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="znd-svg"><defs><linearGradient id="znd_g_crown" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#FFE259"/><stop offset="50%" stop-color="#FFA751"/><stop offset="100%" stop-color="#FF5E3A"/></linearGradient></defs><path d="M3 17 L2 6.5 L7.5 11 L12 3 L16.5 11 L22 6.5 L21 17 Z" fill="url(#znd_g_crown)"/><rect x="2" y="18" width="20" height="3" rx="1.5" fill="url(#znd_g_crown)"/><circle cx="2" cy="6.5" r="1.1" fill="#FFE259"/><circle cx="12" cy="3" r="1.3" fill="#FFE259"/><circle cx="22" cy="6.5" r="1.1" fill="#FFE259"/><circle cx="12" cy="14" r="1.5" fill="#FFFFFF"/><circle cx="6.5" cy="14.5" r="1.2" fill="#FFFFFF"/><circle cx="17.5" cy="14.5" r="1.2" fill="#FFFFFF"/></svg>',
             ),
             'diamond_blue' => array(
                 'id'          => 'diamond_blue',

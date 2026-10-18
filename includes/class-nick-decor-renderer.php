@@ -13,6 +13,31 @@ class ZND_Renderer {
 
     private static $instance = null;
 
+    /**
+     * Chuẩn hoá và cô lập ID gradient trong thẻ SVG, đảm bảo mỗi instance có ID duy nhất
+     * Tránh lỗi trùng lặp ID và lỗi WebKit/Blink SVG khi phần tử đầu tiên rơi vào display:none trên di động
+     *
+     * @param string $svg Chuỗi mã SVG
+     * @return string
+     */
+    public static function prepare_svg($svg) {
+        if (empty($svg) || !is_string($svg)) {
+            return '';
+        }
+
+        static $seq = 0;
+        $seq++;
+        $uid = 'u' . $seq . '_' . wp_rand(100, 999);
+
+        // Đổi tất cả id="znd_g_xxx" thành id="znd_g_xxx_{uid}"
+        $svg = preg_replace('/(\bid=["\'])(znd_g_[^"\']+)(["\'])/i', '$1$2_' . $uid . '$3', $svg);
+
+        // Đổi tất cả url(#znd_g_xxx) thành url(#znd_g_xxx_{uid})
+        $svg = preg_replace('/(\burl\(#)(znd_g_[^)\s]+)(\))/i', '$1$2_' . $uid . '$3', $svg);
+
+        return $svg;
+    }
+
     public static function get_instance() {
         if (null === self::$instance) {
             self::$instance = new self();
@@ -174,7 +199,8 @@ class ZND_Renderer {
             if ($icon_data && !empty($icon_data['svg'])) {
                 $anim_class = !empty($icon_data['animation']) && $icon_data['animation'] !== 'none' ? ' znd-anim-' . esc_attr($icon_data['animation']) : '';
                 $icon_name  = esc_attr($icon_data['name']);
-                $icon_html  = '<span class="znd-nick-icon znd-icon-' . esc_attr($icon_id) . $anim_class . '" title="' . $icon_name . '">' . $icon_data['svg'] . '</span>';
+                $svg        = self::prepare_svg($icon_data['svg']);
+                $icon_html  = '<span class="znd-nick-icon znd-icon-' . esc_attr($icon_id) . $anim_class . '" title="' . $icon_name . '">' . $svg . '</span>';
             }
         }
 
@@ -248,7 +274,8 @@ class ZND_Renderer {
             if ($icon_data && !empty($icon_data['svg'])) {
                 $anim_class = !empty($icon_data['animation']) && $icon_data['animation'] !== 'none' ? ' znd-anim-' . esc_attr($icon_data['animation']) : '';
                 $icon_name  = esc_attr($icon_data['name']);
-                $icon_html  = '<span class="znd-nick-icon znd-icon-' . esc_attr($icon_id) . $anim_class . '" title="' . $icon_name . '">' . $icon_data['svg'] . '</span>';
+                $svg        = self::prepare_svg($icon_data['svg']);
+                $icon_html  = '<span class="znd-nick-icon znd-icon-' . esc_attr($icon_id) . $anim_class . '" title="' . $icon_name . '">' . $svg . '</span>';
             }
         }
 
@@ -473,7 +500,7 @@ class ZND_Renderer {
                                 if (!empty($equipped_icon) && isset($icons[$equipped_icon])) {
                                     $i_data = $icons[$equipped_icon];
                                     $anim_class = !empty($i_data['animation']) && $i_data['animation'] !== 'none' ? ' znd-anim-' . esc_attr($i_data['animation']) : '';
-                                    echo '<span class="' . $anim_class . '">' . $i_data['svg'] . '</span>';
+                                    echo '<span class="' . $anim_class . '">' . self::prepare_svg($i_data['svg']) . '</span>';
                                 }
                                 ?>
                             </span>
@@ -574,7 +601,8 @@ class ZND_Renderer {
                         $anim_class  = !empty($item['animation']) && $item['animation'] !== 'none' ? ' znd-anim-' . esc_attr($item['animation']) : '';
                         $price       = isset($item['price']) ? (float)$item['price'] : 0;
                         $duration    = !empty($item['duration']) ? sprintf(__('%d ngày', 'zibll-nick-decor'), $item['duration']) : __('Vĩnh viễn', 'zibll-nick-decor');
-                        $price_text  = $price > 0 ? number_format($price) . ' ' . $currency_name : __('Miễn phí', 'zibll-nick-decor');
+                        $price_text   = $price > 0 ? number_format($price) . ' ' . $currency_name : __('Miễn phí', 'zibll-nick-decor');
+                        $prepared_svg = self::prepare_svg($item['svg']);
                     ?>
                     <div class="znd-card <?php echo $is_equipped ? 'is-equipped' : ($is_owned ? 'is-owned' : ''); ?>"
                          data-id="<?php echo esc_attr($id); ?>"
@@ -586,12 +614,12 @@ class ZND_Renderer {
                          data-duration="<?php echo esc_attr($duration); ?>"
                          data-status="<?php echo $is_equipped ? 'equipped' : ($is_owned ? 'owned' : 'available'); ?>"
                          data-anim="<?php echo esc_attr(!empty($item['animation']) ? $item['animation'] : ''); ?>"
-                         data-item-svg="<?php echo esc_attr($item['svg']); ?>"
+                         data-item-svg="<?php echo esc_attr($prepared_svg); ?>"
                          title="<?php echo esc_attr($item['name']); ?>">
 
                         <div class="znd-card-icon-preview">
                             <span class="znd-nick-icon <?php echo $anim_class; ?>">
-                                <?php echo $item['svg']; ?>
+                                <?php echo $prepared_svg; ?>
                             </span>
                         </div>
 
@@ -668,7 +696,8 @@ class ZND_Renderer {
                                 $item = $icons[$id];
                                 $is_equipped = ($equipped_icon === $id);
                                 $anim_class  = !empty($item['animation']) && $item['animation'] !== 'none' ? ' znd-anim-' . esc_attr($item['animation']) : '';
-                                $expiry_text = !empty($data['expires_at']) ? sprintf(__('Hết hạn: %s', 'zibll-nick-decor'), date_i18n('d/m/Y', $data['expires_at'])) : __('Vĩnh viễn', 'zibll-nick-decor');
+                                $expiry_text  = !empty($data['expires_at']) ? sprintf(__('Hết hạn: %s', 'zibll-nick-decor'), date_i18n('d/m/Y', $data['expires_at'])) : __('Vĩnh viễn', 'zibll-nick-decor');
+                                $prepared_svg = self::prepare_svg($item['svg']);
                             ?>
                             <div class="znd-card <?php echo $is_equipped ? 'is-equipped' : 'is-owned'; ?>"
                                  data-id="<?php echo esc_attr($id); ?>"
@@ -679,11 +708,11 @@ class ZND_Renderer {
                                  data-duration="<?php echo esc_attr($expiry_text); ?>"
                                  data-status="<?php echo $is_equipped ? 'equipped' : 'owned'; ?>"
                                  data-anim="<?php echo esc_attr(!empty($item['animation']) ? $item['animation'] : ''); ?>"
-                                 data-item-svg="<?php echo esc_attr($item['svg']); ?>"
+                                 data-item-svg="<?php echo esc_attr($prepared_svg); ?>"
                                  title="<?php echo esc_attr($item['name']); ?>">
 
                                 <div class="znd-card-icon-preview">
-                                    <span class="znd-nick-icon <?php echo $anim_class; ?>"><?php echo $item['svg']; ?></span>
+                                    <span class="znd-nick-icon <?php echo $anim_class; ?>"><?php echo $prepared_svg; ?></span>
                                 </div>
                                 <div class="znd-card-name"><?php echo esc_html($item['name']); ?></div>
 

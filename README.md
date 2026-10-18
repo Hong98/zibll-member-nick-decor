@@ -2,7 +2,7 @@
 
 > **Plugin tùy biến màu sắc và icon hiển thị đầu nickname thời thượng dành cho thành viên Theme Zibll.**
 
-![Version](https://img.shields.io/badge/version-v1.0.24-blue.svg)
+![Version](https://img.shields.io/badge/version-v1.0.25-blue.svg)
 ![WordPress](https://img.shields.io/badge/WordPress-5.6%2B-blue.svg)
 ![PHP](https://img.shields.io/badge/PHP-7.2%2B-green.svg)
 
@@ -96,6 +96,16 @@ Plugin cung cấp hệ thống Cửa hàng (Shop) và Tủ đồ (Wardrobe) cá 
 ---
 
 ## Lịch sử thay đổi
+
+### v1.0.25 — 2026-10-19
+- Sửa lỗi icon vương miện và các icon SVG hiển thị thành 3 chấm trên thiết bị di động:
+  - Khắc phục triệt để lỗi mất thân vương miện trên trình duyệt di động (WebKit / Blink):
+    - Tái cấu trúc chuẩn hóa SVG của icon vương miện hoàng gia (`crown_gold`): Tách phần thân vương miện (`<path>`) và đế vương miện bo góc (`<rect>`) rõ ràng với tọa độ chuẩn xác tuyệt đối, loại bỏ các chuỗi lệnh cung nén dính liền (`a1 1 0 0 1-1 1` và `zm0-14`) vốn gây lỗi cú pháp parser trên các trình duyệt di động (Cốc Cốc, Safari iOS, Chrome Android).
+    - Giải quyết hiện tượng 3 chấm tròn trắng: Trước đây khi phần thân vương miện bị mất màu, 3 viên ngọc đính ở thân (`<circle fill="#FFF"/>`) hiển thị trơ trọi trên nền tối tạo thành 3 dấu chấm `...`.
+  - Tích hợp cơ chế cô lập Unique Gradient ID chống xung đột hiển thị đa tầng:
+    - Cơ chế phía máy chủ (PHP): Bổ sung phương thức `prepare_svg()`, tự động gán hậu tố duy nhất ngẫu nhiên (`znd_g_xxx_u...`) cho toàn bộ thẻ `<linearGradient>` và tham chiếu `url(#...)` mỗi lần render SVG. Ngăn chặn triệt để tình trạng thẻ SVG trong Modal hoặc Menu di động tham chiếu nhầm vào gradient của Header Desktop (bị ẩn `display: none` trên di động khiến gradient bị rỗng màu).
+    - Cơ chế phía trình duyệt (JavaScript): Tích hợp `prepareSvg()` tự động làm tươi ID gradient độc lập khi người dùng bấm xem trước trong Live Preview và thanh Action Drawer.
+  - Bảo đảm tất cả 16 icon SVG hiển thị sắc nét, óng ánh đầy đủ hiệu ứng gradient vàng kim và màu sắc rực rỡ 100% trên cả máy tính lẫn điện thoại.
 
 ### v1.0.24 — 2026-10-19
 - Khắc phục lỗi lệch menu trượt bên trái trên thiết bị di động:
