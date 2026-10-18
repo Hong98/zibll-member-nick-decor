@@ -246,20 +246,58 @@ body.modal-open .footer-tabbar {
    4. NAVIGATION TABS (THEME ZIBLL TAB-NAV-THEME)
    ========================================================================== */
 .znd-nav-tabs.tab-nav-theme {
-    margin-bottom: 20px;
+    margin: 0 0 16px 0;
     border-bottom: 1px solid var(--main-border-color, rgba(50, 50, 50, 0.08));
-    padding-bottom: 6px;
+    padding: 0 0 6px 0;
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.znd-nav-tabs.tab-nav-theme li {
+    position: relative;
+    padding: 0 0 8px 0;
+    margin: 0 8px;
+    list-style: none;
+    cursor: pointer;
+}
+
+.znd-nav-tabs.tab-nav-theme li::before {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 0;
+    height: 3px;
+    background: var(--focus-color, #ff6f06);
+    border-radius: 6px;
+    box-shadow: 0 1px 4px var(--focus-shadow, rgba(255, 111, 6, 0.3));
+    transition: width 0.3s cubic-bezier(0.32, 0.85, 0.45, 1.18), opacity 0.2s ease;
+    opacity: 0;
+}
+
+.znd-nav-tabs.tab-nav-theme li.active::before {
+    width: 24px;
+    opacity: 1;
 }
 
 .znd-nav-tabs.tab-nav-theme li > a {
-    padding: 8px 14px;
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--muted-color, #777);
+    padding: 6px 10px;
+    font-size: 14.5px;
+    font-weight: 700;
+    color: var(--muted-2-color, #888);
     display: inline-flex;
     align-items: center;
-    transition: all 0.2s ease;
+    justify-content: center;
+    transition: color 0.2s ease;
     text-decoration: none !important;
+    line-height: 1.4;
 }
 
 .znd-nav-tabs.tab-nav-theme li:hover > a {
@@ -267,11 +305,20 @@ body.modal-open .footer-tabbar {
 }
 
 .znd-nav-tabs.tab-nav-theme li.active > a {
-    color: var(--focus-color, #ff6f06);
+    color: var(--focus-color, #ff6f06) !important;
 }
 
-.znd-nav-tabs.tab-nav-theme li::before {
+.znd-nav-tabs.tab-nav-theme li .badg {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 1px 6px;
+    border-radius: 10px;
+    transition: all 0.2s ease;
+}
+
+.znd-nav-tabs.tab-nav-theme li.active .badg {
     background: var(--focus-color, #ff6f06);
+    color: #fff !important;
 }
 
 .znd-tab-content {
@@ -550,11 +597,27 @@ body.modal-open .footer-tabbar {
     .znd-nav-tabs.tab-nav-theme {
         margin-bottom: 12px !important;
         padding-bottom: 4px !important;
+        gap: 4px !important;
+        justify-content: space-around !important;
+    }
+
+    .znd-nav-tabs.tab-nav-theme li {
+        margin: 0 !important;
+        padding-bottom: 6px !important;
+        flex: 1 !important;
+        text-align: center !important;
     }
 
     .znd-nav-tabs.tab-nav-theme li > a {
-        padding: 6px 10px !important;
-        font-size: 13px !important;
+        padding: 4px 4px !important;
+        font-size: 12.5px !important;
+        width: 100% !important;
+    }
+
+    .znd-nav-tabs.tab-nav-theme li .badg {
+        font-size: 10px !important;
+        padding: 0 4px !important;
+        margin-left: 3px !important;
     }
 
     /* Lưới các mục tự động co giãn linh hoạt vừa khít 100% không bị tràn mép */

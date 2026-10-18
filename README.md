@@ -2,7 +2,7 @@
 
 > **Plugin tùy biến màu sắc và icon hiển thị đầu nickname thời thượng dành cho thành viên Theme Zibll.**
 
-![Version](https://img.shields.io/badge/version-v1.0.20-blue.svg)
+![Version](https://img.shields.io/badge/version-v1.0.21-blue.svg)
 ![WordPress](https://img.shields.io/badge/WordPress-5.6%2B-blue.svg)
 ![PHP](https://img.shields.io/badge/PHP-7.2%2B-green.svg)
 
@@ -96,6 +96,15 @@ Plugin cung cấp hệ thống Cửa hàng (Shop) và Tủ đồ (Wardrobe) cá 
 ---
 
 ## Lịch sử thay đổi
+
+### v1.0.21 — 2026-10-19
+- Thiết kế lại các tab điều hướng đồng bộ hoàn hảo theo chuẩn Theme Zibll và đổi tên ngắn gọn:
+  - Đổi tên các tab thành: `Icon nick`, `Màu nick`, `Tủ đồ` thay cho các tên dài dòng trước đây, giúp giao diện súc tích, tinh gọn và không bao giờ bị rớt dòng trên di động.
+  - Tái thiết kế toàn diện cấu trúc và phong cách thị giác theo chuẩn `.tab-nav-theme` của Zibll:
+    - Máy tính (PC): Căn giữa đối xứng `justify-content: center` thanh lịch, khoảng cách giữa các tab cân đối hài hòa với tiêu đề Colorful Header.
+    - Thiết bị di động (Mobile): Tự động chia đều 3 phần cân đối (`justify-content: space-around; flex: 1`) vừa vặn trọn vẹn bề ngang màn hình.
+    - Thanh chỉ báo active indicator (`li::before`): Vạch ngang thanh mảnh `24px` bo góc `6px` nằm ở chính giữa đáy tab, phát sáng nhẹ theo biến màu `--focus-color` và `--focus-shadow` của theme.
+    - Huy hiệu số lượng (`.badg.badg-sm`): Tự động chuyển đổi màu nền sang màu chủ đề và chữ trắng khi tab đang được kích hoạt, gia tăng độ nhận diện và trải nghiệm tương tác cao cấp.
 
 ### v1.0.20 — 2026-10-19
 - Tinh chỉnh cân đối chiều cao và vị trí hiển thị modal trên di động, tránh co lên quá mức:

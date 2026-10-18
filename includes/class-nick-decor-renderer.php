@@ -497,24 +497,24 @@ class ZND_Renderer {
                 <?php endif; ?>
             </div>
 
-            <!-- THANH ĐIỀU HƯỚNG TABS -->
-            <ul class="list-inline scroll-x mini-scrollbar tab-nav-theme znd-nav-tabs mb20">
+            <!-- THANH ĐIỀU HƯỚNG TABS (CHUẨN THEME ZIBLL TAB-NAV-THEME) -->
+            <ul class="list-inline tab-nav-theme font-bold text-center znd-nav-tabs mb15">
                 <li class="active" data-tab="icons">
                     <a href="javascript:;" class="znd-tab-btn">
-                        <i class="fa fa-star mr6"></i><?php esc_html_e('Icon đầu nick', 'zibll-nick-decor'); ?>
+                        <i class="fa fa-star mr4"></i><?php esc_html_e('Icon nick', 'zibll-nick-decor'); ?>
                         <span class="badg badg-sm c-yellow ml6"><?php echo count($icons); ?></span>
                     </a>
                 </li>
                 <li data-tab="colors">
                     <a href="javascript:;" class="znd-tab-btn">
-                        <i class="fa fa-magic mr6"></i><?php esc_html_e('Màu sắc nick', 'zibll-nick-decor'); ?>
+                        <i class="fa fa-paint-brush mr4"></i><?php esc_html_e('Màu nick', 'zibll-nick-decor'); ?>
                         <span class="badg badg-sm c-yellow ml6"><?php echo count($colors); ?></span>
                     </a>
                 </li>
                 <?php if (is_user_logged_in()): ?>
                 <li data-tab="wardrobe">
                     <a href="javascript:;" class="znd-tab-btn">
-                        <i class="fa fa-briefcase mr6"></i><?php esc_html_e('Tủ đồ của tôi', 'zibll-nick-decor'); ?>
+                        <i class="fa fa-archive mr4"></i><?php esc_html_e('Tủ đồ', 'zibll-nick-decor'); ?>
                         <span class="badg badg-sm c-yellow znd-owned-count ml6"><?php echo count($inv['icons']) + count($inv['colors']); ?></span>
                     </a>
                 </li>
