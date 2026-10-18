@@ -2,7 +2,7 @@
 
 > **Plugin tùy biến màu sắc và icon hiển thị đầu nickname thời thượng dành cho thành viên Theme Zibll.**
 
-![Version](https://img.shields.io/badge/version-v1.0.17-blue.svg)
+![Version](https://img.shields.io/badge/version-v1.0.18-blue.svg)
 ![WordPress](https://img.shields.io/badge/WordPress-5.6%2B-blue.svg)
 ![PHP](https://img.shields.io/badge/PHP-7.2%2B-green.svg)
 
@@ -96,6 +96,16 @@ Plugin cung cấp hệ thống Cửa hàng (Shop) và Tủ đồ (Wardrobe) cá 
 ---
 
 ## Lịch sử thay đổi
+
+### v1.0.18 — 2026-10-19
+- Thiết kế lại lưới danh sách siêu gọn chỉ gồm Icon và Tên, tích hợp thanh Action Drawer chi tiết và nút mua ở đáy:
+  - Tối giản hóa tối đa các ô trong danh sách Shop & Tủ đồ: Mỗi ô chỉ hiển thị icon/màu và tên ngắn gọn (loại bỏ mô tả, badge giá to và nút bấm khỏi từng ô đơn lẻ), kèm huy hiệu trạng thái nhỏ xinh (chấm xanh lá cho item đang dùng, chấm xanh lam cho item đã sở hữu).
+  - Tăng mật độ hiển thị vượt bậc:
+    - Máy tính (PC): Hiển thị lưới `minmax(95px, 1fr)` (từ 7 đến 8 icon trên mỗi hàng), toàn bộ 16 icon chỉ gói gọn trong 2 hàng không cần cuộn trang.
+    - Thiết bị di động (Mobile): Hiển thị lưới 4 cột cân xứng (`repeat(4, 1fr)`), kích thước mỗi ô chỉ ~74px, vừa vặn trọn vẹn trong một màn hình điện thoại.
+  - Tích hợp thanh Action Drawer cố định thông minh ở đáy:
+    - Khi người dùng nhấp vào bất kỳ ô icon/màu nào: Hệ thống vừa lập tức cập nhật diện mạo nick ở Live Preview trên đầu, vừa trượt thanh Action Drawer lên ở đáy với đầy đủ thông tin (Icon to, Tên, Mô tả, Giá tiền, Thời hạn) cùng nút thao tác chính (Mua ngay / Trang bị / Tháo).
+    - Thao tác 1 chạm thuận tiện: Người dùng có thể lướt thử nhanh nhiều icon liên tiếp mà không bị che khuất màn hình hay tốn công đóng mở popup phụ.
 
 ### v1.0.17 — 2026-10-19
 - Bỏ nút Thử và tối ưu kích thước card hiển thị tinh gọn nhiều mục (PC & Di động):

@@ -257,143 +257,191 @@
 }
 
 /* ==========================================================================
-   5. GRID & ITEM CARDS (THEME ZIBLL DESIGN SYSTEM - THU NHỎ TINH GỌN)
+   5. GRID & ITEM CARDS (THEME ZIBLL DESIGN SYSTEM - CHỈ ICON & TÊN SIÊU GỌN)
    ========================================================================== */
 .znd-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-    gap: 12px;
+    grid-template-columns: repeat(auto-fill, minmax(95px, 1fr));
+    gap: 10px;
 }
 
 .znd-card {
     background: var(--main-bg-color, #fff);
     border: 1px solid var(--main-border-color, rgba(50, 50, 50, 0.08));
     border-radius: var(--main-radius, 8px);
-    padding: 10px;
+    padding: 8px 6px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
     transition: all 0.2s ease;
     position: relative;
     box-shadow: 0 1px 3px var(--main-shadow, rgba(0, 0, 0, 0.02));
     cursor: pointer;
     user-select: none;
+    min-height: 82px;
 }
 
 .znd-card:hover {
     border-color: var(--focus-color, #ff6f06);
-    box-shadow: 0 3px 10px var(--focus-shadow, rgba(255, 111, 6, 0.12));
+    box-shadow: 0 3px 10px var(--focus-shadow, rgba(255, 111, 6, 0.15));
+    transform: translateY(-2px);
 }
 
-.znd-card.is-previewing {
-    border-color: var(--focus-color, #ff6f06);
-    box-shadow: 0 0 0 2px var(--focus-color, #ff6f06), 0 4px 12px var(--focus-shadow, rgba(255, 111, 6, 0.18));
+.znd-card.is-previewing,
+.znd-card.is-selected {
+    border-color: var(--focus-color, #ff6f06) !important;
+    box-shadow: 0 0 0 2px var(--focus-color, #ff6f06), 0 4px 12px var(--focus-shadow, rgba(255, 111, 6, 0.2)) !important;
+    background: var(--focus-color-opacity1, rgba(255, 111, 6, 0.04));
 }
 
 .znd-card.is-equipped {
     border-color: var(--green-color, #18a52a);
-    background: rgba(24, 165, 42, 0.04);
 }
 
-.znd-card.is-equipped::after {
-    content: '\f058';
-    font-family: FontAwesome;
+.znd-badge-status {
     position: absolute;
-    top: 6px;
-    right: 8px;
-    color: var(--green-color, #18a52a);
-    font-size: 14px;
+    top: 4px;
+    right: 4px;
+    width: 16px;
+    height: 16px;
+    line-height: 16px;
+    border-radius: 50%;
+    font-size: 9px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    z-index: 2;
+}
+
+.znd-badge-status.status-equipped {
+    background: var(--green-color, #18a52a);
+}
+
+.znd-badge-status.status-owned {
+    background: var(--focus-color, #ff6f06);
 }
 
 .znd-card-icon-preview,
 .znd-card-color-sample {
-    height: 52px;
+    width: 100%;
+    height: 42px;
     display: flex;
     align-items: center;
     justify-content: center;
     background: var(--muted-border-color, rgba(136, 136, 136, 0.05));
     border-radius: var(--mini-radius, 4px);
-    margin-bottom: 8px;
-    padding: 6px;
+    margin-bottom: 6px;
+    padding: 4px;
     transition: background 0.15s ease;
 }
 
 .znd-card:hover .znd-card-icon-preview,
-.znd-card:hover .znd-card-color-sample {
-    background: var(--focus-color-opacity1, rgba(255, 111, 6, 0.06));
+.znd-card:hover .znd-card-color-sample,
+.znd-card.is-selected .znd-card-icon-preview,
+.znd-card.is-selected .znd-card-color-sample {
+    background: var(--focus-color-opacity1, rgba(255, 111, 6, 0.08));
 }
 
 .znd-card-icon-preview .znd-nick-icon {
-    width: 32px;
-    height: 32px;
+    width: 28px;
+    height: 28px;
 }
 
 .znd-sample-text {
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 700;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 100%;
 }
 
-.znd-card-title {
-    margin: 0 0 3px 0;
-    font-size: 13px;
-    font-weight: 700;
+.znd-card-name {
+    font-size: 11.5px;
+    font-weight: 600;
     color: var(--key-color, #333);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    width: 100%;
+    line-height: 1.25;
 }
 
-.znd-card-desc {
-    margin: 0 0 6px 0;
-    font-size: 11px;
+/* ==========================================================================
+   6. THANH CHI TIẾT & NÚT MUA / THAO TÁC Ở ĐÁY (ACTION DRAWER)
+   ========================================================================== */
+.znd-action-drawer {
+    position: sticky;
+    bottom: -20px;
+    margin: 15px -20px -20px -20px;
+    background: var(--main-bg-color, #fff);
+    border-top: 1px solid var(--main-border-color, rgba(50, 50, 50, 0.1));
+    padding: 12px 18px;
+    box-shadow: 0 -4px 18px var(--main-shadow, rgba(0, 0, 0, 0.09));
+    z-index: 99;
+    border-radius: 0 0 var(--main-radius, 8px) var(--main-radius, 8px);
+    animation: znd-slide-up 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes znd-slide-up {
+    from { transform: translateY(100%); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.znd-drawer-preview {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--muted-border-color, rgba(136, 136, 136, 0.08));
+    border-radius: var(--mini-radius, 6px);
+    flex-shrink: 0;
+}
+
+.znd-drawer-preview .znd-nick-icon {
+    width: 32px;
+    height: 32px;
+}
+
+.znd-drawer-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--key-color, #333);
+}
+
+.znd-drawer-desc {
+    font-size: 11.5px;
     color: var(--muted-color, #777);
     line-height: 1.35;
-    display: -webkit-box;
-    -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    height: 16px;
+    margin-top: 2px;
+    max-width: 480px;
 }
 
-.znd-card-tags {
-    display: flex;
-    gap: 4px;
-    flex-wrap: wrap;
-    margin-bottom: 8px;
-}
-
-.znd-card-tags .badg {
-    font-size: 10.5px;
-    padding: 2px 5px;
-    border-radius: 4px;
-    line-height: 1.3;
-}
-
-/* Nút hành động trong Card theo chuẩn class .but của Zibll */
-.znd-card-actions {
-    display: flex;
-    gap: 6px;
-    align-items: center;
-    margin-top: auto;
-    width: 100%;
-}
-
-.znd-card-actions .znd-btn {
-    width: 100%;
-    flex: 1;
-    text-align: center;
-    font-size: 11.5px;
-    padding: 4px 6px;
-    height: 28px;
-    line-height: 18px;
-    border-radius: 4px;
+.znd-drawer-btn-wrap .znd-btn {
+    padding: 6px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    height: 34px;
+    line-height: 20px;
+    border-radius: 6px;
     white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+}
+
+.znd-drawer-close {
+    background: transparent;
+    border: none;
+    font-size: 16px;
+    color: var(--muted-color, #888);
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: all 0.2s;
+    line-height: 1;
+}
+
+.znd-drawer-close:hover {
+    color: var(--red-color, #ff5473);
+    background: rgba(255, 84, 115, 0.1);
 }
 
 .znd-btn-unequip:hover {
@@ -402,7 +450,7 @@
 }
 
 /* ==========================================================================
-   6. TỦ ĐỒ (WARDROBE)
+   7. TỦ ĐỒ (WARDROBE) & KHUNG TRỐNG
    ========================================================================== */
 .znd-section-title {
     font-size: 13px;
@@ -426,63 +474,101 @@
     color: var(--key-color, #333);
 }
 
-/* Responsive: 2 CỘT GỌN TRÊN DI ĐỘNG & TABLET DỌC */
+/* ==========================================================================
+   8. RESPONSIVE THIẾT KẾ CHO DI ĐỘNG & MÀN HÌNH NHỎ
+   ========================================================================== */
 @media (max-width: 767px) {
     .znd-grid {
-        grid-template-columns: repeat(2, 1fr) !important;
-        gap: 8px !important;
+        grid-template-columns: repeat(4, 1fr) !important;
+        gap: 6px !important;
     }
 
     .znd-card {
-        padding: 8px !important;
+        padding: 6px 4px !important;
+        min-height: 74px !important;
     }
 
     .znd-card-icon-preview,
     .znd-card-color-sample {
-        height: 48px !important;
-        margin-bottom: 6px !important;
-    }
-
-    .znd-card-icon-preview .znd-nick-icon {
-        width: 28px !important;
-        height: 28px !important;
-    }
-
-    .znd-card-title {
-        font-size: 12px !important;
-    }
-
-    .znd-card-desc {
-        font-size: 10px !important;
-        height: 14px !important;
+        height: 36px !important;
         margin-bottom: 4px !important;
     }
 
-    .znd-card-tags {
-        margin-bottom: 6px !important;
-        gap: 3px !important;
+    .znd-card-icon-preview .znd-nick-icon {
+        width: 24px !important;
+        height: 24px !important;
     }
 
-    .znd-card-tags .badg {
-        font-size: 10px !important;
-        padding: 1px 4px !important;
+    .znd-card-name {
+        font-size: 10.5px !important;
     }
 
-    .znd-card-actions .znd-btn {
-        font-size: 11px !important;
-        padding: 3px 4px !important;
+    /* Action Drawer trên Mobile: Cố định ở đáy modal, ngón cái dễ chạm */
+    .znd-action-drawer {
+        padding: 10px 14px !important;
+        bottom: -15px !important;
+        margin: 10px -15px -15px -15px !important;
+    }
+
+    .znd-drawer-content {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 8px !important;
+    }
+
+    .znd-drawer-left {
+        width: 100% !important;
+    }
+
+    .znd-drawer-preview {
+        width: 36px !important;
+        height: 36px !important;
+    }
+
+    .znd-drawer-preview .znd-nick-icon {
+        width: 26px !important;
         height: 26px !important;
-        line-height: 18px !important;
+    }
+
+    .znd-drawer-name {
+        font-size: 13px !important;
+    }
+
+    .znd-drawer-desc {
+        display: -webkit-box !important;
+        -webkit-line-clamp: 1 !important;
+        -webkit-box-orient: vertical !important;
+        overflow: hidden !important;
+        font-size: 11px !important;
+    }
+
+    .znd-drawer-right {
+        width: 100% !important;
+        margin-left: 0 !important;
+        justify-content: stretch !important;
+    }
+
+    .znd-drawer-btn-wrap {
+        flex: 1 !important;
+    }
+
+    .znd-drawer-btn-wrap .znd-btn {
+        width: 100% !important;
+        height: 34px !important;
+        font-size: 13px !important;
+    }
+
+    .znd-drawer-close {
+        position: absolute;
+        top: 6px;
+        right: 8px;
     }
 }
 
 @media (max-width: 360px) {
     .znd-grid {
+        grid-template-columns: repeat(3, 1fr) !important;
         gap: 5px !important;
-    }
-
-    .znd-card {
-        padding: 6px !important;
     }
 }
 
