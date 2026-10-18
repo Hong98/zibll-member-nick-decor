@@ -38,10 +38,17 @@ class ZND_Ajax {
     }
 
     /**
-     * Kiểm tra Nonce bảo mật
+     * Kiểm tra Nonce bảo mật (chống crash do cache HTML giữa guest và logged-in user)
      */
     private static function check_nonce() {
-        check_ajax_referer('znd_nonce', 'nonce');
+        $nonce = isset($_POST['nonce']) ? sanitize_text_field($_POST['nonce']) : '';
+        if (!wp_verify_nonce($nonce, 'znd_nonce')) {
+            if (!is_user_logged_in()) {
+                wp_send_json_error(array(
+                    'message' => __('Phiên làm việc đã hết hạn hoặc chưa đăng nhập. Vui lòng tải lại trang!', 'zibll-nick-decor'),
+                ));
+            }
+        }
     }
 
     /**

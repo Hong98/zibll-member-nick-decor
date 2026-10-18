@@ -2,7 +2,7 @@
 
 > **Plugin tùy biến màu sắc và icon hiển thị đầu nickname thời thượng dành cho thành viên Theme Zibll.**
 
-![Version](https://img.shields.io/badge/version-v1.0.14-blue.svg)
+![Version](https://img.shields.io/badge/version-v1.0.15-blue.svg)
 ![WordPress](https://img.shields.io/badge/WordPress-5.6%2B-blue.svg)
 ![PHP](https://img.shields.io/badge/PHP-7.2%2B-green.svg)
 
@@ -91,11 +91,17 @@ Plugin cung cấp hệ thống Cửa hàng (Shop) và Tủ đồ (Wardrobe) cá 
 
 ### 3. Nhúng và hiển thị
 - Để nhúng Cửa hàng vào một trang riêng (ví dụ trang *Cửa hàng ngoại trang*): Tạo một trang mới và dán shortcode `[zibll_nick_shop]`.
-- Để tạo nút mở nhanh Modal Shop ở bất kỳ đâu trên theme: Gán class `open-nick-decor-modal` hoặc thuộc tính `data-action="zibll_nick_decor_modal"` vào thẻ `<a>` hoặc `<button>`.
+- Để tạo nút mở nhanh Modal Shop ở bất kỳ đâu trên theme: Gán class `open-nick-decor-modal` hoặc thuộc tính `data-znd-action="modal"` vào thẻ `<a>` hoặc `<button>`.
 
 ---
 
 ## Lịch sử thay đổi
+
+### v1.0.15 — 2026-10-19
+- Khắc phục triệt để lỗi không mua được và popup shop bị lệch không ở giữa màn hình:
+  - Căn giữa popup tuyệt đối: Cập nhật CSS `#znd-shop-modal.in { display: flex !important; align-items: center; justify-content: center; }` kết hợp `margin: auto !important` và giới hạn `max-height: calc(100vh - 40px)` giúp hộp thoại luôn luôn hiển thị trọn vẹn, cân đối ở chính giữa màn hình mà không bị tụt xuống dưới đáy hay phải cuộn trang.
+  - Khắc phục lỗi nuốt sự kiện click khi bấm Mua: Loại bỏ toàn bộ thuộc tính `data-action` trên các nút bấm của plugin (chuyển sang `data-znd-act` và class đặc trưng `.znd-btn-buy`, `.znd-btn-equip`, `.znd-btn-unequip`), giải quyết triệt để xung đột với bộ bắt sự kiện Like/Bookmark toàn cục `[data-action]` của Theme Zibll.
+  - Tối ưu hóa thông báo Toast và Nonce: Nâng cấp `showToast` hiển thị đồng thời qua hệ thống `notyf` của Zibll và toast banner nổi bật trên cùng màn hình; tối ưu hóa kiểm tra nonce để không bị chặn nhầm bởi full-page cache.
 
 ### v1.0.14 — 2026-10-19
 - Sửa lỗi nghiêm trọng xung đột CSS khiến trang web bị khóa không tương tác hay bấm vào đâu được:

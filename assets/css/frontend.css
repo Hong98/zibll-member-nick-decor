@@ -80,10 +80,21 @@
     display: none !important;
 }
 
+#znd-shop-modal.in {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
 #znd-shop-modal .modal-dialog {
     max-width: 860px;
-    width: 100%;
-    margin: 30px auto;
+    width: 95%;
+    margin: auto !important;
+    max-height: calc(100vh - 40px);
+    display: flex;
+    flex-direction: column;
 }
 
 #znd-shop-modal .modal-content {
@@ -92,24 +103,30 @@
     overflow: hidden;
     position: relative;
     border: none;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
+    max-height: calc(100vh - 40px);
+    display: flex;
+    flex-direction: column;
 }
 
 #znd-shop-modal .modal-body {
     padding: 20px;
     overflow-y: auto;
-    max-height: calc(88vh - 120px);
+    flex: 1 1 auto;
     -webkit-overflow-scrolling: touch;
 }
 
 @media (max-width: 767px) {
     #znd-shop-modal .modal-dialog {
         max-width: calc(100% - 20px);
-        margin: 10px auto;
+        margin: auto !important;
+        max-height: calc(100vh - 20px);
+    }
+    #znd-shop-modal .modal-content {
+        max-height: calc(100vh - 20px);
     }
     #znd-shop-modal .modal-body {
         padding: 15px;
-        max-height: calc(88vh - 120px);
     }
 }
 

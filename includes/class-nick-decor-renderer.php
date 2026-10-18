@@ -285,7 +285,7 @@ class ZND_Renderer {
             return $radius_but;
         }
 
-        $btn = '<a href="javascript:;" data-action="zibll_nick_decor_modal" class="toggle-radius open-nick-decor-modal ml10" title="' . esc_attr__('Cửa hàng màu & Icon nick', 'zibll-nick-decor') . '"><i class="fa fa-paint-brush"></i></a>';
+        $btn = '<a href="javascript:;" data-znd-action="modal" class="toggle-radius open-nick-decor-modal ml10" title="' . esc_attr__('Cửa hàng màu & Icon nick', 'zibll-nick-decor') . '"><i class="fa fa-paint-brush"></i></a>';
 
         return $radius_but . $btn;
     }
@@ -396,7 +396,7 @@ class ZND_Renderer {
         $user_id = get_current_user_id();
         ?>
         <!-- Zibll Member Nickname & Badge Pro Modal -->
-        <div class="modal fade" id="znd-shop-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal fade" id="znd-shop-modal" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
             <div class="modal-dialog modal-lg" role="document" style="max-width: 860px; width: 100%;">
                 <div class="modal-content">
                     <?php if (function_exists('zib_get_modal_colorful_header')): ?>
@@ -557,15 +557,15 @@ class ZND_Renderer {
                             </button>
 
                             <?php if ($is_equipped): ?>
-                                <button type="button" class="but but-sm c-green radius znd-btn znd-btn-unequip" data-action="unequip" data-type="icon">
+                                <button type="button" class="but but-sm c-green radius znd-btn znd-btn-unequip" data-znd-act="unequip" data-type="icon">
                                     <i class="fa fa-check-circle mr3"></i><?php esc_html_e('Đang dùng (Tháo)', 'zibll-nick-decor'); ?>
                                 </button>
                             <?php elseif ($is_owned): ?>
-                                <button type="button" class="but but-sm c-blue radius znd-btn znd-btn-equip" data-action="equip" data-type="icon" data-id="<?php echo esc_attr($id); ?>">
+                                <button type="button" class="but but-sm c-blue radius znd-btn znd-btn-equip" data-znd-act="equip" data-type="icon" data-id="<?php echo esc_attr($id); ?>">
                                     <i class="fa fa-bolt mr3"></i><?php esc_html_e('Trang bị', 'zibll-nick-decor'); ?>
                                 </button>
                             <?php else: ?>
-                                <button type="button" class="but but-sm c-yellow radius znd-btn znd-btn-buy" data-action="buy" data-type="icon" data-id="<?php echo esc_attr($id); ?>">
+                                <button type="button" class="but but-sm c-yellow radius znd-btn znd-btn-buy" data-znd-act="buy" data-type="icon" data-id="<?php echo esc_attr($id); ?>">
                                     <i class="fa fa-shopping-cart mr3"></i><?php esc_html_e('Mua ngay', 'zibll-nick-decor'); ?>
                                 </button>
                             <?php endif; ?>
@@ -616,15 +616,15 @@ class ZND_Renderer {
                             </button>
 
                             <?php if ($is_equipped): ?>
-                                <button type="button" class="but but-sm c-green radius znd-btn znd-btn-unequip" data-action="unequip" data-type="color">
+                                <button type="button" class="but but-sm c-green radius znd-btn znd-btn-unequip" data-znd-act="unequip" data-type="color">
                                     <i class="fa fa-check-circle mr3"></i><?php esc_html_e('Đang dùng (Tháo)', 'zibll-nick-decor'); ?>
                                 </button>
                             <?php elseif ($is_owned): ?>
-                                <button type="button" class="but but-sm c-blue radius znd-btn znd-btn-equip" data-action="equip" data-type="color" data-id="<?php echo esc_attr($id); ?>">
+                                <button type="button" class="but but-sm c-blue radius znd-btn znd-btn-equip" data-znd-act="equip" data-type="color" data-id="<?php echo esc_attr($id); ?>">
                                     <i class="fa fa-bolt mr3"></i><?php esc_html_e('Trang bị', 'zibll-nick-decor'); ?>
                                 </button>
                             <?php else: ?>
-                                <button type="button" class="but but-sm c-yellow radius znd-btn znd-btn-buy" data-action="buy" data-type="color" data-id="<?php echo esc_attr($id); ?>">
+                                <button type="button" class="but but-sm c-yellow radius znd-btn znd-btn-buy" data-znd-act="buy" data-type="color" data-id="<?php echo esc_attr($id); ?>">
                                     <i class="fa fa-shopping-cart mr3"></i><?php esc_html_e('Mua ngay', 'zibll-nick-decor'); ?>
                                 </button>
                             <?php endif; ?>
@@ -666,11 +666,11 @@ class ZND_Renderer {
                                 </div>
                                 <div class="znd-card-actions">
                                     <?php if ($is_equipped): ?>
-                                        <button type="button" class="but but-sm c-green radius znd-btn znd-btn-unequip" data-action="unequip" data-type="icon">
+                                        <button type="button" class="but but-sm c-green radius znd-btn znd-btn-unequip" data-znd-act="unequip" data-type="icon">
                                             <i class="fa fa-times mr3"></i><?php esc_html_e('Tháo trang bị', 'zibll-nick-decor'); ?>
                                         </button>
                                     <?php else: ?>
-                                        <button type="button" class="but but-sm c-blue radius znd-btn znd-btn-equip" data-action="equip" data-type="icon" data-id="<?php echo esc_attr($id); ?>">
+                                        <button type="button" class="but but-sm c-blue radius znd-btn znd-btn-equip" data-znd-act="equip" data-type="icon" data-id="<?php echo esc_attr($id); ?>">
                                             <i class="fa fa-bolt mr3"></i><?php esc_html_e('Đeo icon này', 'zibll-nick-decor'); ?>
                                         </button>
                                     <?php endif; ?>
@@ -700,11 +700,11 @@ class ZND_Renderer {
                                 </div>
                                 <div class="znd-card-actions">
                                     <?php if ($is_equipped): ?>
-                                        <button type="button" class="but but-sm c-green radius znd-btn znd-btn-unequip" data-action="unequip" data-type="color">
+                                        <button type="button" class="but but-sm c-green radius znd-btn znd-btn-unequip" data-znd-act="unequip" data-type="color">
                                             <i class="fa fa-times mr3"></i><?php esc_html_e('Tháo màu nick', 'zibll-nick-decor'); ?>
                                         </button>
                                     <?php else: ?>
-                                        <button type="button" class="but but-sm c-blue radius znd-btn znd-btn-equip" data-action="equip" data-type="color" data-id="<?php echo esc_attr($id); ?>">
+                                        <button type="button" class="but but-sm c-blue radius znd-btn znd-btn-equip" data-znd-act="equip" data-type="color" data-id="<?php echo esc_attr($id); ?>">
                                             <i class="fa fa-bolt mr3"></i><?php esc_html_e('Dùng màu này', 'zibll-nick-decor'); ?>
                                         </button>
                                     <?php endif; ?>
