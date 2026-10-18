@@ -2,7 +2,7 @@
 
 > **Plugin tùy biến màu sắc và icon hiển thị đầu nickname thời thượng dành cho thành viên Theme Zibll.**
 
-![Version](https://img.shields.io/badge/version-v1.0.1-blue.svg)
+![Version](https://img.shields.io/badge/version-v1.0.2-blue.svg)
 ![WordPress](https://img.shields.io/badge/WordPress-5.6%2B-blue.svg)
 ![PHP](https://img.shields.io/badge/PHP-7.2%2B-green.svg)
 
@@ -96,6 +96,12 @@ Plugin cung cấp hệ thống Cửa hàng (Shop) và Tủ đồ (Wardrobe) cá 
 ---
 
 ## Lịch sử thay đổi
+
+### v1.0.2 — 2026-10-18
+- Khắc phục xung đột thuộc tính `data-svg` với hàm `show_svg()` của Theme Zibll: Đổi sang `data-item-svg` giúp hiển thị đầy đủ 100% nội dung 16 ô card icon, giá bán và các nút thao tác trong cửa hàng.
+- Khắc phục lỗi mất banner Swiper slider và 4 thẻ card đầu trang: Loại bỏ `data-toggle="tooltip"` trên icon đầu nick gắn vào thẻ tên người dùng, ngăn ngừa triệt để việc gián đoạn chuỗi khởi tạo JavaScript của theme Zibll.
+- Tối ưu hóa hiệu ứng màu nick: Loại bỏ cưỡng chế `display: inline-block` giúp tên người dùng giữ nguyên bố cục chữ và cắt ngắn `text-ellipsis` mượt mà của theme.
+- Tối ưu hóa lắng nghe sự kiện trên thanh điều hướng header và cô lập logic sắp xếp menu Codestar Framework chỉ chạy trong trang Admin.
 
 ### v1.0.1 — 2026-10-18
 - Tối ưu định vị menu: Sử dụng bộ lọc native `csf_zibll_options_sections` của Codestar Framework để chuyển chính xác menu "Màu & Icon đầu nick" lên ngay dưới menu "Dịch thuật JS".

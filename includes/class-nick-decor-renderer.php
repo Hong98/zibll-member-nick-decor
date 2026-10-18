@@ -129,7 +129,7 @@ class ZND_Renderer {
         foreach ($colors as $id => $color) {
             $style = !empty($color['css_style']) ? $color['css_style'] : '';
             if (!empty($style)) {
-                echo ".znd-color-{$id} { {$style} display: inline-block; }\n";
+                echo ".znd-color-{$id} { {$style} }\n";
             }
         }
 
@@ -165,7 +165,7 @@ class ZND_Renderer {
             if ($icon_data && !empty($icon_data['svg'])) {
                 $anim_class = !empty($icon_data['animation']) && $icon_data['animation'] !== 'none' ? ' znd-anim-' . esc_attr($icon_data['animation']) : '';
                 $icon_name  = esc_attr($icon_data['name']);
-                $icon_html  = '<span class="znd-nick-icon znd-icon-' . esc_attr($icon_id) . $anim_class . '" title="' . $icon_name . '" data-toggle="tooltip">' . $icon_data['svg'] . '</span>';
+                $icon_html  = '<span class="znd-nick-icon znd-icon-' . esc_attr($icon_id) . $anim_class . '" title="' . $icon_name . '">' . $icon_data['svg'] . '</span>';
             }
         }
 
@@ -229,7 +229,7 @@ class ZND_Renderer {
             if ($icon_data && !empty($icon_data['svg'])) {
                 $anim_class = !empty($icon_data['animation']) && $icon_data['animation'] !== 'none' ? ' znd-anim-' . esc_attr($icon_data['animation']) : '';
                 $icon_name  = esc_attr($icon_data['name']);
-                $icon_html  = '<span class="znd-nick-icon znd-icon-' . esc_attr($icon_id) . $anim_class . '" title="' . $icon_name . '" data-toggle="tooltip">' . $icon_data['svg'] . '</span>';
+                $icon_html  = '<span class="znd-nick-icon znd-icon-' . esc_attr($icon_id) . $anim_class . '" title="' . $icon_name . '">' . $icon_data['svg'] . '</span>';
             }
         }
 
@@ -517,7 +517,7 @@ class ZND_Renderer {
                          data-type="icon"
                          data-name="<?php echo esc_attr($item['name']); ?>"
                          data-anim="<?php echo esc_attr(!empty($item['animation']) ? $item['animation'] : ''); ?>"
-                         data-svg="<?php echo esc_attr($item['svg']); ?>">
+                         data-item-svg="<?php echo esc_attr($item['svg']); ?>">
 
                         <div class="znd-card-icon-preview">
                             <span class="znd-nick-icon <?php echo $anim_class; ?>">

@@ -3,7 +3,7 @@
  * Plugin Name: Zibll Member Nickname & Badge Pro
  * Plugin URI: https://cui.vn/
  * Description: Plugin tùy biến màu sắc và icon hiển thị đầu nickname thời thượng cho thành viên Theme Zibll. Tích hợp trọn bộ icon SVG độc đáo, bảng màu gradient chuyển động, cửa hàng mua sắm bằng Điểm thưởng (Points) hoặc Số dư ví (Balance) và hộp xem trước thời gian thực.
- * Version: 1.0.1
+ * Version: 1.0.2
  * Author: Cui.vn
  * Author URI: https://cui.vn/
  * Text Domain: zibll-nick-decor
@@ -17,7 +17,7 @@ if (!defined('ABSPATH')) {
 }
 
 // Định nghĩa các hằng số plugin
-define('ZND_VERSION', '1.0.1');
+define('ZND_VERSION', '1.0.2');
 define('ZND_FILE', __FILE__);
 define('ZND_PATH', plugin_dir_path(__FILE__));
 define('ZND_URL', plugin_dir_url(__FILE__));

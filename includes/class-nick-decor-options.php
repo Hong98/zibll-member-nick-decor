@@ -19,8 +19,10 @@ class ZND_Options {
         add_action('init', array(__CLASS__, 'register_csf_sections'), 20);
 
         // Định vị chính xác menu nằm ngay dưới "Dịch thuật JS" qua filter chính thức của Codestar Framework
-        add_filter('csf_zibll_options_sections', array(__CLASS__, 'filter_csf_sections'), 99);
-        add_action('init', array(__CLASS__, 'reposition_menu_after_translate'), 990);
+        if (is_admin()) {
+            add_filter('csf_zibll_options_sections', array(__CLASS__, 'filter_csf_sections'), 99);
+            add_action('init', array(__CLASS__, 'reposition_menu_after_translate'), 990);
+        }
     }
 
     /**
@@ -479,7 +481,7 @@ class ZND_Options {
      * Tự động sắp xếp vị trí: Đưa menu "Màu & Icon đầu nick" nằm NGAY BÊN DƯỚI menu "Dịch thuật JS"
      */
     public static function reposition_menu_after_translate() {
-        if (!class_exists('CSF') || empty(CSF::$args['sections']['zibll_options'])) {
+        if (!is_admin() || !class_exists('CSF') || empty(CSF::$args['sections']['zibll_options'])) {
             return;
         }
 
