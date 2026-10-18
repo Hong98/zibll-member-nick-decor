@@ -59,8 +59,8 @@
                                   '<div class="relative opacity5 mb10"><i class="line-form-line"></i></div>' +
                                   '<div class="znd-user-row">' +
                                   '<a href="javascript:;" data-action="zibll_nick_decor_modal" class="open-nick-decor-modal znd-user-href-btn" title="Cửa hàng màu & Icon nick">' +
-                                  '<div class="badg mb6 toggle-radius c-theme"><i class="fa fa-paint-brush"></i></div>' +
-                                  '<div class="c-theme translate-ignore">Màu & Icon</div>' +
+                                  '<div class="badg mb6 toggle-radius c-yellow"><i class="fa fa-paint-brush"></i></div>' +
+                                  '<div class="c-yellow translate-ignore">Màu & Icon</div>' +
                                   '</a>' +
                                   '</div>' +
                                   '</div>';
