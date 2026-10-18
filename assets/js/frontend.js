@@ -52,7 +52,7 @@
             }, 3000);
         },
 
-        // Tự động chèn nút vào đáy User Dropdown Box của Theme Zibll
+        // Tự động chèn icon vào đáy User Dropdown Box của Theme Zibll
         injectUserMenuButton: function () {
             try {
                 var insertBtn = function () {
@@ -64,14 +64,28 @@
                         if (!$box.find('.znd-user-menu-bottom').length) {
                             var bottomHtml = '<div class="znd-user-menu-bottom mt10 translate-ignore notranslate">' +
                                              '<div class="relative opacity5 mb10"><i class="line-form-line"></i></div>' +
-                                             '<a href="javascript:;" data-action="zibll_nick_decor_modal" class="open-nick-decor-modal but block c-yellow radius em09 znd-bottom-shop-btn" title="Cửa hàng màu & Icon nick">' +
-                                             '<i class="fa fa-paint-brush mr6"></i><span>Cửa hàng màu & Icon nick</span>' +
+                                             '<div class="flex jc header-user-href znd-bottom-user-href">' +
+                                             '<a href="javascript:;" data-action="zibll_nick_decor_modal" class="open-nick-decor-modal" title="Cửa hàng màu & Icon nick">' +
+                                             '<div class="badg mb6 toggle-radius c-yellow"><i class="fa fa-paint-brush"></i></div>' +
+                                             '<div class="c-yellow translate-ignore">Màu & Icon</div>' +
                                              '</a>' +
+                                             '</div>' +
                                              '</div>';
                             $box.append(bottomHtml);
                         } else {
-                            // Đảm bảo luôn nằm ở vị trí cuối cùng dưới đáy popup
                             var $bottom = $box.find('.znd-user-menu-bottom');
+                            // Cập nhật lại HTML nếu đang hiển thị kiểu nút dài cũ
+                            if ($bottom.find('.znd-bottom-shop-btn').length) {
+                                var newInnerHtml = '<div class="relative opacity5 mb10"><i class="line-form-line"></i></div>' +
+                                                   '<div class="flex jc header-user-href znd-bottom-user-href">' +
+                                                   '<a href="javascript:;" data-action="zibll_nick_decor_modal" class="open-nick-decor-modal" title="Cửa hàng màu & Icon nick">' +
+                                                   '<div class="badg mb6 toggle-radius c-yellow"><i class="fa fa-paint-brush"></i></div>' +
+                                                   '<div class="c-yellow translate-ignore">Màu & Icon</div>' +
+                                                   '</a>' +
+                                                   '</div>';
+                                $bottom.html(newInnerHtml);
+                            }
+                            // Đảm bảo luôn nằm ở vị trí cuối cùng dưới đáy popup
                             if (!$bottom.is(':last-child')) {
                                 $box.append($bottom);
                             }
