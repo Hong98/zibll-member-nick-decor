@@ -276,7 +276,7 @@ class ZND_Renderer {
             return $radius_but;
         }
 
-        $btn = '<a href="javascript:;" data-action="zibll_nick_decor_modal" class="toggle-radius open-nick-decor-modal ml10" title="' . esc_attr__('Cửa hàng màu & Icon nick', 'zibll-nick-decor') . '" data-toggle="tooltip"><i class="fa fa-paint-brush"></i></a>';
+        $btn = '<a href="javascript:;" data-action="zibll_nick_decor_modal" class="toggle-radius open-nick-decor-modal ml10" title="' . esc_attr__('Cửa hàng màu & Icon nick', 'zibll-nick-decor') . '"><i class="fa fa-paint-brush"></i></a>';
 
         return $radius_but . $btn;
     }

@@ -651,3 +651,62 @@ body.dark-theme .znd-empty-box h4 { color: #f1f5f9; }
     white-space: nowrap;
 }
 
+/* ==========================================================================
+   8. NÚT MỞ SHOP TRÊN THIẾT BỊ DI ĐỘNG (MOBILE HEADER & MOBILE DRAWER)
+   ========================================================================== */
+@media (max-width: 767px) {
+    .navbar-toggle.znd-mobile-header-btn {
+        float: right;
+        margin: 6px 2px 0 0 !important;
+        padding: 0 !important;
+        width: 36px !important;
+        height: 36px !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        position: relative !important;
+        color: var(--muted-color, #666);
+        text-decoration: none !important;
+        transition: all 0.2s ease;
+        border: none !important;
+        background: transparent !important;
+        opacity: 0.8 !important;
+        z-index: 10;
+        box-sizing: border-box !important;
+    }
+
+    .navbar-toggle.znd-mobile-header-btn:hover,
+    .navbar-toggle.znd-mobile-header-btn:focus,
+    .navbar-toggle.znd-mobile-header-btn:active {
+        color: var(--focus-color, #ff6f06) !important;
+        opacity: 1 !important;
+    }
+
+    body.dark-theme .navbar-toggle.znd-mobile-header-btn {
+        color: var(--muted-color, #aaa);
+    }
+
+    body.dark-theme .navbar-toggle.znd-mobile-header-btn:hover,
+    body.dark-theme .navbar-toggle.znd-mobile-header-btn:focus {
+        color: var(--focus-color, #ff6f06) !important;
+    }
+
+    .navbar-toggle.znd-mobile-header-btn i.fa {
+        font-size: 17px !important;
+        line-height: 1 !important;
+        margin: 0 !important;
+        position: static !important;
+        transform: none !important;
+        display: inline-block !important;
+    }
+
+    .mobile-navbar .znd-mobile-drawer-btn {
+        margin: 0 4px !important;
+        font-size: 14px;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+}
+
+

@@ -9,7 +9,9 @@
     var ZND = {
         init: function () {
             this.bindEvents();
+            this.cleanHeaderTooltip();
             this.injectUserMenuButton();
+            this.injectMobileButtons();
         },
 
         // Mở Modal
@@ -50,6 +52,26 @@
                     $(this).remove();
                 });
             }, 3000);
+        },
+
+        // Đồng bộ tooltip icon mở shop trên navbar theo chuẩn Theme Zibll (bỏ bóng mây Bootstrap bị khuất phía trên)
+        cleanHeaderTooltip: function () {
+            try {
+                var fixTooltip = function () {
+                    var $btn = $('.navbar .open-nick-decor-modal, .header .open-nick-decor-modal');
+                    if ($btn.length) {
+                        $btn.removeAttr('data-toggle');
+                        if ($.fn.tooltip) {
+                            $btn.tooltip('destroy');
+                        }
+                    }
+                };
+                fixTooltip();
+                $(document).ready(fixTooltip);
+                setTimeout(fixTooltip, 300);
+            } catch (e) {
+                console.warn('ZND cleanHeaderTooltip error:', e);
+            }
         },
 
         // Tự động chèn một hàng mới dưới cùng trong User Dropdown Box Theme Zibll (giữ nguyên 4 icon/hàng)
@@ -145,6 +167,58 @@
                 }
             } catch (e) {
                 console.warn('ZND injectUserMenuButton error:', e);
+            }
+        },
+
+        // Bổ sung icon mở shop trên thiết bị di động (Mobile Header & Mobile Drawer)
+        injectMobileButtons: function () {
+            try {
+                var titleText = 'Cửa hàng màu & Icon nick';
+
+                var insertMobile = function () {
+                    // 1. Mobile Header bar (.navbar-header)
+                    var $navbarHeader = $('.navbar-header');
+                    if ($navbarHeader.length && !$navbarHeader.find('.znd-mobile-header-btn').length) {
+                        var $mBtn = $(
+                            '<a href="javascript:;" data-action="zibll_nick_decor_modal" class="navbar-toggle open-nick-decor-modal znd-mobile-header-btn visible-xs" title="' + titleText + '">' +
+                            '<i class="fa fa-paint-brush" aria-hidden="true"></i>' +
+                            '</a>'
+                        );
+
+                        var $msgBtn = $navbarHeader.find('.zac-mobile-header-msg-btn');
+                        var $searchBtn = $navbarHeader.find('.main-search-btn.navbar-toggle');
+                        var $menuToggle = $navbarHeader.find('button[data-toggle-class="mobile-navbar-show"]');
+
+                        if ($msgBtn.length) {
+                            $msgBtn.after($mBtn);
+                        } else if ($searchBtn.length) {
+                            $searchBtn.after($mBtn);
+                        } else if ($menuToggle.length) {
+                            $menuToggle.before($mBtn);
+                        } else {
+                            $navbarHeader.append($mBtn);
+                        }
+                    }
+
+                    // 2. Mobile Drawer Top Header (.mobile-navbar .flex.ac.pull-right)
+                    var $drawerTop = $('.mobile-navbar .flex.ac.pull-right');
+                    if ($drawerTop.length && !$drawerTop.find('.znd-mobile-drawer-btn').length) {
+                        var $drawerBtn = $(
+                            '<a href="javascript:;" data-action="zibll_nick_decor_modal" class="toggle-radius open-nick-decor-modal znd-mobile-drawer-btn" title="' + titleText + '">' +
+                            '<i class="fa fa-paint-brush"></i>' +
+                            '</a>'
+                        );
+                        $drawerTop.prepend($drawerBtn);
+                    }
+                };
+
+                insertMobile();
+                $(document).ready(insertMobile);
+                [50, 150, 300, 600, 1200, 2500].forEach(function (ms) {
+                    setTimeout(insertMobile, ms);
+                });
+            } catch (e) {
+                console.warn('ZND injectMobileButtons error:', e);
             }
         },
 

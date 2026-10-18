@@ -2,7 +2,7 @@
 
 > **Plugin tùy biến màu sắc và icon hiển thị đầu nickname thời thượng dành cho thành viên Theme Zibll.**
 
-![Version](https://img.shields.io/badge/version-v1.0.9-blue.svg)
+![Version](https://img.shields.io/badge/version-v1.0.10-blue.svg)
 ![WordPress](https://img.shields.io/badge/WordPress-5.6%2B-blue.svg)
 ![PHP](https://img.shields.io/badge/PHP-7.2%2B-green.svg)
 
@@ -96,6 +96,11 @@ Plugin cung cấp hệ thống Cửa hàng (Shop) và Tủ đồ (Wardrobe) cá 
 ---
 
 ## Lịch sử thay đổi
+
+### v1.0.10 — 2026-10-18
+- Thêm icon mở shop trên thiết bị di động và tối ưu tooltip thanh điều hướng (Navbar):
+  - Khắc phục triệt để lỗi tooltip bị khuất trên mép màn hình khi rê chuột: Đồng bộ với các icon khác của Theme Zibll bằng tooltip tự nhiên của trình duyệt, không gây che khuất hay tràn mép viewport.
+  - Tích hợp icon mở shop tiện lợi trên thiết bị di động: Hiển thị trực tiếp trên thanh điều hướng đầu trang mobile (`.navbar-header .navbar-toggle`) và trên thanh tiện ích trượt (`.mobile-navbar`), giúp thành viên mở shop 1 chạm nhanh chóng trên điện thoại và máy tính bảng.
 
 ### v1.0.9 — 2026-10-18
 - Đồng bộ màu sắc và hiệu ứng hover của icon mở shop theo chuẩn nguyên bản Theme Zibll:
