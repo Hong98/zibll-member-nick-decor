@@ -70,6 +70,10 @@ class ZND_Renderer {
         add_filter('author_main_tabs_array', array($this, 'add_author_main_tab'), 20, 2);
         add_filter('main_author_tab_content_nick_decor', array($this, 'render_author_tab_content'));
 
+        // Can thiệp khối Author/User Header trong Trung tâm người dùng (/user)
+        add_action('user_center_page_content', array($this, 'start_user_page_header_buffer'), 7);
+        add_action('user_center_page_content', array($this, 'end_user_page_header_buffer'), 9);
+
         // Xuất Modal Cửa hàng & Tủ đồ ở cuối trang (wp_footer)
         add_action('wp_footer', array($this, 'output_shop_modal'), 99);
 
@@ -114,8 +118,29 @@ class ZND_Renderer {
         );
 
         $current_user_id = get_current_user_id();
-        $equipped_icon  = ZND_User::get_equipped_icon($current_user_id);
-        $equipped_color = ZND_User::get_equipped_color($current_user_id);
+        $equipped_icon   = ZND_User::get_equipped_icon($current_user_id);
+        $equipped_color  = ZND_User::get_equipped_color($current_user_id);
+
+        $user_icon_html   = '';
+        $user_color_class = '';
+
+        if (!empty($equipped_icon)) {
+            $icon_data = ZND_Defaults::get_icon($equipped_icon);
+            if ($icon_data && !empty($icon_data['svg'])) {
+                $anim_class = !empty($icon_data['animation']) && $icon_data['animation'] !== 'none' ? ' znd-anim-' . esc_attr($icon_data['animation']) : '';
+                $icon_name  = esc_attr($icon_data['name']);
+                $svg        = self::prepare_svg($icon_data['svg']);
+                $user_icon_html = '<span class="znd-nick-icon znd-icon-' . esc_attr($equipped_icon) . $anim_class . '" title="' . $icon_name . '">' . $svg . '</span>';
+            }
+        }
+
+        if (!empty($equipped_color)) {
+            $color_data = ZND_Defaults::get_color($equipped_color);
+            if ($color_data) {
+                $anim_class = !empty($color_data['animation']) && $color_data['animation'] !== 'none' ? ' znd-anim-' . esc_attr($color_data['animation']) : '';
+                $user_color_class = 'znd-color-' . esc_attr($equipped_color) . $anim_class;
+            }
+        }
 
         wp_localize_script('znd-frontend', 'znd_vars', array(
             'ajax_url'                 => admin_url('admin-ajax.php'),
@@ -124,6 +149,8 @@ class ZND_Renderer {
             'user_id'                  => $current_user_id,
             'equipped_icon'            => $equipped_icon,
             'equipped_color'           => $equipped_color,
+            'user_icon_html'           => $user_icon_html,
+            'user_color_class'         => $user_color_class,
             'currency_name'            => ZND_User::get_currency_name(),
             'user_balance'             => ZND_User::get_user_currency_balance($current_user_id),
             'enable_mobile_header_btn' => function_exists('_pz') ? (_pz('znd_enable_mobile_header_btn', true) ? 1 : 0) : 1,
@@ -213,9 +240,9 @@ class ZND_Renderer {
             }
         }
 
-        // Tìm thẻ <a class="display-name..." để chèn icon và thêm class màu
+        // Tìm thẻ <a class="display-name..." hoặc <span class="display-name..." để chèn icon và thêm class màu
         // Cấu trúc Zibll chuẩn: <a class="display-name text-ellipsis $class" href="$url">$vip_icon$display_name</a>
-        if (preg_match('/(<a[^>]*class=["\'][^"\']*display-name[^"\']*["\'][^>]*>)(.*?)(<\/a>)/is', $html, $matches)) {
+        if (preg_match('/(<(?:a|span|div)[^>]*class=["\'][^"\']*display-name[^"\']*["\'][^>]*>)(.*?)(<\/(?:a|span|div)>)/is', $html, $matches)) {
             $open_tag  = $matches[1];
             $inner_con = $matches[2];
             $close_tag = $matches[3];
@@ -250,6 +277,85 @@ class ZND_Renderer {
         }
 
         return $html;
+    }
+
+    /**
+     * Bắt đầu buffer khối Author/User Header trong Trung tâm người dùng (/user)
+     */
+    public function start_user_page_header_buffer() {
+        if (!self::is_enabled()) {
+            return;
+        }
+        ob_start();
+    }
+
+    /**
+     * Kết thúc buffer và chèn icon cùng màu nick vào Author/User Header trong Trung tâm người dùng (/user)
+     */
+    public function end_user_page_header_buffer() {
+        if (!self::is_enabled()) {
+            return;
+        }
+        $html = ob_get_clean();
+        if (empty($html)) {
+            return;
+        }
+
+        $user_id = get_current_user_id();
+        if ($user_id) {
+            $icon_id  = ZND_User::get_equipped_icon($user_id);
+            $color_id = ZND_User::get_equipped_color($user_id);
+
+            if (!empty($icon_id) || !empty($color_id)) {
+                $icon_html   = '';
+                $color_class = '';
+
+                if (!empty($icon_id)) {
+                    $icon_data = ZND_Defaults::get_icon($icon_id);
+                    if ($icon_data && !empty($icon_data['svg'])) {
+                        $anim_class = !empty($icon_data['animation']) && $icon_data['animation'] !== 'none' ? ' znd-anim-' . esc_attr($icon_data['animation']) : '';
+                        $icon_name  = esc_attr($icon_data['name']);
+                        $svg        = self::prepare_svg($icon_data['svg']);
+                        $icon_html  = '<span class="znd-nick-icon znd-icon-' . esc_attr($icon_id) . $anim_class . '" title="' . $icon_name . '">' . $svg . '</span>';
+                    }
+                }
+
+                if (!empty($color_id)) {
+                    $color_data = ZND_Defaults::get_color($color_id);
+                    if ($color_data) {
+                        $anim_class  = !empty($color_data['animation']) && $color_data['animation'] !== 'none' ? ' znd-anim-' . esc_attr($color_data['animation']) : '';
+                        $color_class = ' znd-color-' . esc_attr($color_id) . $anim_class;
+                    }
+                }
+
+                // Tìm thẻ <span class="display-name"> hoặc <a class="display-name"> trong author-header
+                if (preg_match('/(<(?:span|a|div)[^>]*class=["\'][^"\']*display-name[^"\']*["\'][^>]*>)(.*?)(<\/(?:span|a|div)>)/is', $html, $matches)) {
+                    $open_tag  = $matches[1];
+                    $inner_con = $matches[2];
+                    $close_tag = $matches[3];
+
+                    if (!empty($icon_html)) {
+                        $open_tag = preg_replace('/class=["\']([^"\']*)["\']/', 'class="$1 has-znd-icon"', $open_tag);
+                    }
+                    if (!empty($color_class)) {
+                        $open_tag = preg_replace('/class=["\']([^"\']*)["\']/', 'class="$1' . $color_class . '"', $open_tag);
+                    }
+
+                    if (!empty($icon_html)) {
+                        if (preg_match('/(<span[^>]*class=["\'][^"\']*mr3[^"\']*["\'][^>]*>.*?<\/span>)/is', $inner_con, $vip_m)) {
+                            $inner_con = str_replace($vip_m[1], $vip_m[1] . $icon_html, $inner_con);
+                        } else {
+                            $inner_con = $icon_html . $inner_con;
+                        }
+                    }
+
+                    $new_tag = $open_tag . $inner_con . $close_tag;
+                    $html = str_replace($matches[0], $new_tag, $html);
+                }
+            }
+        }
+
+        echo $html;
     }
 
     /**

@@ -22,11 +22,13 @@
             this.bindEvents();
             this.autoExpandIconContainers();
             this.fixMobileNavbarSvgIds();
+            this.applyUserPageDecor();
 
             var self = this;
             [100, 300, 800, 1500].forEach(function (ms) {
                 setTimeout(function () {
                     self.fixMobileNavbarSvgIds();
+                    self.applyUserPageDecor();
                 }, ms);
             });
 
@@ -65,6 +67,42 @@
                         return p1 + p2 + '_' + mobId + p3;
                     });
                     $svg.replaceWith(newHtml);
+                }
+            });
+        },
+
+        // Tự động chèn icon và màu vào Header Trang cá nhân / Trung tâm người dùng (/user)
+        applyUserPageDecor: function () {
+            var self = this;
+            if (!self.isUserLoggedIn() || typeof znd_vars === 'undefined') return;
+
+            var iconHtml   = znd_vars.user_icon_html || '';
+            var colorClass = znd_vars.user_color_class || '';
+
+            if (!iconHtml && !colorClass) return;
+
+            // Tìm thẻ tên trong khối author-header của trang cá nhân
+            $('.author-header .header-info, .author-header').each(function () {
+                var $header = $(this);
+                var $displayName = $header.find('.name .display-name, .display-name').first();
+
+                if ($displayName.length) {
+                    // Gán class màu nick
+                    if (colorClass && !$displayName.hasClass(colorClass)) {
+                        $displayName.addClass(colorClass);
+                    }
+
+                    // Chèn icon đầu nick nếu chưa có
+                    if (iconHtml && !$displayName.find('.znd-nick-icon').length) {
+                        $displayName.addClass('has-znd-icon');
+                        var $vip = $displayName.find('.mr3, .payvip-icon, [class*="vip"]').first();
+                        var freshSvg = self.prepareSvg(iconHtml);
+                        if ($vip.length) {
+                            $vip.after(freshSvg);
+                        } else {
+                            $displayName.prepend(freshSvg);
+                        }
+                    }
                 }
             });
         },
@@ -399,6 +437,11 @@
                 setTimeout(function () {
                     self.fixMobileNavbarSvgIds();
                 }, 150);
+            });
+
+            // Tự động áp dụng lại trang trí khi chuyển tab hoặc route AJAX
+            $(document).on('shown.bs.tab route_back ajax_loaded', function () {
+                self.applyUserPageDecor();
             });
 
             // =====================================================================

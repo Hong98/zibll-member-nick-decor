@@ -2,7 +2,7 @@
 
 > **Plugin tùy biến màu sắc và icon hiển thị đầu nickname thời thượng dành cho thành viên Theme Zibll.**
 
-![Version](https://img.shields.io/badge/version-v1.0.26-blue.svg)
+![Version](https://img.shields.io/badge/version-v1.0.27-blue.svg)
 ![WordPress](https://img.shields.io/badge/WordPress-5.6%2B-blue.svg)
 ![PHP](https://img.shields.io/badge/PHP-7.2%2B-green.svg)
 
@@ -96,6 +96,16 @@ Plugin cung cấp hệ thống Cửa hàng (Shop) và Tủ đồ (Wardrobe) cá 
 ---
 
 ## Lịch sử thay đổi
+
+### v1.0.27 — 2026-10-19
+- Đồng bộ hiển thị icon nick và màu nick trong khối Header trang cá nhân và Trung tâm người dùng (/user, /author):
+  - Phía máy chủ (PHP):
+    - Mở rộng bộ lọc `filter_user_show_name` để nhận diện cả thẻ `<span class="display-name">` và `<div class="display-name">` bên cạnh thẻ `<a>`, đảm bảo nhận diện chính xác thẻ tên thành viên trong tất cả các biến thể bố cục của Theme Zibll.
+    - Bổ sung cơ chế Output Buffering (`start_user_page_header_buffer` ở priority 7 và `end_user_page_header_buffer` ở priority 9) móc vào action `user_center_page_content`, can thiệp trực tiếp vào khối Author Header của Trung tâm người dùng (`zib_user_page_header`) vốn echo chuỗi HTML tĩnh mà không qua filter của WordPress.
+    - Khởi tạo và truyền sẵn mã HTML icon nick chuẩn bị sẵn (`user_icon_html`) cùng class màu nick (`user_color_class`) vào biến toàn cục `znd_vars` qua `wp_localize_script`.
+  - Phía trình duyệt (JavaScript):
+    - Bổ sung hàm `applyUserPageDecor()`, tự động quét và áp dụng class màu sắc cùng chèn thẻ SVG icon nick vào khối `.author-header .display-name` ngay khi tải trang và sau các khoảng thời gian chờ (timing intervals).
+    - Lắng nghe các sự kiện chuyển tab và tải nội dung AJAX (`shown.bs.tab`, `route_back`, `ajax_loaded`), đảm bảo icon nick và màu nick luôn luôn hiển thị ổn định, không bị mất khi chuyển đổi qua lại giữa các mục trong trang cá nhân.
 
 ### v1.0.26 — 2026-10-19
 - Khắc phục triệt để lỗi icon vương miện và icon SVG hiển thị 3 chấm trong menu trượt bên trái trên di động:
