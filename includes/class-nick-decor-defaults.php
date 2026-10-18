@@ -429,4 +429,76 @@ class ZND_Defaults {
         $colors = self::get_all_colors();
         return isset($colors[$id]) ? $colors[$id] : false;
     }
+
+    /**
+     * Lấy danh sách các gói thời hạn và giá tương ứng cho một vật phẩm
+     *
+     * @param float $base_price Giá cơ sở hiện tại của vật phẩm
+     * @return array Danh sách các gói (7 ngày, 30 ngày, Vĩnh viễn)
+     */
+    public static function get_duration_options($base_price = 0) {
+        $base_price    = (float)$base_price;
+        $currency_name = class_exists('ZND_User') ? ZND_User::get_currency_name() : __('Điểm', 'zibll-nick-decor');
+
+        $multiplier_7       = 10;
+        $multiplier_30      = 20;
+        $multiplier_forever = 30;
+
+        if (function_exists('_pz')) {
+            $m7  = (int)_pz('znd_price_multiplier_7', 10);
+            $m30 = (int)_pz('znd_price_multiplier_30', 20);
+            $mf  = (int)_pz('znd_price_multiplier_forever', 30);
+            if ($m7 > 0) $multiplier_7 = $m7;
+            if ($m30 > 0) $multiplier_30 = $m30;
+            if ($mf > 0) $multiplier_forever = $mf;
+        }
+
+        $price_7       = ($base_price > 0) ? round($base_price * $multiplier_7) : 0;
+        $price_30      = ($base_price > 0) ? round($base_price * $multiplier_30) : 0;
+        $price_forever = ($base_price > 0) ? round($base_price * $multiplier_forever) : 0;
+
+        return array(
+            7 => array(
+                'days'        => 7,
+                'name'        => __('7 ngày', 'zibll-nick-decor'),
+                'multiplier'  => $multiplier_7,
+                'price'       => $price_7,
+                'price_text'  => ($price_7 > 0) ? number_format($price_7) . ' ' . $currency_name : __('Miễn phí', 'zibll-nick-decor'),
+                'badge'       => '',
+            ),
+            30 => array(
+                'days'        => 30,
+                'name'        => __('30 ngày', 'zibll-nick-decor'),
+                'multiplier'  => $multiplier_30,
+                'price'       => $price_30,
+                'price_text'  => ($price_30 > 0) ? number_format($price_30) . ' ' . $currency_name : __('Miễn phí', 'zibll-nick-decor'),
+                'badge'       => '',
+            ),
+            0 => array(
+                'days'        => 0,
+                'name'        => __('Vĩnh viễn', 'zibll-nick-decor'),
+                'multiplier'  => $multiplier_forever,
+                'price'       => $price_forever,
+                'price_text'  => ($price_forever > 0) ? number_format($price_forever) . ' ' . $currency_name : __('Miễn phí', 'zibll-nick-decor'),
+                'badge'       => __('Khuyên dùng', 'zibll-nick-decor'),
+            ),
+        );
+    }
+
+    /**
+     * Lấy giá của vật phẩm theo số ngày được chọn
+     *
+     * @param float $base_price Giá cơ sở của vật phẩm
+     * @param int   $duration_days Số ngày (7, 30, hoặc 0 cho vĩnh viễn)
+     * @return float Giá tính theo gói thời hạn
+     */
+    public static function get_item_price_by_duration($base_price, $duration_days = 7) {
+        $options = self::get_duration_options($base_price);
+        $duration_days = (int)$duration_days;
+        if (isset($options[$duration_days])) {
+            return $options[$duration_days]['price'];
+        }
+        return isset($options[7]) ? $options[7]['price'] : round((float)$base_price * 10);
+    }
 }
+

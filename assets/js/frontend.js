@@ -418,13 +418,14 @@
         },
 
         // Helper sinh nút thao tác cho Action Drawer
-        getDrawerBtnHtml: function (type, itemId, status, priceText) {
+        getDrawerBtnHtml: function (type, itemId, status, priceText, duration) {
+            duration = (typeof duration !== 'undefined') ? duration : 7;
             if (status === 'equipped') {
                 return '<button type="button" class="but but-sm c-green radius znd-btn znd-btn-unequip" data-znd-act="unequip" data-type="' + type + '" data-id="' + itemId + '"><i class="fa fa-check-circle mr3"></i> Đang dùng (Tháo)</button>';
             } else if (status === 'owned') {
                 return '<button type="button" class="but but-sm c-blue radius znd-btn znd-btn-equip" data-znd-act="equip" data-type="' + type + '" data-id="' + itemId + '"><i class="fa fa-bolt mr3"></i> Trang bị</button>';
             } else {
-                return '<button type="button" class="but but-sm c-yellow radius znd-btn znd-btn-buy" data-znd-act="buy" data-type="' + type + '" data-id="' + itemId + '"><i class="fa fa-shopping-cart mr3"></i> Mua ngay (' + priceText + ')</button>';
+                return '<button type="button" class="but but-sm c-yellow radius znd-btn znd-btn-buy" data-znd-act="buy" data-type="' + type + '" data-id="' + itemId + '" data-duration="' + duration + '"><i class="fa fa-shopping-cart mr3"></i> Mua ngay (' + priceText + ')</button>';
             }
         },
 
@@ -606,6 +607,45 @@
                 var $drawer = $wrapper.find('#znd-action-drawer');
                 $drawer.find('#znd-drawer-name').text(name);
                 $drawer.find('#znd-drawer-desc').text(desc);
+
+                // Đọc các gói giá theo thời hạn (7 ngày, 30 ngày, Vĩnh viễn)
+                var prices = $card.data('prices');
+                if (typeof prices === 'string') {
+                    try { prices = JSON.parse(prices); } catch (e) { prices = null; }
+                }
+
+                var $drawerMiddle = $drawer.find('#znd-drawer-middle');
+                var $packagesContainer = $drawer.find('#znd-drawer-packages');
+                var selectedDuration = 7;
+
+                if (status === 'available' && prices) {
+                    var pillsHtml = '';
+                    var order = [7, 30, 0];
+                    order.forEach(function (days) {
+                        var opt = prices[days] || prices[String(days)];
+                        if (opt) {
+                            var isActive = (days === 7) ? ' active' : '';
+                            var badgeHtml = opt.badge ? '<span class="pill-badge">' + opt.badge + '</span>' : '';
+                            pillsHtml += '<div class="znd-duration-pill' + isActive + '" data-days="' + opt.days + '" data-price="' + opt.price + '" data-price-text="' + opt.price_text + '">';
+                            pillsHtml += '<span class="pill-time">' + opt.name + '</span>';
+                            pillsHtml += '<span class="pill-price">' + opt.price_text + '</span>';
+                            pillsHtml += badgeHtml;
+                            pillsHtml += '</div>';
+
+                            if (days === 7) {
+                                priceText = opt.price_text;
+                                duration = opt.name;
+                            }
+                        }
+                    });
+
+                    $packagesContainer.html(pillsHtml);
+                    $drawerMiddle.show();
+                } else {
+                    $drawerMiddle.hide();
+                    $packagesContainer.empty();
+                }
+
                 $drawer.find('#znd-drawer-price').text(priceText);
                 $drawer.find('#znd-drawer-duration').text(duration);
 
@@ -622,12 +662,34 @@
                 }
 
                 // Nút thao tác tương ứng
-                var btnHtml = self.getDrawerBtnHtml(type, id, status, priceText);
+                var btnHtml = self.getDrawerBtnHtml(type, id, status, priceText, selectedDuration);
                 $drawer.find('#znd-drawer-btn-wrap').html(btnHtml);
 
                 if ($drawer.is(':hidden')) {
                     $drawer.slideDown(200);
                 }
+            });
+
+            // Chọn gói thời hạn trong Action Drawer (7 ngày, 30 ngày, Vĩnh viễn)
+            $(document).on('click', '.znd-duration-pill', function (e) {
+                e.preventDefault();
+                var $pill = $(this);
+                if ($pill.hasClass('active')) return;
+
+                $pill.siblings().removeClass('active');
+                $pill.addClass('active');
+
+                var days      = $pill.data('days');
+                var priceText = $pill.data('price-text');
+                var daysText  = $pill.find('.pill-time').text();
+
+                var $drawer = $pill.closest('#znd-action-drawer');
+                $drawer.find('#znd-drawer-price').text(priceText);
+                $drawer.find('#znd-drawer-duration').text(daysText);
+
+                var $buyBtn = $drawer.find('.znd-btn-buy');
+                $buyBtn.data('duration', days).attr('data-duration', days);
+                $buyBtn.html('<i class="fa fa-shopping-cart mr3"></i> Mua ngay (' + priceText + ')');
             });
 
             // Đóng drawer chi tiết khi bấm nút x
@@ -653,14 +715,16 @@
                     return;
                 }
 
-                var type   = $btn.data('type');
-                var itemId = $btn.data('id');
+                var type     = $btn.data('type');
+                var itemId   = $btn.data('id');
+                var duration = typeof $btn.data('duration') !== 'undefined' ? $btn.data('duration') : 7;
                 var $wrapper = $btn.closest('.znd-shop-wrapper');
-                var $card  = $wrapper.find('.znd-card[data-type="' + type + '"][data-id="' + itemId + '"]');
-                var name   = $card.length ? $card.data('name') : '';
+                var $card    = $wrapper.find('.znd-card[data-type="' + type + '"][data-id="' + itemId + '"]');
+                var name     = $card.length ? $card.data('name') : '';
 
-                var confirmText = (znd_vars.i18n && znd_vars.i18n.confirm_buy) ? znd_vars.i18n.confirm_buy : 'Bạn có chắc chắn muốn mua vật phẩm này không?';
-                if (!window.confirm(confirmText + '\n' + name)) {
+                var durationName = (duration == 0) ? 'Vĩnh viễn' : (duration + ' ngày');
+                var confirmText  = (znd_vars.i18n && znd_vars.i18n.confirm_buy) ? znd_vars.i18n.confirm_buy : 'Bạn có chắc chắn muốn mua vật phẩm này không?';
+                if (!window.confirm(confirmText + '\n' + name + ' (Gói ' + durationName + ')')) {
                     return;
                 }
 
@@ -675,7 +739,8 @@
                         action: 'znd_buy_item',
                         nonce: znd_vars.nonce,
                         type: type,
-                        item_id: itemId
+                        item_id: itemId,
+                        duration: duration
                     },
                     success: function (res) {
                         $btn.prop('disabled', false);
@@ -687,6 +752,9 @@
                                 $('#znd-current-balance').text(Number(res.data.new_balance).toLocaleString());
                             }
 
+                            // Ẩn thanh chọn gói vì đã sở hữu
+                            $wrapper.find('#znd-drawer-middle').hide();
+
                             // Đổi trạng thái các card cùng loại khác
                             $wrapper.find('.znd-card[data-type="' + type + '"]').each(function () {
                                 if ($(this).data('status') === 'equipped') {
@@ -696,7 +764,11 @@
                             });
 
                             if ($card.length) {
-                                $card.data('status', 'equipped').addClass('is-equipped is-owned');
+                                var newDurationText = (duration == 0) ? 'Vĩnh viễn' : 'Hết hạn: ' + duration + ' ngày';
+                                $card.data('status', 'equipped').data('duration', newDurationText).addClass('is-equipped is-owned');
+                                $wrapper.find('#znd-drawer-price').text('Đang dùng');
+                                $wrapper.find('#znd-drawer-duration').text(newDurationText);
+
                                 if (!$card.find('.znd-badge-status').length) {
                                     $card.append('<span class="znd-badge-status status-equipped" title="Đang dùng"><i class="fa fa-check"></i></span>');
                                 } else {
@@ -705,11 +777,11 @@
                             }
 
                             // Cập nhật lại nút trên thanh Drawer
-                            $wrapper.find('#znd-drawer-btn-wrap').html(self.getDrawerBtnHtml(type, itemId, 'equipped', $card.data('price-text')));
+                            $wrapper.find('#znd-drawer-btn-wrap').html(self.getDrawerBtnHtml(type, itemId, 'equipped', 'Đang dùng'));
                         } else {
                             var errMsg = (res && res.data && res.data.message) ? res.data.message : 'Giao dịch không thành công!';
                             self.showToast(errMsg, 'error');
-                            $btn.html('<i class="fa fa-shopping-cart mr3"></i> Mua ngay (' + ($card.data('price-text') || '') + ')');
+                            $btn.html('<i class="fa fa-shopping-cart mr3"></i> Mua ngay');
                         }
                     },
                     error: function (xhr) {

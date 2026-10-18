@@ -65,14 +65,15 @@ class ZND_Ajax {
             wp_send_json_error(array('message' => __('Vui lòng đăng nhập!', 'zibll-nick-decor')));
         }
 
-        $type    = isset($_POST['type']) ? sanitize_text_field($_POST['type']) : '';
-        $item_id = isset($_POST['item_id']) ? sanitize_text_field($_POST['item_id']) : '';
+        $type     = isset($_POST['type']) ? sanitize_text_field($_POST['type']) : '';
+        $item_id  = isset($_POST['item_id']) ? sanitize_text_field($_POST['item_id']) : '';
+        $duration = isset($_POST['duration']) ? (int)$_POST['duration'] : 7;
 
         if (empty($type) || empty($item_id)) {
             wp_send_json_error(array('message' => __('Thông tin vật phẩm không hợp lệ!', 'zibll-nick-decor')));
         }
 
-        $result = ZND_User::buy_item($user_id, $type, $item_id);
+        $result = ZND_User::buy_item($user_id, $type, $item_id, $duration);
 
         if (is_wp_error($result)) {
             wp_send_json_error(array('message' => $result->get_error_message()));

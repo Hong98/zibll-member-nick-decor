@@ -600,6 +600,80 @@ body.modal-open .footer-tabbar {
     max-width: 480px;
 }
 
+.znd-drawer-middle {
+    margin: 0 14px;
+    flex-shrink: 0;
+}
+
+.znd-duration-pills {
+    display: inline-flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.znd-duration-pill {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 12px;
+    border-radius: var(--mini-radius, 6px);
+    border: 1px solid var(--main-border-color, rgba(136, 136, 136, 0.2));
+    background: var(--muted-border-color, rgba(136, 136, 136, 0.04));
+    cursor: pointer;
+    transition: all 0.2s ease;
+    user-select: none;
+    text-align: center;
+    line-height: 1.25;
+    min-width: 82px;
+}
+
+.znd-duration-pill:hover {
+    border-color: var(--focus-color, #ffaa00);
+    background: var(--focus-color-opacity1, rgba(255, 170, 0, 0.08));
+}
+
+.znd-duration-pill.active {
+    border-color: var(--focus-color, #ffaa00);
+    background: var(--focus-color-opacity1, rgba(255, 170, 0, 0.12));
+    box-shadow: 0 2px 6px var(--focus-shadow, rgba(255, 170, 0, 0.15));
+}
+
+.znd-duration-pill .pill-time {
+    font-size: 11.5px;
+    font-weight: 700;
+    color: var(--key-color, #333);
+}
+
+.znd-duration-pill.active .pill-time {
+    color: var(--focus-color, #ffaa00);
+}
+
+.znd-duration-pill .pill-price {
+    font-size: 10.5px;
+    color: var(--muted-color, #888);
+    margin-top: 1px;
+}
+
+.znd-duration-pill.active .pill-price {
+    color: var(--focus-color, #ffaa00);
+    font-weight: 600;
+}
+
+.znd-duration-pill .pill-badge {
+    position: absolute;
+    top: -6px;
+    right: -4px;
+    background: var(--focus-color, #ffaa00);
+    color: #fff;
+    font-size: 8.5px;
+    padding: 1px 4px;
+    border-radius: 4px;
+    line-height: 1.1;
+    font-weight: 600;
+}
+
 .znd-drawer-btn-wrap .znd-btn {
     padding: 6px 14px;
     font-size: 13px;
@@ -822,6 +896,38 @@ body.modal-open .footer-tabbar {
         -webkit-box-orient: vertical !important;
         overflow: hidden !important;
         font-size: 11px !important;
+    }
+
+    .znd-drawer-middle {
+        width: 100% !important;
+        margin: 4px 0 !important;
+    }
+
+    .znd-duration-pills {
+        display: flex !important;
+        width: 100% !important;
+        gap: 6px !important;
+    }
+
+    .znd-duration-pill {
+        flex: 1 !important;
+        min-width: 0 !important;
+        padding: 5px 2px !important;
+    }
+
+    .znd-duration-pill .pill-time {
+        font-size: 11px !important;
+    }
+
+    .znd-duration-pill .pill-price {
+        font-size: 9.5px !important;
+    }
+
+    .znd-duration-pill .pill-badge {
+        font-size: 7.5px !important;
+        padding: 1px 3px !important;
+        top: -5px !important;
+        right: -3px !important;
     }
 
     .znd-drawer-right {

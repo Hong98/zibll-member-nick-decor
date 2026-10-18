@@ -2,7 +2,7 @@
 
 > **Plugin tùy biến màu sắc và icon hiển thị đầu nickname thời thượng dành cho thành viên Theme Zibll.**
 
-![Version](https://img.shields.io/badge/version-v1.0.27-blue.svg)
+![Version](https://img.shields.io/badge/version-v1.0.28-blue.svg)
 ![WordPress](https://img.shields.io/badge/WordPress-5.6%2B-blue.svg)
 ![PHP](https://img.shields.io/badge/PHP-7.2%2B-green.svg)
 
@@ -96,6 +96,22 @@ Plugin cung cấp hệ thống Cửa hàng (Shop) và Tủ đồ (Wardrobe) cá 
 ---
 
 ## Lịch sử thay đổi
+
+### v1.0.28 — 2026-10-19
+- Bổ sung tùy chọn gói thời hạn và bảng giá linh hoạt khi mua icon và màu nick:
+  - Tích hợp 3 gói thời hạn mua sắm theo tỷ lệ giá cơ sở:
+    - **Gói 7 ngày**: Giá bằng 10 lần giá cơ sở hiện tại (mặc định: x10).
+    - **Gói 30 ngày**: Giá bằng 20 lần giá cơ sở hiện tại (mặc định: x20).
+    - **Gói Vĩnh viễn**: Giá bằng 30 lần giá cơ sở hiện tại (mặc định: x30, đính kèm huy hiệu Khuyên dùng).
+  - Tích hợp thanh chọn gói thời hạn (Segmented Pill Selector) trực quan trong Action Drawer:
+    - Hiển thị trực tiếp số ngày và mức giá chi tiết tương ứng trên từng gói.
+    - Người dùng chỉ cần nhấp 1 chạm để chuyển đổi gói, nút mua và nhãn giá sẽ tự động cập nhật mượt mà theo thời gian thực.
+    - Tương thích hoàn hảo trên cả máy tính (PC) và thiết bị di động (Mobile).
+  - Bổ sung tùy chọn trong Cài đặt Theme Zibll (Codestar Framework):
+    - Cho phép quản trị viên tùy chỉnh hệ số nhân giá cho gói 7 ngày, gói 30 ngày và gói Vĩnh viễn theo nhu cầu vận hành thực tế của website.
+    - Cập nhật mô tả trường giá cơ sở trong danh sách icon và màu nick.
+  - Xử lý mua sắm và gia hạn đa gói linh hoạt:
+    - Hỗ trợ gia hạn cộng dồn thời gian sử dụng khi mua thêm ngày hoặc nâng cấp thẳng lên gói Vĩnh viễn.
 
 ### v1.0.27 — 2026-10-19
 - Đồng bộ hiển thị icon nick và màu nick trong khối Header trang cá nhân và Trung tâm người dùng (/user, /author):

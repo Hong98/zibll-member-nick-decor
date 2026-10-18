@@ -172,9 +172,9 @@ class ZND_User {
     }
 
     /**
-     * Xử lý mua một item (Màu hoặc Icon)
+     * Xử lý mua một item (Màu hoặc Icon) với tùy chọn gói thời hạn (7 ngày, 30 ngày, Vĩnh viễn)
      */
-    public static function buy_item($user_id, $type, $item_id) {
+    public static function buy_item($user_id, $type, $item_id, $duration = 7) {
         if (!$user_id) {
             return new WP_Error('not_logged_in', __('Bạn vui lòng đăng nhập để thực hiện mua sắm!', 'zibll-nick-decor'));
         }
@@ -208,15 +208,23 @@ class ZND_User {
             }
         }
 
-        $price = isset($item['price']) ? (float)$item['price'] : 0;
-        $currency = function_exists('_pz') ? _pz('znd_currency', 'points') : 'points';
+        // Chuẩn hóa thời hạn được chọn: 7, 30 hoặc 0 (vĩnh viễn)
+        $duration_days = (int)$duration;
+        if (!in_array($duration_days, array(7, 30, 0), true)) {
+            $duration_days = 7;
+        }
+
+        $base_price    = isset($item['price']) ? (float)$item['price'] : 0;
+        $price         = ZND_Defaults::get_item_price_by_duration($base_price, $duration_days);
+        $currency      = function_exists('_pz') ? _pz('znd_currency', 'points') : 'points';
         $currency_name = self::get_currency_name();
+        $duration_name = ($duration_days > 0) ? sprintf(__('%d ngày', 'zibll-nick-decor'), $duration_days) : __('Vĩnh viễn', 'zibll-nick-decor');
 
         // Kiểm tra số dư và trừ tiền
         if ($price > 0) {
             $user_balance = self::get_user_currency_balance($user_id);
             if ($user_balance < $price) {
-                return new WP_Error('insufficient_funds', sprintf(__('Số dư của bạn không đủ! Cần có %s %s để mua vật phẩm này.', 'zibll-nick-decor'), number_format($price), $currency_name));
+                return new WP_Error('insufficient_funds', sprintf(__('Số dư của bạn không đủ! Cần có %s %s để mua gói %s của vật phẩm này.', 'zibll-nick-decor'), number_format($price), $currency_name, $duration_name));
             }
 
             // Tiến hành trừ tiền
@@ -226,8 +234,8 @@ class ZND_User {
                     $deduct = zibpay_update_user_balance($user_id, array(
                         'order_num' => $order_num,
                         'value'     => -$price,
-                        'type'      => sprintf(__('Mua %s: %s', 'zibll-nick-decor'), ($type_normalized === 'icon' ? 'Icon nick' : 'Màu nick'), $item['name']),
-                        'desc'      => sprintf(__('Thanh toán trang bị %s', 'zibll-nick-decor'), $item['name']),
+                        'type'      => sprintf(__('Mua %s: %s (Gói %s)', 'zibll-nick-decor'), ($type_normalized === 'icon' ? 'Icon nick' : 'Màu nick'), $item['name'], $duration_name),
+                        'desc'      => sprintf(__('Thanh toán trang bị %s thời hạn %s', 'zibll-nick-decor'), $item['name'], $duration_name),
                     ));
                     if (!$deduct) {
                         return new WP_Error('payment_failed', __('Giao dịch trừ số dư ví thất bại, vui lòng thử lại sau!', 'zibll-nick-decor'));
@@ -239,8 +247,8 @@ class ZND_User {
                     $deduct = zibpay_update_user_points($user_id, array(
                         'order_num' => $order_num,
                         'value'     => -(int)$price,
-                        'type'      => sprintf(__('Mua %s: %s', 'zibll-nick-decor'), ($type_normalized === 'icon' ? 'Icon nick' : 'Màu nick'), $item['name']),
-                        'desc'      => sprintf(__('Thanh toán trang bị %s', 'zibll-nick-decor'), $item['name']),
+                        'type'      => sprintf(__('Mua %s: %s (Gói %s)', 'zibll-nick-decor'), ($type_normalized === 'icon' ? 'Icon nick' : 'Màu nick'), $item['name'], $duration_name),
+                        'desc'      => sprintf(__('Thanh toán trang bị %s thời hạn %s', 'zibll-nick-decor'), $item['name'], $duration_name),
                     ));
                     if (!$deduct) {
                         return new WP_Error('payment_failed', __('Giao dịch trừ điểm tích lũy thất bại, vui lòng thử lại sau!', 'zibll-nick-decor'));
@@ -250,7 +258,6 @@ class ZND_User {
         }
 
         // Tính thời hạn sử dụng
-        $duration_days = isset($item['duration']) ? (int)$item['duration'] : 0;
         $expires_at = 0;
         if ($duration_days > 0) {
             // Nếu đã có item và gia hạn thì cộng dồn ngày
@@ -272,9 +279,12 @@ class ZND_User {
 
         return array(
             'success'      => true,
-            'message'      => sprintf(__('Mua thành công %s và đã tự động trang bị cho bạn!', 'zibll-nick-decor'), $item['name']),
+            'message'      => sprintf(__('Mua thành công %s (Gói %s) và đã tự động trang bị cho bạn!', 'zibll-nick-decor'), $item['name'], $duration_name),
             'item_id'      => $item_id,
             'type'         => $type_normalized,
+            'duration'     => $duration_days,
+            'duration_name'=> $duration_name,
+            'expires_at'   => $expires_at,
             'new_balance'  => self::get_user_currency_balance($user_id),
         );
     }

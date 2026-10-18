@@ -702,22 +702,25 @@ class ZND_Renderer {
                 <div class="znd-grid">
                     <?php foreach ($icons as $id => $item):
                         if (empty($item['status'])) continue;
-                        $is_owned    = isset($inv['icons'][$id]);
-                        $is_equipped = ($equipped_icon === $id);
-                        $anim_class  = !empty($item['animation']) && $item['animation'] !== 'none' ? ' znd-anim-' . esc_attr($item['animation']) : '';
-                        $price       = isset($item['price']) ? (float)$item['price'] : 0;
-                        $duration    = !empty($item['duration']) ? sprintf(__('%d ngày', 'zibll-nick-decor'), $item['duration']) : __('Vĩnh viễn', 'zibll-nick-decor');
-                        $price_text   = $price > 0 ? number_format($price) . ' ' . $currency_name : __('Miễn phí', 'zibll-nick-decor');
-                        $prepared_svg = self::prepare_svg($item['svg']);
+                        $is_owned      = isset($inv['icons'][$id]);
+                        $is_equipped   = ($equipped_icon === $id);
+                        $anim_class    = !empty($item['animation']) && $item['animation'] !== 'none' ? ' znd-anim-' . esc_attr($item['animation']) : '';
+                        $base_price    = isset($item['price']) ? (float)$item['price'] : 0;
+                        $duration_opts = ZND_Defaults::get_duration_options($base_price);
+                        $default_pkg   = $duration_opts[7];
+                        $price_text    = $default_pkg['price_text'];
+                        $duration_text = $default_pkg['name'];
+                        $prepared_svg  = self::prepare_svg($item['svg']);
                     ?>
                     <div class="znd-card <?php echo $is_equipped ? 'is-equipped' : ($is_owned ? 'is-owned' : ''); ?>"
                          data-id="<?php echo esc_attr($id); ?>"
                          data-type="icon"
                          data-name="<?php echo esc_attr($item['name']); ?>"
                          data-desc="<?php echo esc_attr(!empty($item['desc']) ? $item['desc'] : ''); ?>"
-                         data-price="<?php echo esc_attr($price); ?>"
+                         data-base-price="<?php echo esc_attr($base_price); ?>"
+                         data-prices="<?php echo esc_attr(wp_json_encode($duration_opts)); ?>"
                          data-price-text="<?php echo esc_attr($price_text); ?>"
-                         data-duration="<?php echo esc_attr($duration); ?>"
+                         data-duration="<?php echo esc_attr($duration_text); ?>"
                          data-status="<?php echo $is_equipped ? 'equipped' : ($is_owned ? 'owned' : 'available'); ?>"
                          data-anim="<?php echo esc_attr(!empty($item['animation']) ? $item['animation'] : ''); ?>"
                          data-item-svg="<?php echo esc_attr($prepared_svg); ?>"
@@ -746,21 +749,24 @@ class ZND_Renderer {
                 <div class="znd-grid">
                     <?php foreach ($colors as $id => $item):
                         if (empty($item['status'])) continue;
-                        $is_owned    = isset($inv['colors'][$id]);
-                        $is_equipped = ($equipped_color === $id);
-                        $anim_class  = !empty($item['animation']) && $item['animation'] !== 'none' ? ' znd-anim-' . esc_attr($item['animation']) : '';
-                        $price       = isset($item['price']) ? (float)$item['price'] : 0;
-                        $duration    = !empty($item['duration']) ? sprintf(__('%d ngày', 'zibll-nick-decor'), $item['duration']) : __('Vĩnh viễn', 'zibll-nick-decor');
-                        $price_text  = $price > 0 ? number_format($price) . ' ' . $currency_name : __('Miễn phí', 'zibll-nick-decor');
+                        $is_owned      = isset($inv['colors'][$id]);
+                        $is_equipped   = ($equipped_color === $id);
+                        $anim_class    = !empty($item['animation']) && $item['animation'] !== 'none' ? ' znd-anim-' . esc_attr($item['animation']) : '';
+                        $base_price    = isset($item['price']) ? (float)$item['price'] : 0;
+                        $duration_opts = ZND_Defaults::get_duration_options($base_price);
+                        $default_pkg   = $duration_opts[7];
+                        $price_text    = $default_pkg['price_text'];
+                        $duration_text = $default_pkg['name'];
                     ?>
                     <div class="znd-card <?php echo $is_equipped ? 'is-equipped' : ($is_owned ? 'is-owned' : ''); ?>"
                          data-id="<?php echo esc_attr($id); ?>"
                          data-type="color"
                          data-name="<?php echo esc_attr($item['name']); ?>"
                          data-desc="<?php echo esc_attr(!empty($item['desc']) ? $item['desc'] : ''); ?>"
-                         data-price="<?php echo esc_attr($price); ?>"
+                         data-base-price="<?php echo esc_attr($base_price); ?>"
+                         data-prices="<?php echo esc_attr(wp_json_encode($duration_opts)); ?>"
                          data-price-text="<?php echo esc_attr($price_text); ?>"
-                         data-duration="<?php echo esc_attr($duration); ?>"
+                         data-duration="<?php echo esc_attr($duration_text); ?>"
                          data-status="<?php echo $is_equipped ? 'equipped' : ($is_owned ? 'owned' : 'available'); ?>"
                          data-anim="<?php echo esc_attr(!empty($item['animation']) ? $item['animation'] : ''); ?>"
                          data-css="znd-color-<?php echo esc_attr($id); ?>"
@@ -883,6 +889,9 @@ class ZND_Renderer {
                             </div>
                             <div class="znd-drawer-desc muted-color em09 mt3" id="znd-drawer-desc"></div>
                         </div>
+                    </div>
+                    <div class="znd-drawer-middle" id="znd-drawer-middle" style="display: none;">
+                        <div class="znd-duration-pills" id="znd-drawer-packages"></div>
                     </div>
                     <div class="znd-drawer-right flex ac ml10">
                         <div class="znd-drawer-btn-wrap" id="znd-drawer-btn-wrap"></div>
