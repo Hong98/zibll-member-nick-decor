@@ -2,7 +2,7 @@
 
 > **Plugin tùy biến màu sắc và icon hiển thị đầu nickname thời thượng dành cho thành viên Theme Zibll.**
 
-![Version](https://img.shields.io/badge/version-v1.0.23-blue.svg)
+![Version](https://img.shields.io/badge/version-v1.0.24-blue.svg)
 ![WordPress](https://img.shields.io/badge/WordPress-5.6%2B-blue.svg)
 ![PHP](https://img.shields.io/badge/PHP-7.2%2B-green.svg)
 
@@ -96,6 +96,14 @@ Plugin cung cấp hệ thống Cửa hàng (Shop) và Tủ đồ (Wardrobe) cá 
 ---
 
 ## Lịch sử thay đổi
+
+### v1.0.24 — 2026-10-19
+- Khắc phục lỗi lệch menu trượt bên trái trên thiết bị di động:
+  - Phân tách độc lập quy tắc co giãn độ rộng giữa máy tính (PC) và thiết bị di động (Mobile):
+    - Trên máy tính (PC Header Dropdown Box): Duy trì độ rộng mở rộng `285px` (`@media (min-width: 769px)`) khi thành viên có icon nick, đảm bảo dòng tên không bị cắt ngắn thành dấu ba chấm.
+    - Trên thiết bị di động (Mobile Drawer `.mobile-navbar`): Cố định tuyệt đối độ rộng ruột `width: 100% !important; max-width: 100% !important; box-sizing: border-box !important`, ngăn chặn triệt để tình trạng khung thông tin người dùng bị phình to làm xô lệch hoặc tràn mép menu trượt bên trái.
+  - Tối ưu hóa JavaScript: Loại bỏ việc gán class mở rộng `has-znd-icon` cho các khung người dùng nằm bên trong menu trượt di động (`.mobile-navbar`), bảo toàn 100% tỷ lệ bố cục gốc `281px` của Theme Zibll.
+  - Giữ trọn vẹn khả năng hiển thị đầy đủ tên thành viên (`Admin`) trên cả hai nền tảng mà không gây ảnh hưởng đến cấu trúc điều hướng.
 
 ### v1.0.23 — 2026-10-19
 - Tự động co giãn độ rộng khung tên khi có trang bị icon nick và khôi phục khi không dùng icon:

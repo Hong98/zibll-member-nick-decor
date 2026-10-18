@@ -77,26 +77,57 @@
    1.1. TỰ ĐỘNG CO GIÃN ĐỘ RỘNG KHUNG TÊN KHI CÓ TRANG BỊ ICON NICK
    ========================================================================== */
 
-/* 1. Hộp người dùng menu thả xuống (User Dropdown Box .sub-user-box) */
-/* Khi thành viên có icon nick: tự động mở rộng dài ra 285px để không bị cắt chữ */
-.sub-user-box:has(.znd-nick-icon),
-.sub-user-box.has-znd-icon {
-    width: 285px !important;
-    max-width: 330px;
-    transition: width 0.2s ease;
+/* 1. Hộp người dùng menu thả xuống trên máy tính (PC Header Dropdown Box) */
+/* Khi thành viên có icon nick: tự động mở rộng dài ra 285px trên PC để không bị cắt chữ */
+@media (min-width: 769px) {
+    .sub-user-box:has(.znd-nick-icon),
+    .sub-user-box.has-znd-icon {
+        width: 285px !important;
+        max-width: 330px;
+        transition: width 0.2s ease;
+    }
+
+    /* Nới rộng khoảng không khả dụng cho dòng tên trong .sub-user-box trên PC */
+    .sub-user-box:has(.znd-nick-icon) .user-right .flex1,
+    .sub-user-box.has-znd-icon .user-right .flex1 {
+        max-width: calc(100% - 28px) !important;
+    }
+
+    /* Cho phép thẻ display-name trong .sub-user-box có đủ chỗ hiển thị tên trọn vẹn */
+    .sub-user-box:has(.znd-nick-icon) .display-name,
+    .sub-user-box.has-znd-icon .display-name {
+        max-width: calc(100% - 50px) !important;
+        flex-shrink: 0;
+    }
 }
 
-/* Nới rộng khoảng không khả dụng cho dòng tên trong .sub-user-box */
-.sub-user-box:has(.znd-nick-icon) .user-right .flex1,
-.sub-user-box.has-znd-icon .user-right .flex1 {
+/* 2. Menu trượt di động (Mobile Drawer .mobile-navbar): Giữ nguyên 100% độ rộng ruột, tuyệt đối không làm lệch menu */
+.mobile-navbar .sub-user-box,
+.mobile-navbar .sub-user-box:has(.znd-nick-icon),
+.mobile-navbar .sub-user-box.has-znd-icon {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    box-sizing: border-box !important;
+}
+
+.mobile-navbar .sub-user-box .user-right {
+    min-width: 0;
+}
+
+.mobile-navbar .sub-user-box .user-right .flex1 {
     max-width: calc(100% - 28px) !important;
+    min-width: 0;
 }
 
-/* Cho phép thẻ display-name trong .sub-user-box có đủ chỗ hiển thị tên trọn vẹn */
-.sub-user-box:has(.znd-nick-icon) .display-name,
-.sub-user-box.has-znd-icon .display-name {
-    max-width: calc(100% - 50px) !important;
+.mobile-navbar .sub-user-box .display-name {
+    max-width: calc(100% - 45px) !important;
     flex-shrink: 0;
+}
+
+.mobile-navbar {
+    overflow-x: hidden !important;
 }
 
 /* 2. Thẻ tên và container flex ở mọi nơi có icon nick tự động co giãn linh hoạt */

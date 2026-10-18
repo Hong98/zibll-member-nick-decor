@@ -37,6 +37,12 @@
         autoExpandIconContainers: function () {
             $('.sub-user-box').each(function () {
                 var $box = $(this);
+                // Nếu nằm trong menu trượt di động mobile-navbar thì không gắn has-znd-icon để tránh phình to lệch menu
+                if ($box.closest('.mobile-navbar').length) {
+                    $box.removeClass('has-znd-icon');
+                    return;
+                }
+
                 if ($box.find('.znd-nick-icon').length) {
                     $box.addClass('has-znd-icon');
                 } else {
