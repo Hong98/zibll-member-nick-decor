@@ -208,7 +208,7 @@ class ZND_Defaults {
                 'duration'    => 0,
                 'css_style'   => 'background: linear-gradient(90deg, #ff0000, #ff7f00, #ffff00, #00ff00, #00ffff, #0000ff, #8b00ff, #ff0000); background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 700;',
                 'animation'   => 'rainbow',
-                'glow_color'  => 'rgba(255, 105, 180, 0.4)',
+                'glow_color'  => 'rgba(255, 105, 180, 0.25)',
                 'vip_level'   => 0,
                 'status'      => true,
             ),
@@ -218,9 +218,9 @@ class ZND_Defaults {
                 'desc'        => 'Màu vàng hoàng kim ánh kim loại sang trọng của bậc vương giả',
                 'price'       => 250,
                 'duration'    => 0,
-                'css_style'   => 'background: linear-gradient(135deg, #FFE259 0%, #FFA751 50%, #FF5E3A 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 700; text-shadow: 0 0 10px rgba(255, 167, 81, 0.4);',
+                'css_style'   => 'background: linear-gradient(135deg, #FFE259 0%, #FFA751 50%, #FF5E3A 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 700; text-shadow: 0 1px 2px rgba(255, 167, 81, 0.2);',
                 'animation'   => 'shimmer',
-                'glow_color'  => 'rgba(255, 167, 81, 0.5)',
+                'glow_color'  => 'rgba(255, 167, 81, 0.25)',
                 'vip_level'   => 0,
                 'status'      => true,
             ),
@@ -232,7 +232,7 @@ class ZND_Defaults {
                 'duration'    => 0,
                 'css_style'   => 'background: linear-gradient(135deg, #F72585 0%, #7209B7 50%, #4CC9F0 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 700;',
                 'animation'   => 'glow',
-                'glow_color'  => 'rgba(247, 37, 133, 0.4)',
+                'glow_color'  => 'rgba(247, 37, 133, 0.25)',
                 'vip_level'   => 0,
                 'status'      => true,
             ),
@@ -244,7 +244,7 @@ class ZND_Defaults {
                 'duration'    => 0,
                 'css_style'   => 'background: linear-gradient(135deg, #00C6FF 0%, #0072FF 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 700;',
                 'animation'   => 'none',
-                'glow_color'  => 'rgba(0, 198, 255, 0.4)',
+                'glow_color'  => 'rgba(0, 198, 255, 0.25)',
                 'vip_level'   => 0,
                 'status'      => true,
             ),
@@ -254,9 +254,9 @@ class ZND_Defaults {
                 'desc'        => 'Sắc đỏ cam bùng cháy năng lượng mãnh liệt và quyền năng',
                 'price'       => 200,
                 'duration'    => 0,
-                'css_style'   => 'background: linear-gradient(135deg, #FF416C 0%, #FF4B2B 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 700; text-shadow: 0 0 10px rgba(255, 65, 108, 0.4);',
+                'css_style'   => 'background: linear-gradient(135deg, #FF416C 0%, #FF4B2B 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 700; text-shadow: 0 1px 2px rgba(255, 65, 108, 0.2);',
                 'animation'   => 'pulse',
-                'glow_color'  => 'rgba(255, 75, 43, 0.4)',
+                'glow_color'  => 'rgba(255, 75, 43, 0.25)',
                 'vip_level'   => 0,
                 'status'      => true,
             ),
@@ -268,7 +268,7 @@ class ZND_Defaults {
                 'duration'    => 0,
                 'css_style'   => 'background: linear-gradient(135deg, #11998E 0%, #38EF7D 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 700;',
                 'animation'   => 'none',
-                'glow_color'  => 'rgba(56, 239, 125, 0.4)',
+                'glow_color'  => 'rgba(56, 239, 125, 0.25)',
                 'vip_level'   => 0,
                 'status'      => true,
             ),
@@ -280,7 +280,7 @@ class ZND_Defaults {
                 'duration'    => 0,
                 'css_style'   => 'background: linear-gradient(135deg, #FF758C 0%, #FF7EB3 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 700;',
                 'animation'   => 'none',
-                'glow_color'  => 'rgba(255, 117, 140, 0.4)',
+                'glow_color'  => 'rgba(255, 117, 140, 0.25)',
                 'vip_level'   => 0,
                 'status'      => true,
             ),
@@ -292,7 +292,7 @@ class ZND_Defaults {
                 'duration'    => 0,
                 'css_style'   => 'background: linear-gradient(135deg, #667EEA 0%, #764BA2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 700;',
                 'animation'   => 'glow',
-                'glow_color'  => 'rgba(102, 126, 234, 0.4)',
+                'glow_color'  => 'rgba(102, 126, 234, 0.25)',
                 'vip_level'   => 0,
                 'status'      => true,
             ),
@@ -304,7 +304,7 @@ class ZND_Defaults {
                 'duration'    => 0,
                 'css_style'   => 'background: linear-gradient(135deg, #FA709A 0%, #FEE140 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 700;',
                 'animation'   => 'none',
-                'glow_color'  => 'rgba(250, 112, 154, 0.4)',
+                'glow_color'  => 'rgba(250, 112, 154, 0.25)',
                 'vip_level'   => 0,
                 'status'      => true,
             ),
@@ -314,9 +314,9 @@ class ZND_Defaults {
                 'desc'        => 'Vũ trụ huyền bí sâu thẳm lấp lánh ánh tinh tú ngàn sao',
                 'price'       => 260,
                 'duration'    => 0,
-                'css_style'   => 'background: linear-gradient(135deg, #654EA3 0%, #EAAFC8 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 700; text-shadow: 0 0 10px rgba(101, 78, 163, 0.4);',
+                'css_style'   => 'background: linear-gradient(135deg, #654EA3 0%, #EAAFC8 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 700; text-shadow: 0 1px 2px rgba(101, 78, 163, 0.2);',
                 'animation'   => 'shimmer',
-                'glow_color'  => 'rgba(101, 78, 163, 0.4)',
+                'glow_color'  => 'rgba(101, 78, 163, 0.25)',
                 'vip_level'   => 0,
                 'status'      => true,
             ),
@@ -328,7 +328,7 @@ class ZND_Defaults {
                 'duration'    => 0,
                 'css_style'   => 'background: linear-gradient(135deg, #00F260 0%, #0575E6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 700;',
                 'animation'   => 'none',
-                'glow_color'  => 'rgba(0, 242, 96, 0.4)',
+                'glow_color'  => 'rgba(0, 242, 96, 0.25)',
                 'vip_level'   => 0,
                 'status'      => true,
             ),
@@ -338,9 +338,9 @@ class ZND_Defaults {
                 'desc'        => 'Màu ngọc ruby huyết phượng hoàng phát sáng lộng lẫy',
                 'price'       => 240,
                 'duration'    => 0,
-                'css_style'   => 'background: linear-gradient(135deg, #CB2D3E 0%, #EF473A 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 700; text-shadow: 0 0 12px rgba(239, 71, 58, 0.5);',
+                'css_style'   => 'background: linear-gradient(135deg, #CB2D3E 0%, #EF473A 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 700; text-shadow: 0 1px 2px rgba(239, 71, 58, 0.2);',
                 'animation'   => 'glow',
-                'glow_color'  => 'rgba(239, 71, 58, 0.5)',
+                'glow_color'  => 'rgba(239, 71, 58, 0.25)',
                 'vip_level'   => 0,
                 'status'      => true,
             ),
@@ -407,11 +407,23 @@ class ZND_Defaults {
         $result = array();
         foreach ($saved as $item) {
             if (!empty($item['id'])) {
+                if (!empty($item['css_style'])) {
+                    // Tự động làm sạch bóng mờ text-shadow cũ quá dày (10px, 12px...) xuống mức thanh mảnh 1px 2px
+                    $item['css_style'] = preg_replace('/text-shadow:\s*0\s+0\s+(?:10|12|\d{2,})px\s+rgba\(([^,\)]+),([^,\)]+),([^,\)]+),\s*([0-9.]+)\);?/i', 'text-shadow: 0 1px 2px rgba($1,$2,$3,0.2);', $item['css_style']);
+                }
                 $result[$item['id']] = $item;
             }
         }
 
-        return !empty($result) ? $result : self::get_default_colors();
+        // Bổ sung các màu mặc định nếu chưa có
+        $defaults = self::get_default_colors();
+        foreach ($defaults as $id => $def_item) {
+            if (!isset($result[$id])) {
+                $result[$id] = $def_item;
+            }
+        }
+
+        return !empty($result) ? $result : $defaults;
     }
 
     /**

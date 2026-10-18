@@ -27,29 +27,37 @@
 }
 
 .znd-nick-icon:hover {
-    transform: scale(1.22) rotate(4deg);
+    opacity: 0.85;
+    transform: scale(1.06);
 }
 
-/* Các Animation cho Icon và Màu Nick */
+/* Các Animation cho Icon và Màu Nick: Tinh tế, nhẹ nhàng, không gây chói mắt */
 @keyframes znd-pulse {
-    0%, 100% { transform: scale(1); filter: drop-shadow(0 0 2px rgba(255, 75, 43, 0.4)); }
-    50% { transform: scale(1.12); filter: drop-shadow(0 0 6px rgba(255, 75, 43, 0.8)); }
+    0%, 100% {
+        filter: brightness(1);
+    }
+    50% {
+        filter: brightness(1.1) drop-shadow(0 0 1.5px rgba(255, 100, 50, 0.25));
+    }
 }
 
 @keyframes znd-glow {
-    0%, 100% { filter: drop-shadow(0 0 2px rgba(0, 210, 255, 0.4)); }
-    50% { filter: drop-shadow(0 0 8px rgba(0, 210, 255, 0.9)); }
+    0%, 100% {
+        filter: brightness(1);
+    }
+    50% {
+        filter: brightness(1.12) drop-shadow(0 0 2px rgba(255, 255, 255, 0.35));
+    }
 }
 
 @keyframes znd-float {
     0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-3px); }
+    50% { transform: translateY(-2px); }
 }
 
 @keyframes znd-shimmer {
-    0% { filter: brightness(1); }
-    50% { filter: brightness(1.3) drop-shadow(0 0 5px rgba(255, 215, 0, 0.8)); }
-    100% { filter: brightness(1); }
+    0%, 100% { filter: brightness(1); }
+    50% { filter: brightness(1.12) drop-shadow(0 0 1.5px rgba(255, 215, 0, 0.25)); }
 }
 
 @keyframes znd-spin-slow {
@@ -63,14 +71,33 @@
     100% { background-position: 0% 50%; }
 }
 
-.znd-anim-pulse { animation: znd-pulse 2s infinite ease-in-out; }
-.znd-anim-glow { animation: znd-glow 2.4s infinite ease-in-out; }
-.znd-anim-float { animation: znd-float 2.8s infinite ease-in-out; }
-.znd-anim-shimmer { animation: znd-shimmer 2.2s infinite ease-in-out; }
+.znd-anim-pulse { animation: znd-pulse 2.4s infinite ease-in-out; }
+.znd-anim-glow { animation: znd-glow 2.6s infinite ease-in-out; }
+.znd-anim-float { animation: znd-float 3s infinite ease-in-out; }
+.znd-anim-shimmer { animation: znd-shimmer 2.4s infinite ease-in-out; }
 .znd-anim-spin-slow { animation: znd-spin-slow 12s linear infinite; }
 .znd-anim-rainbow {
     background-size: 200% auto !important;
     animation: znd-rainbow-slide 4s linear infinite;
+}
+
+/* Riêng icon SVG khi có animation pulse: nhịp thở co giãn siêu nhẹ 1.05 */
+.znd-nick-icon.znd-anim-pulse {
+    animation: znd-icon-pulse 2.2s infinite ease-in-out;
+}
+
+@keyframes znd-icon-pulse {
+    0%, 100% { transform: scale(1); filter: brightness(1); }
+    50% { transform: scale(1.05); filter: brightness(1.12) drop-shadow(0 0 2px rgba(255, 100, 50, 0.3)); }
+}
+
+/* Bảo đảm huy hiệu VIP, Level và tích xanh xác minh không bị ám bóng đổ từ tên */
+.display-name .badg,
+.display-name [class*="vip-"],
+.display-name .auth-mark,
+.display-name .payvip-icon {
+    filter: none !important;
+    text-shadow: none !important;
 }
 
 /* ==========================================================================
