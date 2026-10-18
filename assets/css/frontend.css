@@ -137,27 +137,28 @@ body.modal-open .footer-tabbar {
 
 @media (max-width: 767px) {
     #znd-shop-modal.in {
-        align-items: flex-start !important;
-        padding: 10px 0 calc(70px + env(safe-area-inset-bottom, 0px)) 0 !important;
+        align-items: center !important;
+        justify-content: center !important;
+        padding: 10px 0 calc(14px + env(safe-area-inset-bottom, 0px)) 0 !important;
     }
 
     #znd-shop-modal .modal-dialog {
         max-width: calc(100% - 16px) !important;
         width: calc(100% - 16px) !important;
-        margin: 0 auto !important;
-        max-height: calc(100vh - 85px) !important;
-        max-height: calc(100dvh - 85px) !important;
+        margin: auto !important;
+        max-height: calc(100vh - 36px) !important;
+        max-height: calc(100dvh - 36px) !important;
         height: auto !important;
     }
 
     #znd-shop-modal .modal-content {
-        max-height: calc(100vh - 85px) !important;
-        max-height: calc(100dvh - 85px) !important;
+        max-height: calc(100vh - 36px) !important;
+        max-height: calc(100dvh - 36px) !important;
         border-radius: var(--main-radius, 12px) !important;
     }
 
     #znd-shop-modal .modal-body {
-        padding: 10px 8px 15px 8px !important;
+        padding: 10px 8px 12px 8px !important;
     }
 }
 
@@ -275,7 +276,7 @@ body.modal-open .footer-tabbar {
 
 .znd-tab-content {
     display: none;
-    padding-bottom: 75px;
+    padding-bottom: 25px;
 }
 
 .znd-tab-content.active {
@@ -620,8 +621,8 @@ body.modal-open .footer-tabbar {
     /* Action Drawer trên Mobile: Cố định ở đáy modal, ngón cái dễ chạm */
     .znd-action-drawer {
         padding: 8px 12px !important;
-        bottom: -15px !important;
-        margin: 10px -8px -15px -8px !important;
+        bottom: -12px !important;
+        margin: 10px -8px -12px -8px !important;
         border-radius: 0 0 var(--main-radius, 12px) var(--main-radius, 12px) !important;
     }
 

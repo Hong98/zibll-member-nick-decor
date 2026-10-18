@@ -2,7 +2,7 @@
 
 > **Plugin tùy biến màu sắc và icon hiển thị đầu nickname thời thượng dành cho thành viên Theme Zibll.**
 
-![Version](https://img.shields.io/badge/version-v1.0.19-blue.svg)
+![Version](https://img.shields.io/badge/version-v1.0.20-blue.svg)
 ![WordPress](https://img.shields.io/badge/WordPress-5.6%2B-blue.svg)
 ![PHP](https://img.shields.io/badge/PHP-7.2%2B-green.svg)
 
@@ -96,6 +96,13 @@ Plugin cung cấp hệ thống Cửa hàng (Shop) và Tủ đồ (Wardrobe) cá 
 ---
 
 ## Lịch sử thay đổi
+
+### v1.0.20 — 2026-10-19
+- Tinh chỉnh cân đối chiều cao và vị trí hiển thị modal trên di động, tránh co lên quá mức:
+  - Căn chỉnh lại `max-height: calc(100dvh - 36px)` trên thiết bị di động kết hợp `align-items: center`, giúp hộp thoại Cửa hàng nằm cân xứng tự nhiên ở trung tâm màn hình, không bị co rút hẫng lên trên cao.
+  - Tối ưu khoảng đệm đáy vừa vặn `padding: 10px 0 calc(14px + env(safe-area-inset-bottom)) 0`, tương thích hoàn hảo với thanh công cụ dưới của Cốc Cốc, Chrome Mobile, Safari mà vẫn giữ trọn không gian thoáng đãng cho danh sách.
+  - Thu gọn khoảng trống đệm đáy các tab danh sách xuống `25px`, giúp bố cục danh sách các ô icon đầy đặn, thanh thoát và không tạo khoảng trống thừa ở cuối.
+  - Khớp vị trí thanh Action Drawer với padding đáy `12px`, ngón tay bấm chọn cực kỳ thuận tiện.
 
 ### v1.0.19 — 2026-10-19
 - Co giãn linh hoạt lưới icon và khắc phục triệt để lỗi bị thanh menu dưới che khuất trên thiết bị di động:
