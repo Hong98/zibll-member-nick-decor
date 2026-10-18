@@ -2,7 +2,7 @@
 
 > **Plugin tùy biến màu sắc và icon hiển thị đầu nickname thời thượng dành cho thành viên Theme Zibll.**
 
-![Version](https://img.shields.io/badge/version-v1.0.25-blue.svg)
+![Version](https://img.shields.io/badge/version-v1.0.26-blue.svg)
 ![WordPress](https://img.shields.io/badge/WordPress-5.6%2B-blue.svg)
 ![PHP](https://img.shields.io/badge/PHP-7.2%2B-green.svg)
 
@@ -96,6 +96,12 @@ Plugin cung cấp hệ thống Cửa hàng (Shop) và Tủ đồ (Wardrobe) cá 
 ---
 
 ## Lịch sử thay đổi
+
+### v1.0.26 — 2026-10-19
+- Khắc phục triệt để lỗi icon vương miện và icon SVG hiển thị 3 chấm trong menu trượt bên trái trên di động:
+  - Loại bỏ hoàn toàn sự phụ thuộc vào Gradient ID cho icon vương miện hoàng gia (`crown_gold`): Chuyển sang sử dụng các màu vector trực tiếp độc lập tuyệt đối (thân vàng kim `#FFA751`, đế vàng đồng `#E65100`, đỉnh chóp vàng sáng `#FFE259` và ngọc trắng `#FFFFFF`). Loại bỏ triệt để mọi rủi ro mất màu do trình duyệt tra cứu ID sang khối ẩn, bảo đảm vương miện luôn hiển thị trọn vẹn 100% trên mọi nền tảng.
+  - Tự động di chuyển và nâng cấp dữ liệu SVG cũ trong database: Bổ sung bộ lọc trong `get_all_icons()`, tự động phát hiện và ghi đè các bản ghi SVG cũ còn lưu trong database `wp_options` sang định dạng vector chuẩn mới mà không cần thao tác lưu lại cấu hình.
+  - Xử lý xung đột cache biến tĩnh của Theme Zibll (`static $html` trong `zib_header_user_box`): Bổ sung hàm `fixMobileNavbarSvgIds()` trong JavaScript, tự động làm tươi và cô lập Gradient ID cho toàn bộ icon bên trong Menu trượt di động (`.mobile-navbar`), ngăn chặn triệt để tình trạng icon trên mobile dùng chung ID với Header máy tính (bị `display: none`).
 
 ### v1.0.25 — 2026-10-19
 - Sửa lỗi icon vương miện và các icon SVG hiển thị thành 3 chấm trên thiết bị di động:

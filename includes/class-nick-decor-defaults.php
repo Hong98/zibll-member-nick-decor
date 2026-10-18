@@ -25,7 +25,7 @@ class ZND_Defaults {
                 'animation'   => 'shimmer',
                 'vip_level'   => 0,
                 'status'      => true,
-                'svg'         => '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="znd-svg"><defs><linearGradient id="znd_g_crown" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#FFE259"/><stop offset="50%" stop-color="#FFA751"/><stop offset="100%" stop-color="#FF5E3A"/></linearGradient></defs><path d="M3 17 L2 6.5 L7.5 11 L12 3 L16.5 11 L22 6.5 L21 17 Z" fill="url(#znd_g_crown)"/><rect x="2" y="18" width="20" height="3" rx="1.5" fill="url(#znd_g_crown)"/><circle cx="2" cy="6.5" r="1.1" fill="#FFE259"/><circle cx="12" cy="3" r="1.3" fill="#FFE259"/><circle cx="22" cy="6.5" r="1.1" fill="#FFE259"/><circle cx="12" cy="14" r="1.5" fill="#FFFFFF"/><circle cx="6.5" cy="14.5" r="1.2" fill="#FFFFFF"/><circle cx="17.5" cy="14.5" r="1.2" fill="#FFFFFF"/></svg>',
+                'svg'         => '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="znd-svg"><path d="M3 17 L2 6.5 L7.5 11 L12 3 L16.5 11 L22 6.5 L21 17 Z" fill="#FFA751"/><rect x="2" y="18" width="20" height="3" rx="1.5" fill="#E65100"/><circle cx="2" cy="6.5" r="1.1" fill="#FFE259"/><circle cx="12" cy="3" r="1.4" fill="#FFE259"/><circle cx="22" cy="6.5" r="1.1" fill="#FFE259"/><circle cx="12" cy="14" r="1.5" fill="#FFFFFF"/><circle cx="6.5" cy="14.5" r="1.2" fill="#FFFFFF"/><circle cx="17.5" cy="14.5" r="1.2" fill="#FFFFFF"/></svg>',
             ),
             'diamond_blue' => array(
                 'id'          => 'diamond_blue',
@@ -351,6 +351,7 @@ class ZND_Defaults {
      * Lấy danh sách icon hiện hành (từ cấu hình theme hoặc mặc định)
      */
     public static function get_all_icons() {
+        $defaults = self::get_default_icons();
         $saved = null;
         if (function_exists('_pz')) {
             $saved = _pz('znd_icons_list');
@@ -360,17 +361,31 @@ class ZND_Defaults {
         }
 
         if (empty($saved) || !is_array($saved)) {
-            return self::get_default_icons();
+            return $defaults;
         }
 
         $result = array();
         foreach ($saved as $item) {
             if (!empty($item['id'])) {
-                $result[$item['id']] = $item;
+                $id = $item['id'];
+                // Tự động nâng cấp SVG cũ lỗi trong database lên SVG chuẩn mới
+                if (isset($defaults[$id])) {
+                    if (empty($item['svg']) || strpos($item['svg'], 'zm0-14') !== false || strpos($item['svg'], 'znd_g_crown') !== false) {
+                        $item['svg'] = $defaults[$id]['svg'];
+                    }
+                }
+                $result[$id] = $item;
             }
         }
 
-        return !empty($result) ? $result : self::get_default_icons();
+        // Bổ sung các icon mặc định nếu chưa có
+        foreach ($defaults as $id => $def_item) {
+            if (!isset($result[$id])) {
+                $result[$id] = $def_item;
+            }
+        }
+
+        return !empty($result) ? $result : $defaults;
     }
 
     /**

@@ -21,6 +21,14 @@
         init: function () {
             this.bindEvents();
             this.autoExpandIconContainers();
+            this.fixMobileNavbarSvgIds();
+
+            var self = this;
+            [100, 300, 800, 1500].forEach(function (ms) {
+                setTimeout(function () {
+                    self.fixMobileNavbarSvgIds();
+                }, ms);
+            });
 
             // CHỈ hiển thị biểu tượng mở Shop khi người dùng đã đăng nhập (PC & di động)
             if (this.isUserLoggedIn()) {
@@ -41,6 +49,23 @@
                 return p1 + p2 + '_' + uid + p3;
             }).replace(/\b(url\(#)(znd_g_[^)\s]+)(\))/gi, function (m, p1, p2, p3) {
                 return p1 + p2 + '_' + uid + p3;
+            });
+        },
+
+        // Khắc phục triệt để lỗi Theme Zibll dùng static $html khiến icon trong mobile-navbar bị trùng ID gradient với desktop header (bị display:none)
+        fixMobileNavbarSvgIds: function () {
+            $('.mobile-navbar .znd-nick-icon svg').each(function () {
+                var $svg = $(this);
+                var html = $svg.prop('outerHTML');
+                if (html && html.indexOf('znd_g_') !== -1) {
+                    var mobId = 'mob_' + Math.random().toString(36).substring(2, 8);
+                    var newHtml = html.replace(/\b(id=["'])(znd_g_[^"']+)(["'])/gi, function (m, p1, p2, p3) {
+                        return p1 + p2 + '_' + mobId + p3;
+                    }).replace(/\b(url\(#)(znd_g_[^)\s]+)(\))/gi, function (m, p1, p2, p3) {
+                        return p1 + p2 + '_' + mobId + p3;
+                    });
+                    $svg.replaceWith(newHtml);
+                }
             });
         },
 
@@ -367,6 +392,14 @@
 
         bindEvents: function () {
             var self = this;
+
+            // Tự động làm tươi gradient ID khi người dùng mở Menu trượt di động
+            $(document).on('click', '[data-toggle-class="mobile-navbar-show"], .navbar-toggle', function () {
+                self.fixMobileNavbarSvgIds();
+                setTimeout(function () {
+                    self.fixMobileNavbarSvgIds();
+                }, 150);
+            });
 
             // =====================================================================
             // 1. MỞ & ĐÓNG MODAL (Tuân thủ modal-backdrop-close.md)
