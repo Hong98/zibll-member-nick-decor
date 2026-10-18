@@ -2,7 +2,7 @@
 
 > **Plugin tùy biến màu sắc và icon hiển thị đầu nickname thời thượng dành cho thành viên Theme Zibll.**
 
-![Version](https://img.shields.io/badge/version-v1.0.2-blue.svg)
+![Version](https://img.shields.io/badge/version-v1.0.3-blue.svg)
 ![WordPress](https://img.shields.io/badge/WordPress-5.6%2B-blue.svg)
 ![PHP](https://img.shields.io/badge/PHP-7.2%2B-green.svg)
 
@@ -96,6 +96,13 @@ Plugin cung cấp hệ thống Cửa hàng (Shop) và Tủ đồ (Wardrobe) cá 
 ---
 
 ## Lịch sử thay đổi
+
+### v1.0.3 — 2026-10-18
+- Đồng bộ hoàn toàn nút mở shop trong menu người dùng (User Dropdown Box) theo phong cách Theme Zibll:
+  - Sử dụng class chuẩn `badg mb6 toggle-radius c-yellow` với nền vàng pastel mờ dịu mắt, hòa nhập hoàn hảo với hệ thống icon của Zibll.
+  - Chuyển vị trí nút lên trước nút "Đăng xuất" để bảo đảm nút Đăng xuất luôn nằm ở cuối cùng theo chuẩn UX Zibll.
+  - Tối ưu hóa flex layout và chia đều tỷ lệ cho các cột, ngăn chặn triệt để tình trạng nút bị co ép, méo mó hoặc tràn khung.
+  - Thêm class `translate-ignore` giúp nhãn chữ "Màu & Icon" giữ nguyên độ ngắn gọn thanh lịch, không bị plugin dịch thuật JS tự động chuyển thành "Màu & Biểu tượng".
 
 ### v1.0.2 — 2026-10-18
 - Khắc phục xung đột thuộc tính `data-svg` với hàm `show_svg()` của Theme Zibll: Đổi sang `data-item-svg` giúp hiển thị đầy đủ 100% nội dung 16 ô card icon, giá bán và các nút thao tác trong cửa hàng.

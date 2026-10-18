@@ -58,14 +58,23 @@
                 var insertBtn = function () {
                     var $box = $('.header-user-href').first();
                     if ($box.length && !$box.find('.znd-user-href-btn').length) {
-                        var btnHtml = '<a href="javascript:;" data-action="zibll_nick_decor_modal" class="open-nick-decor-modal znd-user-href-btn" title="Cửa hàng màu & Icon nick"><div class="badg mb6 toggle-radius" style="background:linear-gradient(135deg, #f59e0b 0%, #ec4899 100%);color:#fff;box-shadow:0 3px 8px rgba(245,158,11,0.3);"><i class="fa fa-paint-brush"></i></div><div style="color:#f59e0b;font-weight:600;">Màu & Icon</div></a>';
-                        $box.append(btnHtml);
+                        var btnHtml = '<a href="javascript:;" data-action="zibll_nick_decor_modal" class="open-nick-decor-modal znd-user-href-btn" title="Cửa hàng màu & Icon nick">' +
+                                      '<div class="badg mb6 toggle-radius c-yellow"><i class="fa fa-paint-brush"></i></div>' +
+                                      '<div class="c-yellow translate-ignore">Màu & Icon</div>' +
+                                      '</a>';
+                        // Chèn vào ngay trước nút Đăng xuất để đồng bộ chuẩn thứ tự tính năng Zibll
+                        var $signOut = $box.find('[data-target="#modal_signout"], a:has(.c-red)').first();
+                        if ($signOut.length) {
+                            $signOut.before(btnHtml);
+                        } else {
+                            $box.append(btnHtml);
+                        }
                     }
                 };
 
                 insertBtn();
-                // Lắng nghe khi hover menu tài khoản để chèn nút an toàn
-                $(document).on('mouseenter', '.navbar-avatar, .sub-user-box', function () {
+                // Lắng nghe khi hover hoặc click menu tài khoản để chèn nút an toàn
+                $(document).on('mouseenter click', '.navbar-avatar, .sub-user-box', function () {
                     insertBtn();
                 });
             } catch (e) {

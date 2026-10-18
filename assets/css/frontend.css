@@ -604,3 +604,36 @@ body.dark-theme .znd-empty-box h4 { color: #f1f5f9; }
         grid-template-columns: 1fr;
     }
 }
+
+/* ==========================================================================
+   7. ĐỒNG BỘ NÚT MỞ SHOP TRONG MENU NGƯỜI DÙNG THEME ZIBLL
+   ========================================================================== */
+.sub-user-box .header-user-href:first-of-type {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.sub-user-box .header-user-href:first-of-type > a {
+    min-width: 0 !important;
+    flex: 1 1 0;
+    padding-left: 2px;
+    padding-right: 2px;
+    text-align: center;
+}
+
+.sub-user-box .header-user-href .znd-user-href-btn .badg {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.sub-user-box .header-user-href .znd-user-href-btn .badg i {
+    font-size: 15px;
+}
+
+.sub-user-box .header-user-href .znd-user-href-btn:hover .badg {
+    transform: scale(1.08);
+}
+
