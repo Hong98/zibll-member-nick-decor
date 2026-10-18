@@ -2,7 +2,7 @@
 
 > **Plugin tùy biến màu sắc và icon hiển thị đầu nickname thời thượng dành cho thành viên Theme Zibll.**
 
-![Version](https://img.shields.io/badge/version-v1.0.0-blue.svg)
+![Version](https://img.shields.io/badge/version-v1.0.1-blue.svg)
 ![WordPress](https://img.shields.io/badge/WordPress-5.6%2B-blue.svg)
 ![PHP](https://img.shields.io/badge/PHP-7.2%2B-green.svg)
 
@@ -96,6 +96,11 @@ Plugin cung cấp hệ thống Cửa hàng (Shop) và Tủ đồ (Wardrobe) cá 
 ---
 
 ## Lịch sử thay đổi
+
+### v1.0.1 — 2026-10-18
+- Tối ưu định vị menu: Sử dụng bộ lọc native `csf_zibll_options_sections` của Codestar Framework để chuyển chính xác menu "Màu & Icon đầu nick" lên ngay dưới menu "Dịch thuật JS".
+- Tích hợp nút mở nhanh Cửa hàng vào Menu người dùng trên thanh Header và Dropdown Box của Theme Zibll.
+- Tích hợp tab Màu & Icon vào Trung tâm người dùng (`/user`) và Trang tác giả (`/author`).
 
 ### v1.0.0 — 2026-10-18
 - Khởi tạo plugin Zibll Member Nickname & Badge Pro.

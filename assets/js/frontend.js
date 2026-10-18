@@ -9,6 +9,7 @@
     var ZND = {
         init: function () {
             this.bindEvents();
+            this.injectUserMenuButton();
         },
 
         // Mở Modal
@@ -49,6 +50,23 @@
                     $(this).remove();
                 });
             }, 3000);
+        },
+
+        // Tự động chèn nút vào User Dropdown Box của Theme Zibll
+        injectUserMenuButton: function () {
+            var insertBtn = function () {
+                var $box = $('.header-user-href').first();
+                if ($box.length && !$box.find('.znd-user-href-btn').length) {
+                    var btnHtml = '<a href="javascript:;" data-action="zibll_nick_decor_modal" class="open-nick-decor-modal znd-user-href-btn" title="Cửa hàng màu & Icon nick"><div class="badg mb6 toggle-radius" style="background:linear-gradient(135deg, #f59e0b 0%, #ec4899 100%);color:#fff;box-shadow:0 3px 8px rgba(245,158,11,0.3);"><i class="fa fa-paint-brush"></i></div><div style="color:#f59e0b;font-weight:600;">Màu & Icon</div></a>';
+                    $box.append(btnHtml);
+                }
+            };
+
+            insertBtn();
+            // Lắng nghe khi hover menu tài khoản phòng trường hợp Zibll render hoặc toggle
+            $(document).on('mouseenter click', '.navbar-avatar, .sub-user-box, .navbar-form .btn', function () {
+                insertBtn();
+            });
         },
 
         bindEvents: function () {

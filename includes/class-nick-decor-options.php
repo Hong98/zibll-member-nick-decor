@@ -18,7 +18,8 @@ class ZND_Options {
         add_action('after_setup_theme', array(__CLASS__, 'register_csf_sections'), 20);
         add_action('init', array(__CLASS__, 'register_csf_sections'), 20);
 
-        // Định vị chính xác menu nằm ngay dưới "Dịch thuật JS" trước khi CSF setup ở init priority 1000
+        // Định vị chính xác menu nằm ngay dưới "Dịch thuật JS" qua filter chính thức của Codestar Framework
+        add_filter('csf_zibll_options_sections', array(__CLASS__, 'filter_csf_sections'), 99);
         add_action('init', array(__CLASS__, 'reposition_menu_after_translate'), 990);
     }
 
@@ -424,6 +425,54 @@ class ZND_Options {
                 ),
             ),
         ));
+    }
+
+    /**
+     * Sắp xếp lại vị trí menu qua bộ lọc native của Codestar Framework
+     */
+    public static function filter_csf_sections($sections) {
+        if (!is_array($sections) || empty($sections)) {
+            return $sections;
+        }
+
+        $our_parent_id    = 'zibll_nick_decor_parent';
+        $target_parent_id = 'zibll_translate_section';
+
+        $our_sections   = array();
+        $other_sections = array();
+
+        foreach ($sections as $sec) {
+            $sec_id    = isset($sec['id']) ? $sec['id'] : '';
+            $parent_id = isset($sec['parent']) ? $sec['parent'] : '';
+
+            if ($sec_id === $our_parent_id || $parent_id === $our_parent_id) {
+                $our_sections[] = $sec;
+            } else {
+                $other_sections[] = $sec;
+            }
+        }
+
+        if (empty($our_sections)) {
+            return $sections;
+        }
+
+        // Tìm vị trí cuối cùng của nhóm Dịch thuật JS
+        $insert_index = -1;
+        foreach ($other_sections as $index => $sec) {
+            $sec_id    = isset($sec['id']) ? $sec['id'] : '';
+            $parent_id = isset($sec['parent']) ? $sec['parent'] : '';
+
+            if ($sec_id === $target_parent_id || $parent_id === $target_parent_id) {
+                $insert_index = $index;
+            }
+        }
+
+        if ($insert_index !== -1) {
+            array_splice($other_sections, $insert_index + 1, 0, $our_sections);
+            return $other_sections;
+        }
+
+        return $sections;
     }
 
     /**

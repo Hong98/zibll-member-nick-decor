@@ -3,7 +3,7 @@
  * Plugin Name: Zibll Member Nickname & Badge Pro
  * Plugin URI: https://cui.vn/
  * Description: Plugin tùy biến màu sắc và icon hiển thị đầu nickname thời thượng cho thành viên Theme Zibll. Tích hợp trọn bộ icon SVG độc đáo, bảng màu gradient chuyển động, cửa hàng mua sắm bằng Điểm thưởng (Points) hoặc Số dư ví (Balance) và hộp xem trước thời gian thực.
- * Version: 1.0.0
+ * Version: 1.0.1
  * Author: Cui.vn
  * Author URI: https://cui.vn/
  * Text Domain: zibll-nick-decor
@@ -17,7 +17,7 @@ if (!defined('ABSPATH')) {
 }
 
 // Định nghĩa các hằng số plugin
-define('ZND_VERSION', '1.0.0');
+define('ZND_VERSION', '1.0.1');
 define('ZND_FILE', __FILE__);
 define('ZND_PATH', plugin_dir_path(__FILE__));
 define('ZND_URL', plugin_dir_url(__FILE__));
@@ -65,8 +65,7 @@ function znd_init() {
         add_action('admin_enqueue_scripts', 'znd_admin_enqueue_scripts');
     }
 
-    // Tích hợp nút mở nhanh Cửa hàng vào Menu thả xuống của tài khoản (User Dropdown)
-    add_filter('user_top_menu', 'znd_add_user_top_menu_item', 20);
+    // Đã tích hợp nút mở nhanh qua zib_nav_radius_button và injectUserMenuButton
 }
 add_action('plugins_loaded', 'znd_init');
 
@@ -106,24 +105,6 @@ function znd_admin_enqueue_scripts($hook) {
         $js_ver,
         true
     );
-}
-
-/**
- * Tích hợp nút Cửa hàng màu & Icon vào Menu người dùng trên Header
- */
-function znd_add_user_top_menu_item($html) {
-    if (!is_user_logged_in() || !ZND_Renderer::is_enabled()) {
-        return $html;
-    }
-
-    $show_btn = function_exists('_pz') ? _pz('znd_enable_user_menu_btn', true) : true;
-    if (!$show_btn) {
-        return $html;
-    }
-
-    $btn_html = '<li><a href="javascript:;" data-action="zibll_nick_decor_modal" class="open-nick-decor-modal"><i class="fa fa-paint-brush fa-fw mr6"></i>' . esc_html__('Màu & Icon nick', 'zibll-nick-decor') . '</a></li>';
-
-    return $html . $btn_html;
 }
 
 /**

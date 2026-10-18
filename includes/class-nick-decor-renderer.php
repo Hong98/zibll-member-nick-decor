@@ -33,7 +33,15 @@ class ZND_Renderer {
         // Can thiệp hiển thị tên thành viên trong Bình luận
         add_filter('comment_header', array($this, 'filter_comment_header'), 20, 2);
 
-        // Tích hợp tab vào Trang cá nhân (Author Page) của Zibll
+        // Nút mở nhanh trên thanh Header của Theme Zibll
+        add_filter('zib_nav_radius_button', array($this, 'filter_nav_radius_button'), 20, 2);
+
+        // Tích hợp tab vào Trung tâm người dùng (User Center - /user)
+        add_filter('user_ctnter_main_tabs_array', array($this, 'add_user_center_tab'), 20);
+        add_filter('zib_user_center_page_sidebar_button_1_args', array($this, 'add_user_center_sidebar_button'), 20);
+        add_filter('main_user_tab_content_nick_decor', array($this, 'render_user_tab_content'));
+
+        // Tích hợp tab vào Trang tác giả (Author Page - /author/xxx)
         add_filter('author_main_tabs_array', array($this, 'add_author_main_tab'), 20, 2);
         add_filter('main_author_tab_content_nick_decor', array($this, 'render_author_tab_content'));
 
@@ -253,6 +261,76 @@ class ZND_Renderer {
         }
 
         return $html;
+    }
+
+    /**
+     * Nút mở nhanh trên thanh Header của Theme Zibll (cạnh nút Dark mode & Ngôn ngữ)
+     */
+    public function filter_nav_radius_button($radius_but, $user_id) {
+        if (!self::is_enabled()) {
+            return $radius_but;
+        }
+
+        $show_btn = function_exists('_pz') ? _pz('znd_enable_user_menu_btn', true) : true;
+        if (!$show_btn) {
+            return $radius_but;
+        }
+
+        $btn = '<a href="javascript:;" data-action="zibll_nick_decor_modal" class="toggle-radius open-nick-decor-modal ml10" title="' . esc_attr__('Cửa hàng màu & Icon nick', 'zibll-nick-decor') . '" data-toggle="tooltip"><i class="fa fa-paint-brush"></i></a>';
+
+        return $radius_but . $btn;
+    }
+
+    /**
+     * Thêm tab vào Trung tâm người dùng (/user)
+     */
+    public function add_user_center_tab($tabs_array) {
+        if (!self::is_enabled()) {
+            return $tabs_array;
+        }
+
+        $show_tab = function_exists('_pz') ? _pz('znd_enable_author_tab', true) : true;
+        if (!$show_tab) {
+            return $tabs_array;
+        }
+
+        $tabs_array['nick_decor'] = array(
+            'title'    => __('Màu & Icon', 'zibll-nick-decor'),
+            'nav_attr' => 'drawer-title="' . __('Cửa hàng màu & Icon nick', 'zibll-nick-decor') . '"',
+            'loader'   => '<div class="text-center padding-20 muted-color"><i class="fa fa-spinner fa-spin fa-2x"></i></div>',
+        );
+
+        return $tabs_array;
+    }
+
+    /**
+     * Thêm nút vào Sidebar của Trung tâm người dùng (/user - Dịch vụ của tôi)
+     */
+    public function add_user_center_sidebar_button($buttons) {
+        if (!self::is_enabled()) {
+            return $buttons;
+        }
+
+        $show_tab = function_exists('_pz') ? _pz('znd_enable_author_tab', true) : true;
+        if (!$show_tab) {
+            return $buttons;
+        }
+
+        $buttons[] = array(
+            'html' => '',
+            'icon' => '<i class="fa fa-paint-brush" style="color:#f59e0b;"></i>',
+            'name' => __('Màu & Icon', 'zibll-nick-decor'),
+            'tab'  => 'nick_decor',
+        );
+
+        return $buttons;
+    }
+
+    /**
+     * Render nội dung tab trong Trung tâm người dùng (/user)
+     */
+    public function render_user_tab_content() {
+        return self::render_shop_html(get_current_user_id(), false);
     }
 
     /**
