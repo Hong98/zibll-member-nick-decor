@@ -52,44 +52,36 @@
             }, 3000);
         },
 
-        // Tự động chèn icon vào đáy User Dropdown Box của Theme Zibll
+        // Tự động chèn icon vào hàng cuối cùng của User Dropdown Box Theme Zibll
         injectUserMenuButton: function () {
             try {
                 var insertBtn = function () {
-                    // Xóa nút trong hàng 1 nếu có từ phiên bản cũ
-                    $('.header-user-href .znd-user-href-btn').remove();
+                    // Dọn dẹp các khối nút ở đáy cũ nếu có
+                    $('.znd-user-menu-bottom').remove();
 
                     $('.sub-user-box').each(function () {
                         var $box = $(this);
-                        if (!$box.find('.znd-user-menu-bottom').length) {
-                            var bottomHtml = '<div class="znd-user-menu-bottom mt10 translate-ignore notranslate">' +
-                                             '<div class="relative opacity5 mb10"><i class="line-form-line"></i></div>' +
-                                             '<div class="flex jc header-user-href znd-bottom-user-href">' +
-                                             '<a href="javascript:;" data-action="zibll_nick_decor_modal" class="open-nick-decor-modal" title="Cửa hàng màu & Icon nick">' +
-                                             '<div class="badg mb6 toggle-radius c-yellow"><i class="fa fa-paint-brush"></i></div>' +
-                                             '<div class="c-yellow translate-ignore">Màu & Icon</div>' +
-                                             '</a>' +
-                                             '</div>' +
-                                             '</div>';
-                            $box.append(bottomHtml);
-                        } else {
-                            var $bottom = $box.find('.znd-user-menu-bottom');
-                            // Cập nhật lại HTML nếu đang hiển thị kiểu nút dài cũ
-                            if ($bottom.find('.znd-bottom-shop-btn').length) {
-                                var newInnerHtml = '<div class="relative opacity5 mb10"><i class="line-form-line"></i></div>' +
-                                                   '<div class="flex jc header-user-href znd-bottom-user-href">' +
-                                                   '<a href="javascript:;" data-action="zibll_nick_decor_modal" class="open-nick-decor-modal" title="Cửa hàng màu & Icon nick">' +
-                                                   '<div class="badg mb6 toggle-radius c-yellow"><i class="fa fa-paint-brush"></i></div>' +
-                                                   '<div class="c-yellow translate-ignore">Màu & Icon</div>' +
-                                                   '</a>' +
-                                                   '</div>';
-                                $bottom.html(newInnerHtml);
-                            }
-                            // Đảm bảo luôn nằm ở vị trí cuối cùng dưới đáy popup
-                            if (!$bottom.is(':last-child')) {
-                                $box.append($bottom);
-                            }
+                        var $allHrefs = $box.find('.header-user-href');
+                        if (!$allHrefs.length) return;
+
+                        var $lastHref = $allHrefs.last();
+
+                        // Nếu nút đã ở đúng hàng cuối cùng thì giữ nguyên
+                        if ($lastHref.find('.znd-user-href-btn').length) {
+                            return;
                         }
+
+                        // Xóa nút ở các hàng khác nếu có
+                        $box.find('.znd-user-href-btn').remove();
+                        $allHrefs.removeClass('has-znd-btn');
+
+                        // Cấu trúc icon chuẩn Theme Zibll với màu c-theme đồng bộ với màu chủ đề của website
+                        var btnHtml = '<a href="javascript:;" data-action="zibll_nick_decor_modal" class="open-nick-decor-modal znd-user-href-btn" title="Cửa hàng màu & Icon nick">' +
+                                      '<div class="badg mb6 toggle-radius c-theme"><i class="fa fa-paint-brush"></i></div>' +
+                                      '<div class="c-theme translate-ignore">Màu & Icon</div>' +
+                                      '</a>';
+
+                        $lastHref.addClass('has-znd-btn').append(btnHtml);
                     });
                 };
 
