@@ -661,7 +661,7 @@ body.dark-theme .znd-empty-box h4 { color: #f1f5f9; }
         padding: 0 !important;
         width: 36px !important;
         height: 36px !important;
-        display: inline-flex !important;
+        display: inline-flex;
         align-items: center !important;
         justify-content: center !important;
         position: relative !important;

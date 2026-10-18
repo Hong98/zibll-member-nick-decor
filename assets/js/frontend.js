@@ -174,8 +174,13 @@
         injectMobileButtons: function () {
             try {
                 var titleText = 'Cửa hàng màu & Icon nick';
-                var enableMobileHeader = (typeof znd_vars !== 'undefined' && typeof znd_vars.enable_mobile_header_btn !== 'undefined') ? (znd_vars.enable_mobile_header_btn !== false && znd_vars.enable_mobile_header_btn !== 'false') : true;
-                var enableMobileDrawer = (typeof znd_vars !== 'undefined' && typeof znd_vars.enable_mobile_drawer_btn !== 'undefined') ? (znd_vars.enable_mobile_drawer_btn !== false && znd_vars.enable_mobile_drawer_btn !== 'false') : true;
+                var isOptionEnabled = function (val, defaultVal) {
+                    if (typeof val === 'undefined') return defaultVal !== false;
+                    return val === true || val === 1 || val === '1' || val === 'true';
+                };
+
+                var enableMobileHeader = (typeof znd_vars !== 'undefined') ? isOptionEnabled(znd_vars.enable_mobile_header_btn, true) : true;
+                var enableMobileDrawer = (typeof znd_vars !== 'undefined') ? isOptionEnabled(znd_vars.enable_mobile_drawer_btn, true) : true;
 
                 var insertMobile = function () {
                     // 1. Mobile Header bar (.navbar-header)
@@ -203,7 +208,7 @@
                             }
                         }
                     } else {
-                        $('.navbar-header .znd-mobile-header-btn').remove();
+                        $('.navbar-header .znd-mobile-header-btn, .znd-mobile-header-btn').remove();
                     }
 
                     // 2. Mobile Drawer Top Header (.mobile-navbar .flex.ac.pull-right)
@@ -218,7 +223,7 @@
                             $drawerTop.prepend($drawerBtn);
                         }
                     } else {
-                        $('.mobile-navbar .znd-mobile-drawer-btn').remove();
+                        $('.mobile-navbar .znd-mobile-drawer-btn, .znd-mobile-drawer-btn').remove();
                     }
                 };
 

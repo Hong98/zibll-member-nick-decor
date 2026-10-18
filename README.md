@@ -2,7 +2,7 @@
 
 > **Plugin tùy biến màu sắc và icon hiển thị đầu nickname thời thượng dành cho thành viên Theme Zibll.**
 
-![Version](https://img.shields.io/badge/version-v1.0.11-blue.svg)
+![Version](https://img.shields.io/badge/version-v1.0.12-blue.svg)
 ![WordPress](https://img.shields.io/badge/WordPress-5.6%2B-blue.svg)
 ![PHP](https://img.shields.io/badge/PHP-7.2%2B-green.svg)
 
@@ -96,6 +96,12 @@ Plugin cung cấp hệ thống Cửa hàng (Shop) và Tủ đồ (Wardrobe) cá 
 ---
 
 ## Lịch sử thay đổi
+
+### v1.0.12 — 2026-10-19
+- Khắc phục triệt để lỗi không ẩn được biểu tượng mở shop trên Header di động khi tắt tùy chọn trong cài đặt:
+  - Chuẩn hóa kiểu dữ liệu truyền qua `wp_localize_script` thành giá trị số nguyên (`1` hoặc `0`), loại bỏ triệt để lỗi ép kiểu chuỗi rỗng của WordPress khiến JavaScript nhận diện sai trạng thái bật/tắt.
+  - Nâng cấp bộ chọn CSS ẩn (`body .navbar-header .znd-mobile-header-btn, body .navbar-toggle.znd-mobile-header-btn`) và loại bỏ cờ `!important` thừa trên thuộc tính `display` của CSS cơ sở để đảm bảo quy tắc ẩn luôn có độ ưu tiên cao nhất.
+  - Tự động xóa bỏ phần tử khỏi DOM ngay lập tức khi phát hiện cấu hình đang tắt.
 
 ### v1.0.11 — 2026-10-18
 - Thêm tùy chọn bật/tắt biểu tượng mở shop trên Header và Menu trượt di động:

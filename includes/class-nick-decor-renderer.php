@@ -101,8 +101,8 @@ class ZND_Renderer {
             'equipped_color'           => $equipped_color,
             'currency_name'            => ZND_User::get_currency_name(),
             'user_balance'             => ZND_User::get_user_currency_balance($current_user_id),
-            'enable_mobile_header_btn' => function_exists('_pz') ? (bool) _pz('znd_enable_mobile_header_btn', true) : true,
-            'enable_mobile_drawer_btn' => function_exists('_pz') ? (bool) _pz('znd_enable_mobile_drawer_btn', true) : true,
+            'enable_mobile_header_btn' => function_exists('_pz') ? (_pz('znd_enable_mobile_header_btn', true) ? 1 : 0) : 1,
+            'enable_mobile_drawer_btn' => function_exists('_pz') ? (_pz('znd_enable_mobile_drawer_btn', true) ? 1 : 0) : 1,
             'i18n'                     => array(
                 'confirm_buy'   => __('Bạn có chắc chắn muốn mua vật phẩm này không?', 'zibll-nick-decor'),
                 'buying'        => __('Đang xử lý mua...', 'zibll-nick-decor'),
@@ -138,10 +138,10 @@ class ZND_Renderer {
         // Tùy biến CSS nâng cao từ Admin
         if (function_exists('_pz')) {
             if (!_pz('znd_enable_mobile_header_btn', true)) {
-                echo ".navbar-header .znd-mobile-header-btn { display: none !important; }\n";
+                echo "body .navbar-header .znd-mobile-header-btn, body .navbar-toggle.znd-mobile-header-btn, a.navbar-toggle.znd-mobile-header-btn { display: none !important; }\n";
             }
             if (!_pz('znd_enable_mobile_drawer_btn', true)) {
-                echo ".mobile-navbar .znd-mobile-drawer-btn { display: none !important; }\n";
+                echo "body .mobile-navbar .znd-mobile-drawer-btn, body .toggle-radius.znd-mobile-drawer-btn, a.toggle-radius.znd-mobile-drawer-btn { display: none !important; }\n";
             }
 
             $custom_css = _pz('znd_custom_css', '');
