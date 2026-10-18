@@ -2,7 +2,7 @@
 
 > **Plugin tùy biến màu sắc và icon hiển thị đầu nickname thời thượng dành cho thành viên Theme Zibll.**
 
-![Version](https://img.shields.io/badge/version-v1.0.12-blue.svg)
+![Version](https://img.shields.io/badge/version-v1.0.13-blue.svg)
 ![WordPress](https://img.shields.io/badge/WordPress-5.6%2B-blue.svg)
 ![PHP](https://img.shields.io/badge/PHP-7.2%2B-green.svg)
 
@@ -96,6 +96,15 @@ Plugin cung cấp hệ thống Cửa hàng (Shop) và Tủ đồ (Wardrobe) cá 
 ---
 
 ## Lịch sử thay đổi
+
+### v1.0.13 — 2026-10-19
+- Đồng bộ hoàn toàn giao diện và cơ chế Cửa hàng (Shop) theo chuẩn nguyên bản Theme Zibll:
+  - Cập nhật cơ chế Modal sang hệ thống Bootstrap Modal của Theme Zibll (`.modal.fade.flex.jc`), tích hợp tiêu đề màu chuyển động signature `modal-colorful-header jb-yellow` chuẩn Zibll.
+  - Tuân thủ nghiêm ngặt quy tắc đóng an toàn khi nhấp ra ngoài (`modal-backdrop-close.md`) với cơ chế kiểm tra `mousedown` và `mouseup` trên modal backdrop, ngăn chặn tình trạng đóng nhầm popup khi bôi đen văn bản hay kéo chuột từ trong ra ngoài.
+  - Thay thế toàn bộ bảng màu tĩnh sang hệ thống biến CSS nguyên bản của Theme Zibll (`var(--focus-color)`, `var(--main-bg-color)`, `var(--main-border-color)`, `c-yellow`, `jb-yellow`, `c-blue`, `c-green`, `c-red`), tự động tương thích hoàn hảo cả chế độ sáng (Light Mode) và chế độ tối (Dark Mode).
+  - Đồng bộ thanh điều hướng Tabs sang chuẩn `.tab-nav-theme` của Zibll với hiệu ứng đường kẻ chỉ báo active indicator tinh tế.
+  - Đồng bộ hệ thống nút bấm sang chuẩn Zibll (`.but.but-sm.radius` kết hợp `c-yellow`, `c-blue`, `c-green`, `hollow`).
+  - Tích hợp thông báo tương tác qua hệ thống thông báo toàn cục `notyf()` nguyên bản của Theme Zibll.
 
 ### v1.0.12 — 2026-10-19
 - Khắc phục triệt để lỗi không ẩn được biểu tượng mở shop trên Header di động khi tắt tùy chọn trong cài đặt:

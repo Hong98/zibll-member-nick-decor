@@ -14,37 +14,46 @@
             this.injectMobileButtons();
         },
 
-        // Mở Modal
+        // Mở Modal (Tích hợp cơ chế Bootstrap Modal của Theme Zibll)
         openModal: function () {
             var $modal = $('#znd-shop-modal');
             if (!$modal.length) return;
 
-            $modal.show();
-            // Trigger reflow
-            $modal[0].offsetHeight;
-            $modal.addClass('is-open');
-            $('body').addClass('znd-modal-open');
+            if ($.fn.modal) {
+                $modal.modal({ backdrop: 'static', keyboard: true }).modal('show');
+            } else {
+                $modal.show().addClass('in is-open');
+                $('body').addClass('modal-open');
+            }
         },
 
-        // Đóng Modal
+        // Đóng Modal (Tích hợp cơ chế Bootstrap Modal của Theme Zibll)
         closeModal: function () {
             var $modal = $('#znd-shop-modal');
             if (!$modal.length) return;
 
-            $modal.removeClass('is-open');
-            setTimeout(function () {
-                $modal.hide();
-                $('body').removeClass('znd-modal-open');
-            }, 300);
+            if ($.fn.modal) {
+                $modal.modal('hide');
+            } else {
+                $modal.removeClass('in is-open').hide();
+                $('body').removeClass('modal-open');
+            }
         },
 
-        // Thông báo Toast đơn giản, đẹp mắt
+        // Thông báo qua hệ thống notyf chuẩn của Theme Zibll
         showToast: function (message, type) {
             type = type || 'success';
-            var bg = (type === 'success') ? '#10b981' : '#ef4444';
+            if (typeof window.notyf === 'function') {
+                var notyfType = (type === 'success') ? 'success' : (type === 'error' ? 'danger' : type);
+                window.notyf(message, notyfType);
+                return;
+            }
+
+            // Fallback nếu chưa tải hàm notyf
+            var bg = (type === 'success') ? '#18a52a' : '#ff5473';
             var icon = (type === 'success') ? 'fa-check-circle' : 'fa-exclamation-circle';
 
-            var $toast = $('<div class="znd-toast-msg" style="position:fixed;bottom:24px;right:24px;z-index:9999999;background:' + bg + ';color:#fff;padding:12px 20px;border-radius:10px;font-size:14px;box-shadow:0 10px 25px rgba(0,0,0,0.2);display:flex;align-items:center;gap:10px;animation:znd-fade-in 0.3s ease;"><i class="fa ' + icon + '"></i> ' + message + '</div>');
+            var $toast = $('<div class="znd-toast-msg" style="position:fixed;top:24px;right:24px;z-index:9999999;background:' + bg + ';color:#fff;padding:12px 20px;border-radius:8px;font-size:14px;box-shadow:0 10px 25px rgba(0,0,0,0.2);display:flex;align-items:center;gap:10px;animation:znd-fade-in 0.3s ease;"><i class="fa ' + icon + '"></i> ' + message + '</div>');
             $('body').append($toast);
 
             setTimeout(function () {
@@ -248,12 +257,12 @@
                 self.openModal();
             });
 
-            $(document).on('click', '.znd-modal-close', function (e) {
+            $(document).on('click', '.znd-modal-close, [data-dismiss="modal"]', function (e) {
                 e.preventDefault();
                 self.closeModal();
             });
 
-            // Bắt mousedown & mouseup trên backdrop để tránh đóng nhầm khi kéo chuột từ trong ra ngoài
+            // Bắt mousedown & mouseup trên backdrop để tránh đóng nhầm khi kéo chuột từ trong ra ngoài (modal-backdrop-close.md)
             var backdropMouseDownTarget = null;
 
             $(document).on('mousedown', '#znd-shop-modal', function (e) {
@@ -270,22 +279,25 @@
             // Phím Escape để đóng
             $(document).on('keydown', function (e) {
                 if (e.key === 'Escape' || e.keyCode === 27) {
-                    if ($('#znd-shop-modal').hasClass('is-open')) {
+                    if ($('#znd-shop-modal').is(':visible')) {
                         self.closeModal();
                     }
                 }
             });
 
             // =====================================================================
-            // 2. CHUYỂN TAB ĐIỀU HƯỚNG
+            // 2. CHUYỂN TAB ĐIỀU HƯỚNG (THEME ZIBLL TAB-NAV-THEME)
             // =====================================================================
-            $(document).on('click', '.znd-tab-btn', function (e) {
+            $(document).on('click', '.znd-tab-btn, .znd-nav-tabs li a, .znd-nav-tabs li', function (e) {
                 e.preventDefault();
-                var tab = $(this).data('tab');
+                var $li = $(this).closest('li');
+                var tab = $li.data('tab') || $(this).data('tab');
+                if (!tab) return;
+
                 var $wrapper = $(this).closest('.znd-shop-wrapper');
 
-                $wrapper.find('.znd-tab-btn').removeClass('active');
-                $(this).addClass('active');
+                $wrapper.find('.znd-nav-tabs li').removeClass('active');
+                $li.addClass('active');
 
                 $wrapper.find('.znd-tab-content').removeClass('active');
                 $wrapper.find('#znd-tab-' + tab).addClass('active');
@@ -351,7 +363,7 @@
                     return;
                 }
 
-                $btn.prop('disabled', true).html('<i class="fa fa-spinner fa-spin"></i> ' + znd_vars.i18n.buying);
+                $btn.prop('disabled', true).html('<i class="fa fa-spinner fa-spin mr3"></i> ' + znd_vars.i18n.buying);
 
                 $.ajax({
                     url: znd_vars.ajax_url,
@@ -378,18 +390,18 @@
                             $wrapper.find('.znd-card[data-type="' + type + '"]').removeClass('is-equipped');
                             $card.addClass('is-equipped is-owned');
 
-                            // Cập nhật nút bấm
-                            $btn.replaceWith('<button type="button" class="znd-btn znd-btn-unequip" data-action="unequip" data-type="' + type + '"><i class="fa fa-check-circle"></i> Đang dùng (Tháo)</button>');
+                            // Cập nhật nút bấm theo class Zibll
+                            $btn.replaceWith('<button type="button" class="but but-sm c-green radius znd-btn znd-btn-unequip" data-action="unequip" data-type="' + type + '"><i class="fa fa-check-circle mr3"></i> Đang dùng (Tháo)</button>');
 
                             // Kích hoạt xem thử
                             $card.find('.znd-btn-preview').click();
                         } else {
                             self.showToast(res.data ? res.data.message : 'Có lỗi xảy ra!', 'error');
-                            $btn.html('<i class="fa fa-shopping-cart"></i> Mua ngay');
+                            $btn.html('<i class="fa fa-shopping-cart mr3"></i> Mua ngay');
                         }
                     },
                     error: function () {
-                        $btn.prop('disabled', false).html('<i class="fa fa-shopping-cart"></i> Mua ngay');
+                        $btn.prop('disabled', false).html('<i class="fa fa-shopping-cart mr3"></i> Mua ngay');
                         self.showToast('Lỗi kết nối máy chủ, vui lòng thử lại!', 'error');
                     }
                 });
@@ -407,7 +419,7 @@
                 var itemId = $btn.data('id');
                 var $card  = $btn.closest('.znd-card');
 
-                $btn.prop('disabled', true).html('<i class="fa fa-spinner fa-spin"></i> ' + znd_vars.i18n.equipping);
+                $btn.prop('disabled', true).html('<i class="fa fa-spinner fa-spin mr3"></i> ' + znd_vars.i18n.equipping);
 
                 $.ajax({
                     url: znd_vars.ajax_url,
@@ -430,22 +442,22 @@
                                 $(this).removeClass('is-equipped');
                                 var otherId = $(this).data('id');
                                 if ($(this).hasClass('is-owned')) {
-                                    $(this).find('.znd-btn-unequip').replaceWith('<button type="button" class="znd-btn znd-btn-equip" data-action="equip" data-type="' + type + '" data-id="' + otherId + '"><i class="fa fa-bolt"></i> Trang bị</button>');
+                                    $(this).find('.znd-btn-unequip').replaceWith('<button type="button" class="but but-sm c-blue radius znd-btn znd-btn-equip" data-action="equip" data-type="' + type + '" data-id="' + otherId + '"><i class="fa fa-bolt mr3"></i> Trang bị</button>');
                                 }
                             });
 
                             $card.addClass('is-equipped');
-                            $btn.replaceWith('<button type="button" class="znd-btn znd-btn-unequip" data-action="unequip" data-type="' + type + '"><i class="fa fa-check-circle"></i> Đang dùng (Tháo)</button>');
+                            $btn.replaceWith('<button type="button" class="but but-sm c-green radius znd-btn znd-btn-unequip" data-action="unequip" data-type="' + type + '"><i class="fa fa-check-circle mr3"></i> Đang dùng (Tháo)</button>');
 
                             // Kích hoạt xem thử
                             $card.find('.znd-btn-preview').click();
                         } else {
                             self.showToast(res.data ? res.data.message : 'Có lỗi xảy ra!', 'error');
-                            $btn.html('<i class="fa fa-bolt"></i> Trang bị');
+                            $btn.html('<i class="fa fa-bolt mr3"></i> Trang bị');
                         }
                     },
                     error: function () {
-                        $btn.prop('disabled', false).html('<i class="fa fa-bolt"></i> Trang bị');
+                        $btn.prop('disabled', false).html('<i class="fa fa-bolt mr3"></i> Trang bị');
                         self.showToast('Lỗi kết nối máy chủ!', 'error');
                     }
                 });
@@ -463,7 +475,7 @@
                 var $card = $btn.closest('.znd-card');
                 var itemId = $card.data('id');
 
-                $btn.prop('disabled', true).html('<i class="fa fa-spinner fa-spin"></i> ' + znd_vars.i18n.unequipping);
+                $btn.prop('disabled', true).html('<i class="fa fa-spinner fa-spin mr3"></i> ' + znd_vars.i18n.unequipping);
 
                 $.ajax({
                     url: znd_vars.ajax_url,
@@ -479,7 +491,7 @@
                         if (res.success) {
                             self.showToast(res.data.message, 'success');
                             $card.removeClass('is-equipped');
-                            $btn.replaceWith('<button type="button" class="znd-btn znd-btn-equip" data-action="equip" data-type="' + type + '" data-id="' + itemId + '"><i class="fa fa-bolt"></i> Trang bị</button>');
+                            $btn.replaceWith('<button type="button" class="but but-sm c-blue radius znd-btn znd-btn-equip" data-action="equip" data-type="' + type + '" data-id="' + itemId + '"><i class="fa fa-bolt mr3"></i> Trang bị</button>');
 
                             // Xóa khỏi khung xem trước
                             var $wrapper = $card.closest('.znd-shop-wrapper');
@@ -493,11 +505,11 @@
                             $wrapper.find('#znd-preview-desc').text('Đã tháo trang bị!');
                         } else {
                             self.showToast(res.data ? res.data.message : 'Có lỗi xảy ra!', 'error');
-                            $btn.html('<i class="fa fa-check-circle"></i> Đang dùng (Tháo)');
+                            $btn.html('<i class="fa fa-check-circle mr3"></i> Đang dùng (Tháo)');
                         }
                     },
                     error: function () {
-                        $btn.prop('disabled', false).html('<i class="fa fa-check-circle"></i> Đang dùng (Tháo)');
+                        $btn.prop('disabled', false).html('<i class="fa fa-check-circle mr3"></i> Đang dùng (Tháo)');
                         self.showToast('Lỗi kết nối máy chủ!', 'error');
                     }
                 });

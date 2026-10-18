@@ -396,21 +396,20 @@ class ZND_Renderer {
         $user_id = get_current_user_id();
         ?>
         <!-- Zibll Member Nickname & Badge Pro Modal -->
-        <div id="znd-shop-modal" class="znd-modal-backdrop" style="display:none;" aria-hidden="true">
-            <div class="znd-modal-dialog" role="dialog" aria-modal="true">
-                <div class="znd-modal-header">
-                    <div class="znd-modal-title">
-                        <span class="znd-title-icon"><i class="fa fa-diamond"></i></span>
-                        <div>
-                            <h3 class="znd-heading"><?php esc_html_e('Cửa hàng màu & Icon nick', 'zibll-nick-decor'); ?></h3>
-                            <p class="znd-subheading"><?php esc_html_e('Tùy biến phong cách nickname độc bản và nổi bật cho thành viên', 'zibll-nick-decor'); ?></p>
+        <div class="modal fade flex jc" id="znd-shop-modal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document" style="max-width: 860px; width: 100%;">
+                <div class="modal-content">
+                    <?php if (function_exists('zib_get_modal_colorful_header')): ?>
+                        <?php echo zib_get_modal_colorful_header('jb-yellow', '<i class="fa fa-paint-brush"></i>', '<div class="em12 font-bold">' . esc_html__('Cửa hàng màu & Icon nick', 'zibll-nick-decor') . '</div><div class="em09 opacity8 mt6 font-normal">' . esc_html__('Tùy biến phong cách nickname độc bản và nổi bật cho thành viên', 'zibll-nick-decor') . '</div>'); ?>
+                    <?php else: ?>
+                        <div class="box-body notop mb10 touch">
+                            <button class="close" data-dismiss="modal"><i class="fa fa-times"></i></button>
+                            <b class="modal-title flex ac"><span class="badg c-yellow mr6"><i class="fa fa-paint-brush"></i></span> <?php esc_html_e('Cửa hàng màu & Icon nick', 'zibll-nick-decor'); ?></b>
                         </div>
+                    <?php endif; ?>
+                    <div class="modal-body" style="padding: 20px;">
+                        <?php echo self::render_shop_html($user_id, true); ?>
                     </div>
-                    <button type="button" class="znd-modal-close" aria-label="<?php esc_attr_e('Đóng', 'zibll-nick-decor'); ?>">&times;</button>
-                </div>
-
-                <div class="znd-modal-body">
-                    <?php echo self::render_shop_html($user_id, true); ?>
                 </div>
             </div>
         </div>
@@ -442,14 +441,14 @@ class ZND_Renderer {
         <div class="znd-shop-wrapper <?php echo $is_modal ? 'znd-in-modal' : 'znd-standalone'; ?>">
 
             <!-- HỘP XEM TRƯỚC THỜI GIAN THỰC (LIVE PREVIEW) -->
-            <div class="znd-live-preview-box">
-                <div class="znd-preview-label">
-                    <i class="fa fa-eye fa-fw"></i> <?php esc_html_e('Xem trước diện mạo của bạn:', 'zibll-nick-decor'); ?>
+            <div class="znd-live-preview-box muted-box padding-15 mb20 radius8">
+                <div class="znd-preview-label c-yellow font-bold mb10">
+                    <i class="fa fa-eye fa-fw mr6"></i><?php esc_html_e('Xem trước diện mạo của bạn:', 'zibll-nick-decor'); ?>
                 </div>
-                <div class="znd-preview-card">
-                    <div class="znd-preview-avatar"><?php echo $avatar; ?></div>
-                    <div class="znd-preview-info">
-                        <div class="znd-preview-name-line">
+                <div class="znd-preview-card flex ac padding-10 radius8">
+                    <div class="znd-preview-avatar mr10"><?php echo $avatar; ?></div>
+                    <div class="znd-preview-info flex1">
+                        <div class="znd-preview-name-line font-bold em11">
                             <span id="znd-preview-icon" class="znd-nick-icon">
                                 <?php
                                 if (!empty($equipped_icon) && isset($icons[$equipped_icon])) {
@@ -463,7 +462,7 @@ class ZND_Renderer {
                                 <?php echo esc_html($user_name); ?>
                             </span>
                         </div>
-                        <div class="znd-preview-meta muted-2-color">
+                        <div class="znd-preview-meta muted-2-color em09 mt3">
                             <span id="znd-preview-desc"><?php esc_html_e('Nhấp vào bất kỳ màu hoặc icon nào bên dưới để thử ngay!', 'zibll-nick-decor'); ?></span>
                         </div>
                     </div>
@@ -471,11 +470,12 @@ class ZND_Renderer {
 
                 <!-- THANH THỐNG KÊ TÀI SẢN THÀNH VIÊN -->
                 <?php if (is_user_logged_in()): ?>
-                <div class="znd-balance-bar">
-                    <div class="znd-balance-info">
-                        <i class="fa fa-wallet fa-fw text-warning"></i>
+                <div class="znd-balance-bar flex jsb ac mt10 pt10">
+                    <div class="znd-balance-info em09">
+                        <i class="fa fa-wallet fa-fw c-yellow mr6"></i>
                         <span><?php esc_html_e('Số dư hiện có:', 'zibll-nick-decor'); ?></span>
-                        <strong id="znd-current-balance" class="text-primary"><?php echo number_format($balance); ?></strong> <?php echo esc_html($currency_name); ?>
+                        <strong id="znd-current-balance" class="c-yellow font-bold em11 ml3"><?php echo number_format($balance); ?></strong>
+                        <span class="muted-color ml3"><?php echo esc_html($currency_name); ?></span>
                     </div>
                     <?php if (function_exists('zibpay_get_points_pay_link')): ?>
                     <div class="znd-charge-btn">
@@ -484,31 +484,37 @@ class ZND_Renderer {
                     <?php endif; ?>
                 </div>
                 <?php else: ?>
-                <div class="znd-login-notice">
-                    <i class="fa fa-sign-in fa-fw"></i> <?php esc_html_e('Vui lòng', 'zibll-nick-decor'); ?>
-                    <a href="javascript:;" class="signin-loader text-primary font-bold"><?php esc_html_e('Đăng nhập', 'zibll-nick-decor'); ?></a>
+                <div class="znd-login-notice muted-2-color em09 mt10 pt10">
+                    <i class="fa fa-sign-in fa-fw mr6"></i><?php esc_html_e('Vui lòng', 'zibll-nick-decor'); ?>
+                    <a href="javascript:;" class="signin-loader c-yellow font-bold"><?php esc_html_e('Đăng nhập', 'zibll-nick-decor'); ?></a>
                     <?php esc_html_e('để mua sắm và trang bị màu & icon cho nick của bạn!', 'zibll-nick-decor'); ?>
                 </div>
                 <?php endif; ?>
             </div>
 
             <!-- THANH ĐIỀU HƯỚNG TABS -->
-            <div class="znd-nav-tabs">
-                <button type="button" class="znd-tab-btn active" data-tab="icons">
-                    <i class="fa fa-star fa-fw"></i> <?php esc_html_e('Icon đầu nick', 'zibll-nick-decor'); ?>
-                    <span class="znd-badge-count"><?php echo count($icons); ?></span>
-                </button>
-                <button type="button" class="znd-tab-btn" data-tab="colors">
-                    <i class="fa fa-magic fa-fw"></i> <?php esc_html_e('Màu sắc nick', 'zibll-nick-decor'); ?>
-                    <span class="znd-badge-count"><?php echo count($colors); ?></span>
-                </button>
+            <ul class="list-inline scroll-x mini-scrollbar tab-nav-theme znd-nav-tabs mb20">
+                <li class="active" data-tab="icons">
+                    <a href="javascript:;" class="znd-tab-btn">
+                        <i class="fa fa-star mr6"></i><?php esc_html_e('Icon đầu nick', 'zibll-nick-decor'); ?>
+                        <span class="badg badg-sm c-yellow ml6"><?php echo count($icons); ?></span>
+                    </a>
+                </li>
+                <li data-tab="colors">
+                    <a href="javascript:;" class="znd-tab-btn">
+                        <i class="fa fa-magic mr6"></i><?php esc_html_e('Màu sắc nick', 'zibll-nick-decor'); ?>
+                        <span class="badg badg-sm c-yellow ml6"><?php echo count($colors); ?></span>
+                    </a>
+                </li>
                 <?php if (is_user_logged_in()): ?>
-                <button type="button" class="znd-tab-btn" data-tab="wardrobe">
-                    <i class="fa fa-briefcase fa-fw"></i> <?php esc_html_e('Tủ đồ của tôi', 'zibll-nick-decor'); ?>
-                    <span class="znd-badge-count znd-owned-count"><?php echo count($inv['icons']) + count($inv['colors']); ?></span>
-                </button>
+                <li data-tab="wardrobe">
+                    <a href="javascript:;" class="znd-tab-btn">
+                        <i class="fa fa-briefcase mr6"></i><?php esc_html_e('Tủ đồ của tôi', 'zibll-nick-decor'); ?>
+                        <span class="badg badg-sm c-yellow znd-owned-count ml6"><?php echo count($inv['icons']) + count($inv['colors']); ?></span>
+                    </a>
+                </li>
                 <?php endif; ?>
-            </div>
+            </ul>
 
             <!-- NỘI DUNG TAB 1: SHOP ICON ĐẦU NICK -->
             <div id="znd-tab-icons" class="znd-tab-content active">
@@ -538,29 +544,29 @@ class ZND_Renderer {
                             <h4 class="znd-card-title"><?php echo esc_html($item['name']); ?></h4>
                             <p class="znd-card-desc"><?php echo esc_html($item['desc']); ?></p>
                             <div class="znd-card-tags">
-                                <span class="znd-tag znd-tag-price">
-                                    <i class="fa fa-coins"></i> <?php echo $price > 0 ? number_format($price) . ' ' . esc_html($currency_name) : __('Miễn phí', 'zibll-nick-decor'); ?>
+                                <span class="badg badg-sm c-yellow">
+                                    <i class="fa fa-coins mr3"></i><?php echo $price > 0 ? number_format($price) . ' ' . esc_html($currency_name) : __('Miễn phí', 'zibll-nick-decor'); ?>
                                 </span>
-                                <span class="znd-tag znd-tag-duration"><i class="fa fa-clock-o"></i> <?php echo esc_html($duration); ?></span>
+                                <span class="badg badg-sm"><i class="fa fa-clock-o mr3"></i><?php echo esc_html($duration); ?></span>
                             </div>
                         </div>
 
                         <div class="znd-card-actions">
-                            <button type="button" class="znd-btn znd-btn-preview" title="<?php esc_attr_e('Xem thử trên tên bạn', 'zibll-nick-decor'); ?>">
-                                <i class="fa fa-eye"></i> <?php esc_html_e('Thử', 'zibll-nick-decor'); ?>
+                            <button type="button" class="but but-sm hollow radius znd-btn znd-btn-preview" title="<?php esc_attr_e('Xem thử trên tên bạn', 'zibll-nick-decor'); ?>">
+                                <i class="fa fa-eye mr3"></i><?php esc_html_e('Thử', 'zibll-nick-decor'); ?>
                             </button>
 
                             <?php if ($is_equipped): ?>
-                                <button type="button" class="znd-btn znd-btn-unequip" data-action="unequip" data-type="icon">
-                                    <i class="fa fa-check-circle"></i> <?php esc_html_e('Đang dùng (Tháo)', 'zibll-nick-decor'); ?>
+                                <button type="button" class="but but-sm c-green radius znd-btn znd-btn-unequip" data-action="unequip" data-type="icon">
+                                    <i class="fa fa-check-circle mr3"></i><?php esc_html_e('Đang dùng (Tháo)', 'zibll-nick-decor'); ?>
                                 </button>
                             <?php elseif ($is_owned): ?>
-                                <button type="button" class="znd-btn znd-btn-equip" data-action="equip" data-type="icon" data-id="<?php echo esc_attr($id); ?>">
-                                    <i class="fa fa-bolt"></i> <?php esc_html_e('Trang bị', 'zibll-nick-decor'); ?>
+                                <button type="button" class="but but-sm c-blue radius znd-btn znd-btn-equip" data-action="equip" data-type="icon" data-id="<?php echo esc_attr($id); ?>">
+                                    <i class="fa fa-bolt mr3"></i><?php esc_html_e('Trang bị', 'zibll-nick-decor'); ?>
                                 </button>
                             <?php else: ?>
-                                <button type="button" class="znd-btn znd-btn-buy" data-action="buy" data-type="icon" data-id="<?php echo esc_attr($id); ?>">
-                                    <i class="fa fa-shopping-cart"></i> <?php esc_html_e('Mua ngay', 'zibll-nick-decor'); ?>
+                                <button type="button" class="but but-sm c-yellow radius znd-btn znd-btn-buy" data-action="buy" data-type="icon" data-id="<?php echo esc_attr($id); ?>">
+                                    <i class="fa fa-shopping-cart mr3"></i><?php esc_html_e('Mua ngay', 'zibll-nick-decor'); ?>
                                 </button>
                             <?php endif; ?>
                         </div>
@@ -597,29 +603,29 @@ class ZND_Renderer {
                             <h4 class="znd-card-title"><?php echo esc_html($item['name']); ?></h4>
                             <p class="znd-card-desc"><?php echo esc_html($item['desc']); ?></p>
                             <div class="znd-card-tags">
-                                <span class="znd-tag znd-tag-price">
-                                    <i class="fa fa-coins"></i> <?php echo $price > 0 ? number_format($price) . ' ' . esc_html($currency_name) : __('Miễn phí', 'zibll-nick-decor'); ?>
+                                <span class="badg badg-sm c-yellow">
+                                    <i class="fa fa-coins mr3"></i><?php echo $price > 0 ? number_format($price) . ' ' . esc_html($currency_name) : __('Miễn phí', 'zibll-nick-decor'); ?>
                                 </span>
-                                <span class="znd-tag znd-tag-duration"><i class="fa fa-clock-o"></i> <?php echo esc_html($duration); ?></span>
+                                <span class="badg badg-sm"><i class="fa fa-clock-o mr3"></i><?php echo esc_html($duration); ?></span>
                             </div>
                         </div>
 
                         <div class="znd-card-actions">
-                            <button type="button" class="znd-btn znd-btn-preview" title="<?php esc_attr_e('Xem thử trên tên bạn', 'zibll-nick-decor'); ?>">
-                                <i class="fa fa-eye"></i> <?php esc_html_e('Thử', 'zibll-nick-decor'); ?>
+                            <button type="button" class="but but-sm hollow radius znd-btn znd-btn-preview" title="<?php esc_attr_e('Xem thử trên tên bạn', 'zibll-nick-decor'); ?>">
+                                <i class="fa fa-eye mr3"></i><?php esc_html_e('Thử', 'zibll-nick-decor'); ?>
                             </button>
 
                             <?php if ($is_equipped): ?>
-                                <button type="button" class="znd-btn znd-btn-unequip" data-action="unequip" data-type="color">
-                                    <i class="fa fa-check-circle"></i> <?php esc_html_e('Đang dùng (Tháo)', 'zibll-nick-decor'); ?>
+                                <button type="button" class="but but-sm c-green radius znd-btn znd-btn-unequip" data-action="unequip" data-type="color">
+                                    <i class="fa fa-check-circle mr3"></i><?php esc_html_e('Đang dùng (Tháo)', 'zibll-nick-decor'); ?>
                                 </button>
                             <?php elseif ($is_owned): ?>
-                                <button type="button" class="znd-btn znd-btn-equip" data-action="equip" data-type="color" data-id="<?php echo esc_attr($id); ?>">
-                                    <i class="fa fa-bolt"></i> <?php esc_html_e('Trang bị', 'zibll-nick-decor'); ?>
+                                <button type="button" class="but but-sm c-blue radius znd-btn znd-btn-equip" data-action="equip" data-type="color" data-id="<?php echo esc_attr($id); ?>">
+                                    <i class="fa fa-bolt mr3"></i><?php esc_html_e('Trang bị', 'zibll-nick-decor'); ?>
                                 </button>
                             <?php else: ?>
-                                <button type="button" class="znd-btn znd-btn-buy" data-action="buy" data-type="color" data-id="<?php echo esc_attr($id); ?>">
-                                    <i class="fa fa-shopping-cart"></i> <?php esc_html_e('Mua ngay', 'zibll-nick-decor'); ?>
+                                <button type="button" class="but but-sm c-yellow radius znd-btn znd-btn-buy" data-action="buy" data-type="color" data-id="<?php echo esc_attr($id); ?>">
+                                    <i class="fa fa-shopping-cart mr3"></i><?php esc_html_e('Mua ngay', 'zibll-nick-decor'); ?>
                                 </button>
                             <?php endif; ?>
                         </div>
@@ -632,14 +638,14 @@ class ZND_Renderer {
             <?php if (is_user_logged_in()): ?>
             <div id="znd-tab-wardrobe" class="znd-tab-content">
                 <?php if (empty($inv['icons']) && empty($inv['colors'])): ?>
-                    <div class="znd-empty-box">
-                        <i class="fa fa-box-open fa-3x muted-3-color"></i>
-                        <h4><?php esc_html_e('Tủ đồ của bạn đang trống!', 'zibll-nick-decor'); ?></h4>
+                    <div class="znd-empty-box text-center padding-30 muted-box radius8">
+                        <i class="fa fa-box-open fa-3x muted-3-color mb10"></i>
+                        <h4 class="font-bold"><?php esc_html_e('Tủ đồ của bạn đang trống!', 'zibll-nick-decor'); ?></h4>
                         <p class="muted-color"><?php esc_html_e('Hãy chọn mua những icon và màu nick cực chất ở các tab bên cạnh để làm mới phong cách nhé.', 'zibll-nick-decor'); ?></p>
                     </div>
                 <?php else: ?>
                     <div class="znd-wardrobe-section">
-                        <h4 class="znd-section-title"><i class="fa fa-star text-warning"></i> <?php esc_html_e('Icon đã sở hữu', 'zibll-nick-decor'); ?></h4>
+                        <h4 class="znd-section-title font-bold mb10"><i class="fa fa-star c-yellow mr6"></i><?php esc_html_e('Icon đã sở hữu', 'zibll-nick-decor'); ?></h4>
                         <div class="znd-grid">
                             <?php foreach ($inv['icons'] as $id => $data):
                                 if (!isset($icons[$id])) continue;
@@ -654,16 +660,18 @@ class ZND_Renderer {
                                 </div>
                                 <div class="znd-card-info">
                                     <h4 class="znd-card-title"><?php echo esc_html($item['name']); ?></h4>
-                                    <span class="znd-tag znd-tag-duration"><i class="fa fa-shield"></i> <?php echo esc_html($expiry_text); ?></span>
+                                    <div class="znd-card-tags">
+                                        <span class="badg badg-sm"><i class="fa fa-shield mr3"></i><?php echo esc_html($expiry_text); ?></span>
+                                    </div>
                                 </div>
                                 <div class="znd-card-actions">
                                     <?php if ($is_equipped): ?>
-                                        <button type="button" class="znd-btn znd-btn-unequip" data-action="unequip" data-type="icon">
-                                            <i class="fa fa-times"></i> <?php esc_html_e('Tháo trang bị', 'zibll-nick-decor'); ?>
+                                        <button type="button" class="but but-sm c-green radius znd-btn znd-btn-unequip" data-action="unequip" data-type="icon">
+                                            <i class="fa fa-times mr3"></i><?php esc_html_e('Tháo trang bị', 'zibll-nick-decor'); ?>
                                         </button>
                                     <?php else: ?>
-                                        <button type="button" class="znd-btn znd-btn-equip" data-action="equip" data-type="icon" data-id="<?php echo esc_attr($id); ?>">
-                                            <i class="fa fa-bolt"></i> <?php esc_html_e('Đeo icon này', 'zibll-nick-decor'); ?>
+                                        <button type="button" class="but but-sm c-blue radius znd-btn znd-btn-equip" data-action="equip" data-type="icon" data-id="<?php echo esc_attr($id); ?>">
+                                            <i class="fa fa-bolt mr3"></i><?php esc_html_e('Đeo icon này', 'zibll-nick-decor'); ?>
                                         </button>
                                     <?php endif; ?>
                                 </div>
@@ -671,7 +679,7 @@ class ZND_Renderer {
                             <?php endforeach; ?>
                         </div>
 
-                        <h4 class="znd-section-title mt20"><i class="fa fa-magic text-primary"></i> <?php esc_html_e('Màu nick đã sở hữu', 'zibll-nick-decor'); ?></h4>
+                        <h4 class="znd-section-title font-bold mt20 mb10"><i class="fa fa-magic c-blue mr6"></i><?php esc_html_e('Màu nick đã sở hữu', 'zibll-nick-decor'); ?></h4>
                         <div class="znd-grid">
                             <?php foreach ($inv['colors'] as $id => $data):
                                 if (!isset($colors[$id])) continue;
@@ -686,16 +694,18 @@ class ZND_Renderer {
                                 </div>
                                 <div class="znd-card-info">
                                     <h4 class="znd-card-title"><?php echo esc_html($item['name']); ?></h4>
-                                    <span class="znd-tag znd-tag-duration"><i class="fa fa-shield"></i> <?php echo esc_html($expiry_text); ?></span>
+                                    <div class="znd-card-tags">
+                                        <span class="badg badg-sm"><i class="fa fa-shield mr3"></i><?php echo esc_html($expiry_text); ?></span>
+                                    </div>
                                 </div>
                                 <div class="znd-card-actions">
                                     <?php if ($is_equipped): ?>
-                                        <button type="button" class="znd-btn znd-btn-unequip" data-action="unequip" data-type="color">
-                                            <i class="fa fa-times"></i> <?php esc_html_e('Tháo màu nick', 'zibll-nick-decor'); ?>
+                                        <button type="button" class="but but-sm c-green radius znd-btn znd-btn-unequip" data-action="unequip" data-type="color">
+                                            <i class="fa fa-times mr3"></i><?php esc_html_e('Tháo màu nick', 'zibll-nick-decor'); ?>
                                         </button>
                                     <?php else: ?>
-                                        <button type="button" class="znd-btn znd-btn-equip" data-action="equip" data-type="color" data-id="<?php echo esc_attr($id); ?>">
-                                            <i class="fa fa-bolt"></i> <?php esc_html_e('Dùng màu này', 'zibll-nick-decor'); ?>
+                                        <button type="button" class="but but-sm c-blue radius znd-btn znd-btn-equip" data-action="equip" data-type="color" data-id="<?php echo esc_attr($id); ?>">
+                                            <i class="fa fa-bolt mr3"></i><?php esc_html_e('Dùng màu này', 'zibll-nick-decor'); ?>
                                         </button>
                                     <?php endif; ?>
                                 </div>
