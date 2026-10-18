@@ -174,41 +174,51 @@
         injectMobileButtons: function () {
             try {
                 var titleText = 'Cửa hàng màu & Icon nick';
+                var enableMobileHeader = (typeof znd_vars !== 'undefined' && typeof znd_vars.enable_mobile_header_btn !== 'undefined') ? (znd_vars.enable_mobile_header_btn !== false && znd_vars.enable_mobile_header_btn !== 'false') : true;
+                var enableMobileDrawer = (typeof znd_vars !== 'undefined' && typeof znd_vars.enable_mobile_drawer_btn !== 'undefined') ? (znd_vars.enable_mobile_drawer_btn !== false && znd_vars.enable_mobile_drawer_btn !== 'false') : true;
 
                 var insertMobile = function () {
                     // 1. Mobile Header bar (.navbar-header)
-                    var $navbarHeader = $('.navbar-header');
-                    if ($navbarHeader.length && !$navbarHeader.find('.znd-mobile-header-btn').length) {
-                        var $mBtn = $(
-                            '<a href="javascript:;" data-action="zibll_nick_decor_modal" class="navbar-toggle open-nick-decor-modal znd-mobile-header-btn visible-xs" title="' + titleText + '">' +
-                            '<i class="fa fa-paint-brush" aria-hidden="true"></i>' +
-                            '</a>'
-                        );
+                    if (enableMobileHeader) {
+                        var $navbarHeader = $('.navbar-header');
+                        if ($navbarHeader.length && !$navbarHeader.find('.znd-mobile-header-btn').length) {
+                            var $mBtn = $(
+                                '<a href="javascript:;" data-action="zibll_nick_decor_modal" class="navbar-toggle open-nick-decor-modal znd-mobile-header-btn visible-xs" title="' + titleText + '">' +
+                                '<i class="fa fa-paint-brush" aria-hidden="true"></i>' +
+                                '</a>'
+                            );
 
-                        var $msgBtn = $navbarHeader.find('.zac-mobile-header-msg-btn');
-                        var $searchBtn = $navbarHeader.find('.main-search-btn.navbar-toggle');
-                        var $menuToggle = $navbarHeader.find('button[data-toggle-class="mobile-navbar-show"]');
+                            var $msgBtn = $navbarHeader.find('.zac-mobile-header-msg-btn');
+                            var $searchBtn = $navbarHeader.find('.main-search-btn.navbar-toggle');
+                            var $menuToggle = $navbarHeader.find('button[data-toggle-class="mobile-navbar-show"]');
 
-                        if ($msgBtn.length) {
-                            $msgBtn.after($mBtn);
-                        } else if ($searchBtn.length) {
-                            $searchBtn.after($mBtn);
-                        } else if ($menuToggle.length) {
-                            $menuToggle.before($mBtn);
-                        } else {
-                            $navbarHeader.append($mBtn);
+                            if ($msgBtn.length) {
+                                $msgBtn.after($mBtn);
+                            } else if ($searchBtn.length) {
+                                $searchBtn.after($mBtn);
+                            } else if ($menuToggle.length) {
+                                $menuToggle.before($mBtn);
+                            } else {
+                                $navbarHeader.append($mBtn);
+                            }
                         }
+                    } else {
+                        $('.navbar-header .znd-mobile-header-btn').remove();
                     }
 
                     // 2. Mobile Drawer Top Header (.mobile-navbar .flex.ac.pull-right)
-                    var $drawerTop = $('.mobile-navbar .flex.ac.pull-right');
-                    if ($drawerTop.length && !$drawerTop.find('.znd-mobile-drawer-btn').length) {
-                        var $drawerBtn = $(
-                            '<a href="javascript:;" data-action="zibll_nick_decor_modal" class="toggle-radius open-nick-decor-modal znd-mobile-drawer-btn" title="' + titleText + '">' +
-                            '<i class="fa fa-paint-brush"></i>' +
-                            '</a>'
-                        );
-                        $drawerTop.prepend($drawerBtn);
+                    if (enableMobileDrawer) {
+                        var $drawerTop = $('.mobile-navbar .flex.ac.pull-right');
+                        if ($drawerTop.length && !$drawerTop.find('.znd-mobile-drawer-btn').length) {
+                            var $drawerBtn = $(
+                                '<a href="javascript:;" data-action="zibll_nick_decor_modal" class="toggle-radius open-nick-decor-modal znd-mobile-drawer-btn" title="' + titleText + '">' +
+                                '<i class="fa fa-paint-brush"></i>' +
+                                '</a>'
+                            );
+                            $drawerTop.prepend($drawerBtn);
+                        }
+                    } else {
+                        $('.mobile-navbar .znd-mobile-drawer-btn').remove();
                     }
                 };
 

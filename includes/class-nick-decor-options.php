@@ -135,6 +135,22 @@ class ZND_Options {
                     'dependency' => array('znd_enabled', '==', 'true'),
                 ),
                 array(
+                    'id'         => 'znd_enable_mobile_header_btn',
+                    'type'       => 'switcher',
+                    'title'      => __('Biểu tượng mở shop trên Header di động', 'zibll-nick-decor'),
+                    'label'      => __('Hiển thị nút icon mở nhanh Cửa hàng màu & Icon nick trên thanh Header thiết bị di động', 'zibll-nick-decor'),
+                    'default'    => true,
+                    'dependency' => array('znd_enabled', '==', 'true'),
+                ),
+                array(
+                    'id'         => 'znd_enable_mobile_drawer_btn',
+                    'type'       => 'switcher',
+                    'title'      => __('Biểu tượng mở shop trong Menu trượt di động', 'zibll-nick-decor'),
+                    'label'      => __('Hiển thị nút icon mở nhanh Cửa hàng màu & Icon nick ở hàng tiện ích trên cùng của Menu trượt', 'zibll-nick-decor'),
+                    'default'    => true,
+                    'dependency' => array('znd_enabled', '==', 'true'),
+                ),
+                array(
                     'id'         => 'znd_apply_locations',
                     'type'       => 'checkbox',
                     'title'      => __('Khu vực hiển thị màu & Icon', 'zibll-nick-decor'),

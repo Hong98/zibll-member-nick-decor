@@ -93,15 +93,17 @@ class ZND_Renderer {
         $equipped_color = ZND_User::get_equipped_color($current_user_id);
 
         wp_localize_script('znd-frontend', 'znd_vars', array(
-            'ajax_url'        => admin_url('admin-ajax.php'),
-            'nonce'           => wp_create_nonce('znd_nonce'),
-            'is_logged_in'    => is_user_logged_in(),
-            'user_id'         => $current_user_id,
-            'equipped_icon'   => $equipped_icon,
-            'equipped_color'  => $equipped_color,
-            'currency_name'   => ZND_User::get_currency_name(),
-            'user_balance'    => ZND_User::get_user_currency_balance($current_user_id),
-            'i18n'            => array(
+            'ajax_url'                 => admin_url('admin-ajax.php'),
+            'nonce'                    => wp_create_nonce('znd_nonce'),
+            'is_logged_in'             => is_user_logged_in(),
+            'user_id'                  => $current_user_id,
+            'equipped_icon'            => $equipped_icon,
+            'equipped_color'           => $equipped_color,
+            'currency_name'            => ZND_User::get_currency_name(),
+            'user_balance'             => ZND_User::get_user_currency_balance($current_user_id),
+            'enable_mobile_header_btn' => function_exists('_pz') ? (bool) _pz('znd_enable_mobile_header_btn', true) : true,
+            'enable_mobile_drawer_btn' => function_exists('_pz') ? (bool) _pz('znd_enable_mobile_drawer_btn', true) : true,
+            'i18n'                     => array(
                 'confirm_buy'   => __('Bạn có chắc chắn muốn mua vật phẩm này không?', 'zibll-nick-decor'),
                 'buying'        => __('Đang xử lý mua...', 'zibll-nick-decor'),
                 'equipping'     => __('Đang trang bị...', 'zibll-nick-decor'),
@@ -135,6 +137,13 @@ class ZND_Renderer {
 
         // Tùy biến CSS nâng cao từ Admin
         if (function_exists('_pz')) {
+            if (!_pz('znd_enable_mobile_header_btn', true)) {
+                echo ".navbar-header .znd-mobile-header-btn { display: none !important; }\n";
+            }
+            if (!_pz('znd_enable_mobile_drawer_btn', true)) {
+                echo ".mobile-navbar .znd-mobile-drawer-btn { display: none !important; }\n";
+            }
+
             $custom_css = _pz('znd_custom_css', '');
             if (!empty($custom_css)) {
                 echo $custom_css . "\n";

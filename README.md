@@ -2,7 +2,7 @@
 
 > **Plugin tùy biến màu sắc và icon hiển thị đầu nickname thời thượng dành cho thành viên Theme Zibll.**
 
-![Version](https://img.shields.io/badge/version-v1.0.10-blue.svg)
+![Version](https://img.shields.io/badge/version-v1.0.11-blue.svg)
 ![WordPress](https://img.shields.io/badge/WordPress-5.6%2B-blue.svg)
 ![PHP](https://img.shields.io/badge/PHP-7.2%2B-green.svg)
 
@@ -96,6 +96,12 @@ Plugin cung cấp hệ thống Cửa hàng (Shop) và Tủ đồ (Wardrobe) cá 
 ---
 
 ## Lịch sử thay đổi
+
+### v1.0.11 — 2026-10-18
+- Thêm tùy chọn bật/tắt biểu tượng mở shop trên Header và Menu trượt di động:
+  - Bổ sung tùy chọn "Biểu tượng mở shop trên Header di động" (`znd_enable_mobile_header_btn`) trong Cài đặt Theme Zibll -> Màu & Icon đầu nick -> Cài đặt chung, cho phép quản trị viên chủ động bật hoặc tắt nút icon cọ vẽ (`.znd-mobile-header-btn`) trên thanh Header điện thoại.
+  - Bổ sung tùy chọn "Biểu tượng mở shop trong Menu trượt di động" (`znd_enable_mobile_drawer_btn`) để quản lý nút icon mở shop ở hàng tiện ích trên cùng của Menu trượt (Mobile Drawer).
+  - Tích hợp kiểm tra 2 lớp cả ở PHP Output CSS và JavaScript Client-side, đảm bảo phản hồi tức thì và tương thích hoàn hảo với bộ nhớ đệm trang.
 
 ### v1.0.10 — 2026-10-18
 - Thêm icon mở shop trên thiết bị di động và tối ưu tooltip thanh điều hướng (Navbar):
