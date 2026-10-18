@@ -194,6 +194,11 @@ class ZND_Renderer {
             $inner_con = $matches[2];
             $close_tag = $matches[3];
 
+            // Thêm class nhận diện có icon đầu nick
+            if (!empty($icon_html)) {
+                $open_tag = preg_replace('/class=["\']([^"\']*)["\']/', 'class="$1 has-znd-icon"', $open_tag);
+            }
+
             // Thêm class màu vào thẻ <a> nếu có
             if (!empty($color_class)) {
                 $open_tag = preg_replace('/class=["\']([^"\']*)["\']/', 'class="$1' . $color_class . '"', $open_tag);
@@ -211,6 +216,11 @@ class ZND_Renderer {
 
             $new_a = $open_tag . $inner_con . $close_tag;
             $html = str_replace($matches[0], $new_a, $html);
+
+            // Gắn thêm has-znd-icon vào thẻ <name> nếu có icon
+            if (!empty($icon_html) && strpos($html, '<name') !== false) {
+                $html = preg_replace('/(<name[^>]*class=["\'][^"\']*)["\']/', '$1 has-znd-icon"', $html, 1);
+            }
         }
 
         return $html;
@@ -256,6 +266,10 @@ class ZND_Renderer {
             $open_tag  = $matches[1];
             $inner_con = $matches[2];
             $close_tag = $matches[3];
+
+            if (!empty($icon_html)) {
+                $open_tag = preg_replace('/class=["\']([^"\']*)["\']/', 'class="$1 has-znd-icon"', $open_tag);
+            }
 
             if (!empty($color_class)) {
                 $open_tag = preg_replace('/class=["\']([^"\']*)["\']/', 'class="$1' . $color_class . '"', $open_tag);

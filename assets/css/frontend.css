@@ -74,6 +74,62 @@
 }
 
 /* ==========================================================================
+   1.1. TỰ ĐỘNG CO GIÃN ĐỘ RỘNG KHUNG TÊN KHI CÓ TRANG BỊ ICON NICK
+   ========================================================================== */
+
+/* 1. Hộp người dùng menu thả xuống (User Dropdown Box .sub-user-box) */
+/* Khi thành viên có icon nick: tự động mở rộng dài ra 285px để không bị cắt chữ */
+.sub-user-box:has(.znd-nick-icon),
+.sub-user-box.has-znd-icon {
+    width: 285px !important;
+    max-width: 330px;
+    transition: width 0.2s ease;
+}
+
+/* Nới rộng khoảng không khả dụng cho dòng tên trong .sub-user-box */
+.sub-user-box:has(.znd-nick-icon) .user-right .flex1,
+.sub-user-box.has-znd-icon .user-right .flex1 {
+    max-width: calc(100% - 28px) !important;
+}
+
+/* Cho phép thẻ display-name trong .sub-user-box có đủ chỗ hiển thị tên trọn vẹn */
+.sub-user-box:has(.znd-nick-icon) .display-name,
+.sub-user-box.has-znd-icon .display-name {
+    max-width: calc(100% - 50px) !important;
+    flex-shrink: 0;
+}
+
+/* 2. Thẻ tên và container flex ở mọi nơi có icon nick tự động co giãn linh hoạt */
+name:has(.znd-nick-icon),
+name.has-znd-icon {
+    min-width: 0;
+    max-width: 100%;
+}
+
+.display-name:has(.znd-nick-icon),
+.display-name.has-znd-icon {
+    max-width: fit-content;
+}
+
+/* Trường hợp thẻ a.display-name nằm trong container flexbox bị text-ellipsis */
+.flex > a.display-name:has(.znd-nick-icon),
+.flex > a.display-name.has-znd-icon {
+    max-width: 100%;
+}
+
+/* Trong widget thẻ thành viên hoặc tác giả (User Card Widget) */
+.user-card name:has(.znd-nick-icon) .display-name,
+.user-card name.has-znd-icon .display-name {
+    max-width: 100% !important;
+}
+
+/* Trong tiêu đề bình luận (Comment Header) */
+.comment-header a.has-znd-icon,
+.comment-header:has(.znd-nick-icon) a.text-ellipsis {
+    max-width: fit-content !important;
+}
+
+/* ==========================================================================
    2. MODAL DIALOG (CỬA HÀNG & TỦ ĐỒ THEME ZIBLL)
    ========================================================================== */
 #znd-shop-modal {

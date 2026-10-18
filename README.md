@@ -2,7 +2,7 @@
 
 > **Plugin tùy biến màu sắc và icon hiển thị đầu nickname thời thượng dành cho thành viên Theme Zibll.**
 
-![Version](https://img.shields.io/badge/version-v1.0.22-blue.svg)
+![Version](https://img.shields.io/badge/version-v1.0.23-blue.svg)
 ![WordPress](https://img.shields.io/badge/WordPress-5.6%2B-blue.svg)
 ![PHP](https://img.shields.io/badge/PHP-7.2%2B-green.svg)
 
@@ -96,6 +96,15 @@ Plugin cung cấp hệ thống Cửa hàng (Shop) và Tủ đồ (Wardrobe) cá 
 ---
 
 ## Lịch sử thay đổi
+
+### v1.0.23 — 2026-10-19
+- Tự động co giãn độ rộng khung tên khi có trang bị icon nick và khôi phục khi không dùng icon:
+  - Khắc phục triệt để lỗi tên bị cắt cụt (`text-ellipsis` thành `...`) ở các khu vực giới hạn kích thước (đặc biệt là User Dropdown Box `.sub-user-box` trên thanh Header).
+  - Tự động mở rộng linh hoạt theo trạng thái sở hữu icon:
+    - Khi thành viên có trang bị icon nick: Hộp thông tin người dùng (`.sub-user-box`) tự động mở rộng độ rộng từ `242px` lên `285px`, giải phóng không gian cho dòng tên hiển thị đầy đủ, không còn bị chèn ép bởi icon đầu nick, huy hiệu tích xanh xác minh và huy hiệu cấp bậc Lv.
+    - Khi thành viên không trang bị icon nick: Tự động thu gọn về kích thước chuẩn nguyên bản `242px` của Theme Zibll, đảm bảo giao diện gọn gàng, tinh tế và đồng bộ hoàn hảo.
+  - Tự động gán class nhận diện hai tầng (`.has-znd-icon` và `:has(.znd-nick-icon)`) xuyên suốt từ máy chủ PHP đến trình duyệt JavaScript, đảm bảo tương thích 100% trên mọi nền tảng trình duyệt.
+  - Tối ưu hóa độ co giãn (`max-width: fit-content` và `flex-shrink: 0`) cho thẻ tên trong các khối flexbox như bình luận, thẻ tác giả và danh sách bài viết.
 
 ### v1.0.22 — 2026-10-19
 - Sửa lỗi nút Nạp thêm không hiện popup nạp tiền và hỗ trợ nạp đa tiền tệ:

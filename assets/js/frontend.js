@@ -20,6 +20,7 @@
 
         init: function () {
             this.bindEvents();
+            this.autoExpandIconContainers();
 
             // CHỈ hiển thị biểu tượng mở Shop khi người dùng đã đăng nhập (PC & di động)
             if (this.isUserLoggedIn()) {
@@ -30,6 +31,24 @@
                 // Nếu chưa đăng nhập, dọn dẹp sạch toàn bộ các icon/nút mở shop trên giao diện (phòng ngừa page cache)
                 $('.open-nick-decor-modal, .znd-user-shortcuts-section, .znd-mobile-header-btn, .znd-mobile-drawer-btn').remove();
             }
+        },
+
+        // Tự động kiểm tra và gắn class has-znd-icon cho các container chứa tên có icon nick
+        autoExpandIconContainers: function () {
+            $('.sub-user-box').each(function () {
+                var $box = $(this);
+                if ($box.find('.znd-nick-icon').length) {
+                    $box.addClass('has-znd-icon');
+                } else {
+                    $box.removeClass('has-znd-icon');
+                }
+            });
+
+            // Gắn class has-znd-icon cho các thẻ name hoặc display-name có icon nick
+            $('.znd-nick-icon').each(function () {
+                var $icon = $(this);
+                $icon.closest('name, .display-name, .comment-header, .user-info').addClass('has-znd-icon');
+            });
         },
 
         // Tự động làm mới số dư hiện tại của thành viên qua AJAX
@@ -201,6 +220,9 @@
                                 }
                             }
                         });
+
+                        // Cập nhật co giãn độ rộng cho .sub-user-box nếu có icon nick
+                        self.autoExpandIconContainers();
                     } finally {
                         isAdjusting = false;
                     }
