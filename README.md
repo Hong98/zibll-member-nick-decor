@@ -2,7 +2,7 @@
 
 > **Plugin tùy biến màu sắc và icon hiển thị đầu nickname thời thượng dành cho thành viên Theme Zibll.**
 
-![Version](https://img.shields.io/badge/version-v1.0.18-blue.svg)
+![Version](https://img.shields.io/badge/version-v1.0.19-blue.svg)
 ![WordPress](https://img.shields.io/badge/WordPress-5.6%2B-blue.svg)
 ![PHP](https://img.shields.io/badge/PHP-7.2%2B-green.svg)
 
@@ -96,6 +96,19 @@ Plugin cung cấp hệ thống Cửa hàng (Shop) và Tủ đồ (Wardrobe) cá 
 ---
 
 ## Lịch sử thay đổi
+
+### v1.0.19 — 2026-10-19
+- Co giãn linh hoạt lưới icon và khắc phục triệt để lỗi bị thanh menu dưới che khuất trên thiết bị di động:
+  - Tối ưu hóa lưới Grid co giãn hoàn hảo (`repeat(4, minmax(0, 1fr))`):
+    - Thiết lập `minmax(0, 1fr)` và `min-width: 0` trên từng card giúp các cột tự động co giãn linh hoạt vừa in 100% độ rộng modal trên mọi kích thước màn hình điện thoại (từ 340px đến 430px+), giải quyết triệt để lỗi tràn viền làm lẹm chữ ở cột 1 bên trái và cột 4 bên phải.
+    - Căn chỉnh font chữ tiêu đề 10px kèm `text-overflow: ellipsis` và thu gọn padding khung card xuống `5px 2px`, đảm bảo hiển thị trọn vẹn, không bị cắt xén nội dung.
+    - Hỗ trợ màn hình siêu nhỏ (`<= 330px`): Tự động chuyển đổi mượt mà sang 3 cột cân đối.
+  - Khắc phục triệt để tình trạng chân modal bị thanh menu dưới (Toolbar/Bottom Nav) che khuất:
+    - Nâng cấp `z-index` của modal `#znd-shop-modal` lên `100050` và backdrop lên `100040`.
+    - Tự động trượt ẩn thanh điều hướng đáy của Theme Zibll (`.footer-tabbar`) khi popup mở ra (`transform: translateY(120%)`) và phục hồi mượt mà khi đóng, trả lại trọn vẹn diện tích màn hình cho người dùng thao tác.
+    - Giới hạn chiều cao an toàn trên di động theo chuẩn dynamic viewport `max-height: calc(100dvh - 85px)` kết hợp khoảng đệm an toàn `padding: 10px 0 calc(70px + env(safe-area-inset-bottom)) 0` trên modal wrapper, đảm bảo modal luôn nằm trên thanh Toolbar của các trình duyệt di động (Safari iOS, Chrome Mobile, Cốc Cốc, Samsung Internet, Zalo/Facebook WebView).
+    - Bổ sung khoảng đệm đáy `padding-bottom: 75px` cho các tab danh sách, giúp các hàng icon cuối cùng khi cuộn kịch đáy luôn nổi cao hơn thanh Action Drawer ít nhất 75px, ngón tay dễ dàng chạm chọn mà không lo bị che khuất.
+  - Thu gọn kích thước hộp xem trước Live Preview trên di động để tăng tối đa diện tích hiển thị danh sách vật phẩm.
 
 ### v1.0.18 — 2026-10-19
 - Thiết kế lại lưới danh sách siêu gọn chỉ gồm Icon và Tên, tích hợp thanh Action Drawer chi tiết và nút mua ở đáy:

@@ -76,6 +76,22 @@
 /* ==========================================================================
    2. MODAL DIALOG (CỬA HÀNG & TỦ ĐỒ THEME ZIBLL)
    ========================================================================== */
+#znd-shop-modal {
+    z-index: 100050 !important;
+}
+
+.modal-backdrop.in {
+    z-index: 100040 !important;
+}
+
+/* Ẩn trượt êm thanh footer tabbar của Theme Zibll khi mở modal Nick Decor */
+body.znd-modal-open .footer-tabbar,
+body.modal-open .footer-tabbar {
+    transform: translateY(120%) !important;
+    pointer-events: none !important;
+    transition: transform 0.25s ease !important;
+}
+
 #znd-shop-modal:not(.in) {
     display: none !important;
 }
@@ -93,6 +109,7 @@
     width: 95%;
     margin: auto !important;
     max-height: calc(100vh - 40px);
+    max-height: calc(100dvh - 40px);
     display: flex;
     flex-direction: column;
 }
@@ -105,6 +122,7 @@
     border: none;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
     max-height: calc(100vh - 40px);
+    max-height: calc(100dvh - 40px);
     display: flex;
     flex-direction: column;
 }
@@ -114,19 +132,32 @@
     overflow-y: auto;
     flex: 1 1 auto;
     -webkit-overflow-scrolling: touch;
+    box-sizing: border-box;
 }
 
 @media (max-width: 767px) {
+    #znd-shop-modal.in {
+        align-items: flex-start !important;
+        padding: 10px 0 calc(70px + env(safe-area-inset-bottom, 0px)) 0 !important;
+    }
+
     #znd-shop-modal .modal-dialog {
-        max-width: calc(100% - 20px);
-        margin: auto !important;
-        max-height: calc(100vh - 20px);
+        max-width: calc(100% - 16px) !important;
+        width: calc(100% - 16px) !important;
+        margin: 0 auto !important;
+        max-height: calc(100vh - 85px) !important;
+        max-height: calc(100dvh - 85px) !important;
+        height: auto !important;
     }
+
     #znd-shop-modal .modal-content {
-        max-height: calc(100vh - 20px);
+        max-height: calc(100vh - 85px) !important;
+        max-height: calc(100dvh - 85px) !important;
+        border-radius: var(--main-radius, 12px) !important;
     }
+
     #znd-shop-modal .modal-body {
-        padding: 15px;
+        padding: 10px 8px 15px 8px !important;
     }
 }
 
@@ -244,6 +275,7 @@
 
 .znd-tab-content {
     display: none;
+    padding-bottom: 75px;
 }
 
 .znd-tab-content.active {
@@ -478,42 +510,125 @@
    8. RESPONSIVE THIẾT KẾ CHO DI ĐỘNG & MÀN HÌNH NHỎ
    ========================================================================== */
 @media (max-width: 767px) {
+    /* Thu gọn hộp Live Preview để tăng không gian cho danh sách */
+    .znd-live-preview-box {
+        padding: 10px 12px !important;
+        margin-bottom: 12px !important;
+    }
+
+    .znd-preview-label {
+        font-size: 12px !important;
+        margin-bottom: 6px !important;
+    }
+
+    .znd-preview-card {
+        padding: 8px 10px !important;
+        gap: 10px !important;
+    }
+
+    .znd-preview-avatar img,
+    .znd-preview-avatar .avatar-img {
+        width: 38px !important;
+        height: 38px !important;
+    }
+
+    .znd-preview-name-line {
+        font-size: 14px !important;
+    }
+
+    .znd-preview-meta {
+        font-size: 11px !important;
+    }
+
+    .znd-balance-bar {
+        margin-top: 8px !important;
+        padding-top: 8px !important;
+        font-size: 12px !important;
+    }
+
+    .znd-nav-tabs.tab-nav-theme {
+        margin-bottom: 12px !important;
+        padding-bottom: 4px !important;
+    }
+
+    .znd-nav-tabs.tab-nav-theme li > a {
+        padding: 6px 10px !important;
+        font-size: 13px !important;
+    }
+
+    /* Lưới các mục tự động co giãn linh hoạt vừa khít 100% không bị tràn mép */
     .znd-grid {
-        grid-template-columns: repeat(4, 1fr) !important;
-        gap: 6px !important;
+        display: grid !important;
+        grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+        gap: 4px !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
     }
 
     .znd-card {
-        padding: 6px 4px !important;
-        min-height: 74px !important;
+        width: 100% !important;
+        min-width: 0 !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+        padding: 5px 2px !important;
+        min-height: 68px !important;
+        overflow: hidden !important;
     }
 
     .znd-card-icon-preview,
     .znd-card-color-sample {
-        height: 36px !important;
-        margin-bottom: 4px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+        height: 34px !important;
+        margin-bottom: 3px !important;
+        padding: 2px !important;
     }
 
     .znd-card-icon-preview .znd-nick-icon {
-        width: 24px !important;
-        height: 24px !important;
+        width: 22px !important;
+        height: 22px !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+
+    .znd-card-icon-preview .znd-nick-icon svg,
+    .znd-card-icon-preview .znd-nick-icon img {
+        width: 100% !important;
+        height: 100% !important;
+        max-width: 22px !important;
+        max-height: 22px !important;
+        object-fit: contain !important;
     }
 
     .znd-card-name {
-        font-size: 10.5px !important;
+        display: block !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+        box-sizing: border-box !important;
+        font-size: 10px !important;
+        line-height: 1.2 !important;
+        text-align: center !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        padding: 0 1px !important;
     }
 
     /* Action Drawer trên Mobile: Cố định ở đáy modal, ngón cái dễ chạm */
     .znd-action-drawer {
-        padding: 10px 14px !important;
+        padding: 8px 12px !important;
         bottom: -15px !important;
-        margin: 10px -15px -15px -15px !important;
+        margin: 10px -8px -15px -8px !important;
+        border-radius: 0 0 var(--main-radius, 12px) var(--main-radius, 12px) !important;
     }
 
     .znd-drawer-content {
         flex-direction: column !important;
         align-items: stretch !important;
-        gap: 8px !important;
+        gap: 6px !important;
     }
 
     .znd-drawer-left {
@@ -521,17 +636,17 @@
     }
 
     .znd-drawer-preview {
-        width: 36px !important;
-        height: 36px !important;
+        width: 32px !important;
+        height: 32px !important;
     }
 
     .znd-drawer-preview .znd-nick-icon {
-        width: 26px !important;
-        height: 26px !important;
+        width: 24px !important;
+        height: 24px !important;
     }
 
     .znd-drawer-name {
-        font-size: 13px !important;
+        font-size: 12.5px !important;
     }
 
     .znd-drawer-desc {
@@ -554,8 +669,8 @@
 
     .znd-drawer-btn-wrap .znd-btn {
         width: 100% !important;
-        height: 34px !important;
-        font-size: 13px !important;
+        height: 32px !important;
+        font-size: 12.5px !important;
     }
 
     .znd-drawer-close {
@@ -565,10 +680,10 @@
     }
 }
 
-@media (max-width: 360px) {
+@media (max-width: 330px) {
     .znd-grid {
-        grid-template-columns: repeat(3, 1fr) !important;
-        gap: 5px !important;
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+        gap: 4px !important;
     }
 }
 

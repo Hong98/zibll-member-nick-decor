@@ -402,7 +402,7 @@ class ZND_Renderer {
         ?>
         <!-- Zibll Member Nickname & Badge Pro Modal -->
         <div class="modal fade" id="znd-shop-modal" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
-            <div class="modal-dialog modal-lg" role="document" style="max-width: 860px; width: 100%;">
+            <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <?php if (function_exists('zib_get_modal_colorful_header')): ?>
                         <?php echo zib_get_modal_colorful_header('jb-yellow', '<i class="fa fa-paint-brush"></i>', '<div class="em12 font-bold">' . esc_html__('Cửa hàng màu & Icon nick', 'zibll-nick-decor') . '</div><div class="em09 opacity8 mt6 font-normal">' . esc_html__('Tùy biến phong cách nickname độc bản và nổi bật cho thành viên', 'zibll-nick-decor') . '</div>'); ?>
@@ -412,7 +412,7 @@ class ZND_Renderer {
                             <b class="modal-title flex ac"><span class="badg c-yellow mr6"><i class="fa fa-paint-brush"></i></span> <?php esc_html_e('Cửa hàng màu & Icon nick', 'zibll-nick-decor'); ?></b>
                         </div>
                     <?php endif; ?>
-                    <div class="modal-body" style="padding: 20px;">
+                    <div class="modal-body">
                         <?php echo self::render_shop_html($user_id, true); ?>
                     </div>
                 </div>

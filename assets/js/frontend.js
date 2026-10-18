@@ -37,11 +37,11 @@
             var $modal = $('#znd-shop-modal');
             if (!$modal.length) return;
 
+            $('body').addClass('znd-modal-open modal-open');
             if ($.fn.modal) {
                 $modal.modal({ backdrop: 'static', keyboard: true }).modal('show');
             } else {
                 $modal.addClass('in is-open').show();
-                $('body').addClass('modal-open');
             }
             $modal.css('display', 'flex');
         },
@@ -51,6 +51,7 @@
             var $modal = $('#znd-shop-modal');
             if (!$modal.length) return;
 
+            $('body').removeClass('znd-modal-open');
             if ($.fn.modal) {
                 $modal.modal('hide');
             } else {
@@ -352,6 +353,15 @@
                         self.closeModal();
                     }
                 }
+            });
+
+            // Đồng bộ trạng thái lớp body khi đóng/mở qua Bootstrap Modal
+            $('#znd-shop-modal').on('hidden.bs.modal', function () {
+                $('body').removeClass('znd-modal-open');
+                $(this).css('display', 'none');
+            }).on('shown.bs.modal', function () {
+                $('body').addClass('znd-modal-open');
+                $(this).css('display', 'flex');
             });
 
             // =====================================================================
