@@ -606,34 +606,40 @@ body.dark-theme .znd-empty-box h4 { color: #f1f5f9; }
 }
 
 /* ==========================================================================
-   7. ĐỒNG BỘ NÚT MỞ SHOP TRONG MENU NGƯỜI DÙNG THEME ZIBLL
+   7. NÚT MỞ SHOP Ở ĐÁY MENU NGƯỜI DÙNG THEME ZIBLL (.sub-user-box)
    ========================================================================== */
-.sub-user-box .header-user-href:first-of-type {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
+.znd-user-menu-bottom {
+    padding: 2px 0 0 0;
+    margin-top: 10px;
 }
 
-.sub-user-box .header-user-href:first-of-type > a {
-    min-width: 0 !important;
-    flex: 1 1 0;
-    padding-left: 2px;
-    padding-right: 2px;
-    text-align: center;
-}
-
-.sub-user-box .header-user-href .znd-user-href-btn .badg {
-    display: inline-flex;
+.znd-bottom-shop-btn {
+    display: flex !important;
     align-items: center;
     justify-content: center;
-    transition: transform 0.2s ease, background 0.2s ease;
+    gap: 8px;
+    padding: 8px 14px !important;
+    font-size: 13px !important;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+    border-radius: 8px !important;
+    transition: all 0.25s ease;
+    text-decoration: none !important;
+    box-shadow: none;
 }
 
-.sub-user-box .header-user-href .znd-user-href-btn .badg i {
-    font-size: 15px;
+.znd-bottom-shop-btn i.fa-paint-brush {
+    font-size: 14px;
+    transition: transform 0.25s ease;
 }
 
-.sub-user-box .header-user-href .znd-user-href-btn:hover .badg {
-    transform: scale(1.08);
+.znd-bottom-shop-btn:hover {
+    filter: brightness(1.05);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(245, 158, 11, 0.2);
+}
+
+.znd-bottom-shop-btn:hover i.fa-paint-brush {
+    transform: rotate(15deg) scale(1.1);
 }
 

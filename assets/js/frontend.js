@@ -52,24 +52,31 @@
             }, 3000);
         },
 
-        // Tự động chèn nút vào User Dropdown Box của Theme Zibll
+        // Tự động chèn nút vào đáy User Dropdown Box của Theme Zibll
         injectUserMenuButton: function () {
             try {
                 var insertBtn = function () {
-                    var $box = $('.header-user-href').first();
-                    if ($box.length && !$box.find('.znd-user-href-btn').length) {
-                        var btnHtml = '<a href="javascript:;" data-action="zibll_nick_decor_modal" class="open-nick-decor-modal znd-user-href-btn" title="Cửa hàng màu & Icon nick">' +
-                                      '<div class="badg mb6 toggle-radius c-yellow"><i class="fa fa-paint-brush"></i></div>' +
-                                      '<div class="c-yellow translate-ignore">Màu & Icon</div>' +
-                                      '</a>';
-                        // Chèn vào ngay trước nút Đăng xuất để đồng bộ chuẩn thứ tự tính năng Zibll
-                        var $signOut = $box.find('[data-target="#modal_signout"], a:has(.c-red)').first();
-                        if ($signOut.length) {
-                            $signOut.before(btnHtml);
+                    // Xóa nút trong hàng 1 nếu có từ phiên bản cũ
+                    $('.header-user-href .znd-user-href-btn').remove();
+
+                    $('.sub-user-box').each(function () {
+                        var $box = $(this);
+                        if (!$box.find('.znd-user-menu-bottom').length) {
+                            var bottomHtml = '<div class="znd-user-menu-bottom mt10 translate-ignore notranslate">' +
+                                             '<div class="relative opacity5 mb10"><i class="line-form-line"></i></div>' +
+                                             '<a href="javascript:;" data-action="zibll_nick_decor_modal" class="open-nick-decor-modal but block c-yellow radius em09 znd-bottom-shop-btn" title="Cửa hàng màu & Icon nick">' +
+                                             '<i class="fa fa-paint-brush mr6"></i><span>Cửa hàng màu & Icon nick</span>' +
+                                             '</a>' +
+                                             '</div>';
+                            $box.append(bottomHtml);
                         } else {
-                            $box.append(btnHtml);
+                            // Đảm bảo luôn nằm ở vị trí cuối cùng dưới đáy popup
+                            var $bottom = $box.find('.znd-user-menu-bottom');
+                            if (!$bottom.is(':last-child')) {
+                                $box.append($bottom);
+                            }
                         }
-                    }
+                    });
                 };
 
                 insertBtn();
