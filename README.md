@@ -2,7 +2,7 @@
 
 > **Plugin tùy biến màu sắc và icon hiển thị đầu nickname thời thượng dành cho thành viên Theme Zibll.**
 
-![Version](https://img.shields.io/badge/version-v1.0.32-blue.svg)
+![Version](https://img.shields.io/badge/version-v1.0.33-blue.svg)
 ![WordPress](https://img.shields.io/badge/WordPress-5.6%2B-blue.svg)
 ![PHP](https://img.shields.io/badge/PHP-7.2%2B-green.svg)
 
@@ -105,6 +105,17 @@ Plugin cung cấp hệ thống Cửa hàng (Shop) và Tủ đồ (Wardrobe) cá 
 ---
 
 ## Lịch sử thay đổi
+
+### v1.0.33 — 2026-10-19
+- Chuẩn hóa nút xác nhận mua hàng theo đúng 100% cấu trúc Theme Zibll:
+  - Thay thế khối nút tùy biến cũ bằng cấu trúc chuẩn `.modal-buts.but-average` của Theme Zibll.
+  - Phân bổ 2 nút cân đối 50% - 50% bao trọn toàn bộ đáy modal: Nút "Hủy bỏ" (`.but.padding-lg`) nền trong suốt tinh tế và Nút "Xác nhận mua" (`.but.jb-yellow.padding-lg`) với gradient vàng cam đặc trưng Zibll, icon check và đường kẻ dọc phân cách sắc nét.
+  - Tự động bo cong 2 góc đáy khớp hoàn hảo với viền `12px` của modal popup, mang lại trải nghiệm thị giác cao cấp và đồng bộ tuyệt đối với theme.
+- Tự động làm mới và cập nhật tab Tủ đồ thời gian thực qua AJAX khi mua hoặc đổi trang bị:
+  - Tách hàm render nội dung tab Tủ đồ `render_wardrobe_content` phía máy chủ PHP, cho phép trả về trọn vẹn HTML mới nhất của tủ đồ ngay trong kết quả AJAX của các hành động Mua (`buy_item`), Trang bị (`equip_item`) và Tháo (`unequip_item`).
+  - Phía trình duyệt (JavaScript): Tự động cập nhật tức thì toàn bộ DOM của tab Tủ đồ (`#znd-tab-wardrobe`), hiển thị ngay lập tức vật phẩm vừa mua kèm trạng thái "Đang dùng" mà không cần phải tải lại trang.
+  - Bổ sung chuyển hướng mượt mà sang tab Tủ đồ sau khi mua thành công, giúp thành viên nhìn thấy ngay vật phẩm trong tủ đồ và dễ dàng quản lý trang bị.
+  - Thêm endpoint AJAX `znd_get_wardrobe_html` hỗ trợ làm mới dữ liệu tủ đồ linh hoạt bất cứ lúc nào.
 
 ### v1.0.32 — 2026-10-19
 - Tích hợp popup xác nhận mua vật phẩm chuẩn Theme Zibll và hỗ trợ cập nhật giao diện thời gian thực (HTMX Reactive DOM Swap):

@@ -25,6 +25,9 @@ class ZND_Ajax {
         add_action('wp_ajax_znd_get_user_balance', array(__CLASS__, 'ajax_get_user_balance'));
         add_action('wp_ajax_nopriv_znd_get_user_balance', array(__CLASS__, 'ajax_need_login'));
 
+        add_action('wp_ajax_znd_get_wardrobe_html', array(__CLASS__, 'ajax_get_wardrobe_html'));
+        add_action('wp_ajax_nopriv_znd_get_wardrobe_html', array(__CLASS__, 'ajax_need_login'));
+
         // AJAX Admin quản lý thành viên
         add_action('wp_ajax_znd_admin_search_user', array(__CLASS__, 'ajax_admin_search_user'));
         add_action('wp_ajax_znd_admin_grant_item', array(__CLASS__, 'ajax_admin_grant_item'));
@@ -86,6 +89,7 @@ class ZND_Ajax {
         }
 
         $balance = ZND_User::get_user_currency_balance($user_id);
+        $wardrobe_html = class_exists('ZND_Renderer') ? ZND_Renderer::render_wardrobe_content($user_id) : '';
 
         return array(
             'equipped_icon'          => $equipped_icon,
@@ -95,6 +99,7 @@ class ZND_Ajax {
             'user_balance'           => $balance,
             'user_balance_formatted' => number_format($balance),
             'currency_name'          => ZND_User::get_currency_name(),
+            'wardrobe_html'          => $wardrobe_html,
         );
     }
 
@@ -380,6 +385,24 @@ class ZND_Ajax {
             'balance'           => $balance,
             'balance_formatted' => number_format($balance),
             'currency_name'     => $currency_name,
+        ));
+    }
+
+    /**
+     * Lấy HTML Tủ đồ mới nhất của người dùng
+     */
+    public static function ajax_get_wardrobe_html() {
+        self::check_nonce();
+
+        $user_id = get_current_user_id();
+        if (!$user_id) {
+            wp_send_json_error(array('message' => __('Vui lòng đăng nhập!', 'zibll-nick-decor')));
+        }
+
+        $html = class_exists('ZND_Renderer') ? ZND_Renderer::render_wardrobe_content($user_id) : '';
+
+        wp_send_json_success(array(
+            'wardrobe_html' => $html,
         ));
     }
 }

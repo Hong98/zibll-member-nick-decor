@@ -199,14 +199,14 @@
                     '<div class="mt10 em12 padding-w10 font-bold">Xác nhận mua vật phẩm</div>' +
                     '</div>' +
                     '</div>' +
-                    '<div class="modal-body text-center" style="padding: 20px 20px 24px;">' +
+                    '<div class="modal-body text-center" style="padding: 24px 20px 0;">' +
                     '<div class="znd-confirm-preview mb15" style="min-height: 52px; display: flex; align-items: center; justify-content: center;"></div>' +
                     '<div class="em12 font-bold mb6 znd-confirm-title" style="color: var(--focus-color, #ff6f06);"></div>' +
                     '<div class="muted-2-color mb6 em09">Thời hạn sử dụng: <b class="c-yellow znd-confirm-duration"></b></div>' +
                     '<div class="muted-2-color mb20 em09">Giá thanh toán: <b class="c-red em12 font-bold znd-confirm-price"></b></div>' +
-                    '<div class="flex jsb gap-10">' +
-                    '<button type="button" class="but radius hollow flex1 znd-confirm-cancel" data-dismiss="modal">Hủy bỏ</button>' +
-                    '<button type="button" class="but c-yellow radius flex1 znd-confirm-ok"><i class="fa fa-check mr3"></i> Xác nhận mua</button>' +
+                    '<div class="modal-buts but-average">' +
+                    '<button type="button" class="but padding-lg znd-confirm-cancel" data-dismiss="modal">Hủy bỏ</button>' +
+                    '<button type="button" class="but jb-yellow padding-lg znd-confirm-ok"><i class="fa fa-check mr6"></i>Xác nhận mua</button>' +
                     '</div>' +
                     '</div>' +
                     '</div>' +
@@ -358,6 +358,14 @@
                 }
 
                 $pDesc.text('Đang dùng');
+            }
+
+            // 4.1. Cập nhật nội dung tab Tủ đồ thời gian thực qua AJAX (HTMX / Reactive DOM Swap)
+            if (typeof data.wardrobe_html !== 'undefined' && data.wardrobe_html) {
+                var $wardrobeTab = $('#znd-tab-wardrobe');
+                if ($wardrobeTab.length) {
+                    $wardrobeTab.html(data.wardrobe_html);
+                }
             }
 
             // 5. Kích hoạt Custom Event cho các script khác nếu có
@@ -1017,7 +1025,7 @@
                             success: function (res) {
                                 $btn.prop('disabled', false);
                                 if (res && res.success) {
-                                    self.showToast((res.data && res.data.message) || 'Mua thành công!', 'success');
+                                    self.showToast((res.data && res.data.message) || 'Mua thành công! Vật phẩm đã được thêm vào tủ đồ.', 'success');
 
                                     // CẬP NHẬT GIAO DIỆN THỜI GIAN THỰC TOÀN TRANG (HTMX REACTIVE DOM SWAP)
                                     self.updateUserDecorOnPage(res.data);
@@ -1048,6 +1056,14 @@
 
                                     // Cập nhật lại nút trên thanh Drawer
                                     $wrapper.find('#znd-drawer-btn-wrap').html(self.getDrawerBtnHtml(type, itemId, 'equipped', 'Đang dùng'));
+
+                                    // Tự động chuyển nhẹ sang tab Tủ đồ sau 350ms để thành viên nhìn thấy ngay vật phẩm mới mua
+                                    setTimeout(function () {
+                                        var $wardrobeTabBtn = $wrapper.find('.znd-nav-tabs li[data-tab="wardrobe"] a, .znd-nav-tabs li[data-tab="wardrobe"]');
+                                        if ($wardrobeTabBtn.length) {
+                                            $wardrobeTabBtn.first().trigger('click');
+                                        }
+                                    }, 350);
                                 } else {
                                     var errMsg = (res && res.data && res.data.message) ? res.data.message : 'Giao dịch không thành công!';
                                     self.showToast(errMsg, 'error');
