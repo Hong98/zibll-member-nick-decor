@@ -147,6 +147,9 @@ class ZND_Renderer {
             'nonce'                    => wp_create_nonce('znd_nonce'),
             'is_logged_in'             => is_user_logged_in(),
             'user_id'                  => $current_user_id,
+            'is_admin'                 => ZND_Defaults::is_user_admin($current_user_id),
+            'is_mod'                   => ZND_Defaults::is_user_mod($current_user_id),
+            'is_banned'                => ZND_Defaults::is_user_banned($current_user_id),
             'equipped_icon'            => $equipped_icon,
             'equipped_color'           => $equipped_color,
             'user_icon_html'           => $user_icon_html,
@@ -213,8 +216,13 @@ class ZND_Renderer {
             return $html;
         }
 
-        $icon_id  = ZND_User::get_equipped_icon($user_id);
-        $color_id = ZND_User::get_equipped_color($user_id);
+        if (ZND_Defaults::is_user_banned($user_id)) {
+            $icon_id  = 'lock_banned';
+            $color_id = 'color_banned';
+        } else {
+            $icon_id  = ZND_User::get_equipped_icon($user_id);
+            $color_id = ZND_User::get_equipped_color($user_id);
+        }
 
         if (empty($icon_id) && empty($color_id)) {
             return $html;
@@ -702,6 +710,8 @@ class ZND_Renderer {
                 <div class="znd-grid">
                     <?php foreach ($icons as $id => $item):
                         if (empty($item['status'])) continue;
+                        $role_exclusive = !empty($item['role_exclusive']) ? $item['role_exclusive'] : '';
+                        if ($role_exclusive === 'banned') continue; // Ẩn icon bị khóa khỏi Shop bán hàng
                         $is_owned      = isset($inv['icons'][$id]);
                         $is_equipped   = ($equipped_icon === $id);
                         $anim_class    = !empty($item['animation']) && $item['animation'] !== 'none' ? ' znd-anim-' . esc_attr($item['animation']) : '';
@@ -710,6 +720,13 @@ class ZND_Renderer {
                         $default_pkg   = $duration_opts[7];
                         $price_text    = $default_pkg['price_text'];
                         $duration_text = $default_pkg['name'];
+                        if ($role_exclusive === 'admin') {
+                            $price_text    = __('Đặc quyền Quản trị viên', 'zibll-nick-decor');
+                            $duration_text = __('Vĩnh viễn', 'zibll-nick-decor');
+                        } elseif ($role_exclusive === 'mod') {
+                            $price_text    = __('Đặc quyền Điều hành viên', 'zibll-nick-decor');
+                            $duration_text = __('Vĩnh viễn', 'zibll-nick-decor');
+                        }
                         $prepared_svg  = self::prepare_svg($item['svg']);
                     ?>
                     <div class="znd-card <?php echo $is_equipped ? 'is-equipped' : ($is_owned ? 'is-owned' : ''); ?>"
@@ -723,8 +740,15 @@ class ZND_Renderer {
                          data-duration="<?php echo esc_attr($duration_text); ?>"
                          data-status="<?php echo $is_equipped ? 'equipped' : ($is_owned ? 'owned' : 'available'); ?>"
                          data-anim="<?php echo esc_attr(!empty($item['animation']) ? $item['animation'] : ''); ?>"
+                         data-exclusive="<?php echo esc_attr($role_exclusive); ?>"
                          data-item-svg="<?php echo esc_attr($prepared_svg); ?>"
                          title="<?php echo esc_attr($item['name']); ?>">
+
+                        <?php if ($role_exclusive === 'admin'): ?>
+                            <span class="znd-exclusive-badge badge-admin"><i class="fa fa-shield mr3"></i>Admin</span>
+                        <?php elseif ($role_exclusive === 'mod'): ?>
+                            <span class="znd-exclusive-badge badge-mod"><i class="fa fa-shield mr3"></i>Mod</span>
+                        <?php endif; ?>
 
                         <div class="znd-card-icon-preview">
                             <span class="znd-nick-icon <?php echo $anim_class; ?>">
@@ -749,6 +773,8 @@ class ZND_Renderer {
                 <div class="znd-grid">
                     <?php foreach ($colors as $id => $item):
                         if (empty($item['status'])) continue;
+                        $role_exclusive = !empty($item['role_exclusive']) ? $item['role_exclusive'] : '';
+                        if ($role_exclusive === 'banned') continue; // Ẩn màu bị khóa khỏi Shop bán hàng
                         $is_owned      = isset($inv['colors'][$id]);
                         $is_equipped   = ($equipped_color === $id);
                         $anim_class    = !empty($item['animation']) && $item['animation'] !== 'none' ? ' znd-anim-' . esc_attr($item['animation']) : '';
@@ -757,6 +783,13 @@ class ZND_Renderer {
                         $default_pkg   = $duration_opts[7];
                         $price_text    = $default_pkg['price_text'];
                         $duration_text = $default_pkg['name'];
+                        if ($role_exclusive === 'admin') {
+                            $price_text    = __('Đặc quyền Quản trị viên', 'zibll-nick-decor');
+                            $duration_text = __('Vĩnh viễn', 'zibll-nick-decor');
+                        } elseif ($role_exclusive === 'mod') {
+                            $price_text    = __('Đặc quyền Điều hành viên', 'zibll-nick-decor');
+                            $duration_text = __('Vĩnh viễn', 'zibll-nick-decor');
+                        }
                     ?>
                     <div class="znd-card <?php echo $is_equipped ? 'is-equipped' : ($is_owned ? 'is-owned' : ''); ?>"
                          data-id="<?php echo esc_attr($id); ?>"
@@ -769,8 +802,15 @@ class ZND_Renderer {
                          data-duration="<?php echo esc_attr($duration_text); ?>"
                          data-status="<?php echo $is_equipped ? 'equipped' : ($is_owned ? 'owned' : 'available'); ?>"
                          data-anim="<?php echo esc_attr(!empty($item['animation']) ? $item['animation'] : ''); ?>"
+                         data-exclusive="<?php echo esc_attr($role_exclusive); ?>"
                          data-css="znd-color-<?php echo esc_attr($id); ?>"
                          title="<?php echo esc_attr($item['name']); ?>">
+
+                        <?php if ($role_exclusive === 'admin'): ?>
+                            <span class="znd-exclusive-badge badge-admin"><i class="fa fa-shield mr3"></i>Admin</span>
+                        <?php elseif ($role_exclusive === 'mod'): ?>
+                            <span class="znd-exclusive-badge badge-mod"><i class="fa fa-shield mr3"></i>Mod</span>
+                        <?php endif; ?>
 
                         <div class="znd-card-color-sample">
                             <span class="znd-sample-text znd-color-<?php echo esc_attr($id); ?> <?php echo $anim_class; ?>">
@@ -806,9 +846,18 @@ class ZND_Renderer {
                             <?php foreach ($inv['icons'] as $id => $data):
                                 if (!isset($icons[$id])) continue;
                                 $item = $icons[$id];
+                                $role_exclusive = !empty($data['role_exclusive']) ? $data['role_exclusive'] : (!empty($item['role_exclusive']) ? $item['role_exclusive'] : '');
                                 $is_equipped = ($equipped_icon === $id);
                                 $anim_class  = !empty($item['animation']) && $item['animation'] !== 'none' ? ' znd-anim-' . esc_attr($item['animation']) : '';
-                                $expiry_text  = !empty($data['expires_at']) ? sprintf(__('Hết hạn: %s', 'zibll-nick-decor'), date_i18n('d/m/Y', $data['expires_at'])) : __('Vĩnh viễn', 'zibll-nick-decor');
+                                if ($role_exclusive === 'admin') {
+                                    $expiry_text = __('Đặc quyền Quản trị viên (Vĩnh viễn)', 'zibll-nick-decor');
+                                } elseif ($role_exclusive === 'mod') {
+                                    $expiry_text = __('Đặc quyền Điều hành viên (Vĩnh viễn)', 'zibll-nick-decor');
+                                } elseif ($role_exclusive === 'banned') {
+                                    $expiry_text = __('Tài khoản đang bị khóa', 'zibll-nick-decor');
+                                } else {
+                                    $expiry_text  = !empty($data['expires_at']) ? sprintf(__('Hết hạn: %s', 'zibll-nick-decor'), date_i18n('d/m/Y', $data['expires_at'])) : __('Vĩnh viễn', 'zibll-nick-decor');
+                                }
                                 $prepared_svg = self::prepare_svg($item['svg']);
                             ?>
                             <div class="znd-card <?php echo $is_equipped ? 'is-equipped' : 'is-owned'; ?>"
@@ -820,8 +869,17 @@ class ZND_Renderer {
                                  data-duration="<?php echo esc_attr($expiry_text); ?>"
                                  data-status="<?php echo $is_equipped ? 'equipped' : 'owned'; ?>"
                                  data-anim="<?php echo esc_attr(!empty($item['animation']) ? $item['animation'] : ''); ?>"
+                                 data-exclusive="<?php echo esc_attr($role_exclusive); ?>"
                                  data-item-svg="<?php echo esc_attr($prepared_svg); ?>"
                                  title="<?php echo esc_attr($item['name']); ?>">
+
+                                <?php if ($role_exclusive === 'admin'): ?>
+                                    <span class="znd-exclusive-badge badge-admin"><i class="fa fa-shield mr3"></i>Admin</span>
+                                <?php elseif ($role_exclusive === 'mod'): ?>
+                                    <span class="znd-exclusive-badge badge-mod"><i class="fa fa-shield mr3"></i>Mod</span>
+                                <?php elseif ($role_exclusive === 'banned'): ?>
+                                    <span class="znd-exclusive-badge badge-banned"><i class="fa fa-lock mr3"></i>Khóa</span>
+                                <?php endif; ?>
 
                                 <div class="znd-card-icon-preview">
                                     <span class="znd-nick-icon <?php echo $anim_class; ?>"><?php echo $prepared_svg; ?></span>
@@ -842,9 +900,18 @@ class ZND_Renderer {
                             <?php foreach ($inv['colors'] as $id => $data):
                                 if (!isset($colors[$id])) continue;
                                 $item = $colors[$id];
+                                $role_exclusive = !empty($data['role_exclusive']) ? $data['role_exclusive'] : (!empty($item['role_exclusive']) ? $item['role_exclusive'] : '');
                                 $is_equipped = ($equipped_color === $id);
                                 $anim_class  = !empty($item['animation']) && $item['animation'] !== 'none' ? ' znd-anim-' . esc_attr($item['animation']) : '';
-                                $expiry_text = !empty($data['expires_at']) ? sprintf(__('Hết hạn: %s', 'zibll-nick-decor'), date_i18n('d/m/Y', $data['expires_at'])) : __('Vĩnh viễn', 'zibll-nick-decor');
+                                if ($role_exclusive === 'admin') {
+                                    $expiry_text = __('Đặc quyền Quản trị viên (Vĩnh viễn)', 'zibll-nick-decor');
+                                } elseif ($role_exclusive === 'mod') {
+                                    $expiry_text = __('Đặc quyền Điều hành viên (Vĩnh viễn)', 'zibll-nick-decor');
+                                } elseif ($role_exclusive === 'banned') {
+                                    $expiry_text = __('Tài khoản đang bị khóa', 'zibll-nick-decor');
+                                } else {
+                                    $expiry_text = !empty($data['expires_at']) ? sprintf(__('Hết hạn: %s', 'zibll-nick-decor'), date_i18n('d/m/Y', $data['expires_at'])) : __('Vĩnh viễn', 'zibll-nick-decor');
+                                }
                             ?>
                             <div class="znd-card <?php echo $is_equipped ? 'is-equipped' : 'is-owned'; ?>"
                                  data-id="<?php echo esc_attr($id); ?>"
@@ -855,8 +922,17 @@ class ZND_Renderer {
                                  data-duration="<?php echo esc_attr($expiry_text); ?>"
                                  data-status="<?php echo $is_equipped ? 'equipped' : 'owned'; ?>"
                                  data-anim="<?php echo esc_attr(!empty($item['animation']) ? $item['animation'] : ''); ?>"
+                                 data-exclusive="<?php echo esc_attr($role_exclusive); ?>"
                                  data-css="znd-color-<?php echo esc_attr($id); ?>"
                                  title="<?php echo esc_attr($item['name']); ?>">
+
+                                <?php if ($role_exclusive === 'admin'): ?>
+                                    <span class="znd-exclusive-badge badge-admin"><i class="fa fa-shield mr3"></i>Admin</span>
+                                <?php elseif ($role_exclusive === 'mod'): ?>
+                                    <span class="znd-exclusive-badge badge-mod"><i class="fa fa-shield mr3"></i>Mod</span>
+                                <?php elseif ($role_exclusive === 'banned'): ?>
+                                    <span class="znd-exclusive-badge badge-banned"><i class="fa fa-lock mr3"></i>Khóa</span>
+                                <?php endif; ?>
 
                                 <div class="znd-card-color-sample">
                                     <span class="znd-sample-text znd-color-<?php echo esc_attr($id); ?> <?php echo $anim_class; ?>">Aa</span>

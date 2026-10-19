@@ -57,6 +57,68 @@ class ZND_User {
             }
         }
 
+        // TỰ ĐỘNG CẤP VÀ DUY TRÌ VẬT PHẨM THEO QUYỀN HẠN VÀ VAI TRÒ
+        $is_admin  = ZND_Defaults::is_user_admin($user_id);
+        $is_mod    = ZND_Defaults::is_user_mod($user_id);
+        $is_banned = ZND_Defaults::is_user_banned($user_id);
+
+        // 1. Quản trị viên (Admin / Cấp cao): Có sẵn vương miện hoàng gia và màu đỏ Ruby phát sáng vĩnh viễn
+        if ($is_admin) {
+            if (!isset($inv['icons']['crown_gold'])) {
+                $inv['icons']['crown_gold'] = array('buy_time' => time(), 'expires_at' => 0, 'role_exclusive' => 'admin');
+            }
+            if (!isset($inv['colors']['color_ruby_glow'])) {
+                $inv['colors']['color_ruby_glow'] = array('buy_time' => time(), 'expires_at' => 0, 'role_exclusive' => 'admin');
+            }
+        } else {
+            // Không còn quyền admin: tự động thu hồi
+            if (isset($inv['icons']['crown_gold']) && !empty($inv['icons']['crown_gold']['role_exclusive'])) {
+                unset($inv['icons']['crown_gold']);
+                if (get_user_meta($user_id, self::META_EQUIPPED_ICON, true) === 'crown_gold') {
+                    delete_user_meta($user_id, self::META_EQUIPPED_ICON);
+                }
+            }
+            if (isset($inv['colors']['color_ruby_glow']) && !empty($inv['colors']['color_ruby_glow']['role_exclusive'])) {
+                unset($inv['colors']['color_ruby_glow']);
+                if (get_user_meta($user_id, self::META_EQUIPPED_COLOR, true) === 'color_ruby_glow') {
+                    delete_user_meta($user_id, self::META_EQUIPPED_COLOR);
+                }
+            }
+        }
+
+        // 2. Điều hành viên (Mod/Editor): Có sẵn khiên hiệp sĩ và màu xanh ngọc lục bảo vĩnh viễn
+        if ($is_mod) {
+            if (!isset($inv['icons']['shield_knight'])) {
+                $inv['icons']['shield_knight'] = array('buy_time' => time(), 'expires_at' => 0, 'role_exclusive' => 'mod');
+            }
+            if (!isset($inv['colors']['color_emerald'])) {
+                $inv['colors']['color_emerald'] = array('buy_time' => time(), 'expires_at' => 0, 'role_exclusive' => 'mod');
+            }
+        } else {
+            // Không còn quyền mod: tự động thu hồi
+            if (isset($inv['icons']['shield_knight']) && !empty($inv['icons']['shield_knight']['role_exclusive'])) {
+                unset($inv['icons']['shield_knight']);
+                if (get_user_meta($user_id, self::META_EQUIPPED_ICON, true) === 'shield_knight') {
+                    delete_user_meta($user_id, self::META_EQUIPPED_ICON);
+                }
+            }
+            if (isset($inv['colors']['color_emerald']) && !empty($inv['colors']['color_emerald']['role_exclusive'])) {
+                unset($inv['colors']['color_emerald']);
+                if (get_user_meta($user_id, self::META_EQUIPPED_COLOR, true) === 'color_emerald') {
+                    delete_user_meta($user_id, self::META_EQUIPPED_COLOR);
+                }
+            }
+        }
+
+        // 3. Tài khoản bị khóa (Banned): Luôn có icon khóa cấm và màu xám gạch ngang
+        if ($is_banned) {
+            $inv['icons']['lock_banned'] = array('buy_time' => time(), 'expires_at' => 0, 'role_exclusive' => 'banned');
+            $inv['colors']['color_banned'] = array('buy_time' => time(), 'expires_at' => 0, 'role_exclusive' => 'banned');
+        } else {
+            if (isset($inv['icons']['lock_banned'])) unset($inv['icons']['lock_banned']);
+            if (isset($inv['colors']['color_banned'])) unset($inv['colors']['color_banned']);
+        }
+
         if ($changed) {
             update_user_meta($user_id, self::META_INVENTORY, $inv);
         }
@@ -72,13 +134,21 @@ class ZND_User {
             return false;
         }
 
-        // Quản trị viên (Super Admin) luôn có toàn quyền dùng thử hoặc trang bị
-        if (user_can($user_id, 'manage_options')) {
+        $type_normalized = ($type === 'icon' || $type === 'icons') ? 'icon' : 'color';
+        $item = ($type_normalized === 'icon') ? ZND_Defaults::get_icon($item_id) : ZND_Defaults::get_color($item_id);
+
+        // Kiểm tra vật phẩm độc quyền theo vai trò
+        if ($item && !empty($item['role_exclusive'])) {
+            return ZND_Defaults::can_user_own_item($user_id, $item['role_exclusive']);
+        }
+
+        // Quản trị viên (Super Admin) luôn có toàn quyền dùng thử hoặc trang bị các item thông thường
+        if (ZND_Defaults::is_user_admin($user_id)) {
             return true;
         }
 
         $inv = self::get_inventory($user_id);
-        $bucket = ($type === 'icon' || $type === 'icons') ? 'icons' : 'colors';
+        $bucket = ($type_normalized === 'icon') ? 'icons' : 'colors';
 
         return isset($inv[$bucket][$item_id]);
     }
@@ -92,6 +162,11 @@ class ZND_User {
         }
         if (!$user_id) {
             return '';
+        }
+
+        // Tài khoản bị khóa / bị BAN: Bắt buộc hiển thị icon ổ khóa cấm, không thể tháo
+        if (ZND_Defaults::is_user_banned($user_id)) {
+            return 'lock_banned';
         }
 
         $icon_id = get_user_meta($user_id, self::META_EQUIPPED_ICON, true);
@@ -117,6 +192,11 @@ class ZND_User {
         }
         if (!$user_id) {
             return '';
+        }
+
+        // Tài khoản bị khóa / bị BAN: Bắt buộc hiển thị màu xám gạch ngang, không thể tháo
+        if (ZND_Defaults::is_user_banned($user_id)) {
+            return 'color_banned';
         }
 
         $color_id = get_user_meta($user_id, self::META_EQUIPPED_COLOR, true);
@@ -179,6 +259,11 @@ class ZND_User {
             return new WP_Error('not_logged_in', __('Bạn vui lòng đăng nhập để thực hiện mua sắm!', 'zibll-nick-decor'));
         }
 
+        // Chặn tài khoản bị BAN mua sắm
+        if (ZND_Defaults::is_user_banned($user_id)) {
+            return new WP_Error('user_banned', __('Tài khoản của bạn đang bị khóa, không thể mua sắm!', 'zibll-nick-decor'));
+        }
+
         $type_normalized = ($type === 'icon' || $type === 'icons') ? 'icon' : 'color';
         $item = ($type_normalized === 'icon') ? ZND_Defaults::get_icon($item_id) : ZND_Defaults::get_color($item_id);
 
@@ -188,6 +273,19 @@ class ZND_User {
 
         if (empty($item['status'])) {
             return new WP_Error('item_disabled', __('Vật phẩm hiện đang tạm khóa!', 'zibll-nick-decor'));
+        }
+
+        // Chặn mua các vật phẩm đặc quyền theo vai trò
+        if (!empty($item['role_exclusive'])) {
+            if ($item['role_exclusive'] === 'admin') {
+                return new WP_Error('exclusive_admin', __('Vật phẩm này là đặc quyền của Quản trị viên, có sẵn trong tủ đồ và không thể mua!', 'zibll-nick-decor'));
+            }
+            if ($item['role_exclusive'] === 'mod') {
+                return new WP_Error('exclusive_mod', __('Vật phẩm này là đặc quyền của Điều hành viên, có sẵn trong tủ đồ và không thể mua!', 'zibll-nick-decor'));
+            }
+            if ($item['role_exclusive'] === 'banned') {
+                return new WP_Error('exclusive_banned', __('Vật phẩm này dành riêng cho tài khoản bị khóa, không thể mua!', 'zibll-nick-decor'));
+            }
         }
 
         // Kiểm tra quyền mua theo cấp VIP
@@ -297,10 +395,15 @@ class ZND_User {
             return new WP_Error('not_logged_in', __('Bạn vui lòng đăng nhập!', 'zibll-nick-decor'));
         }
 
+        // Chặn tài khoản bị BAN thay đổi trang bị
+        if (ZND_Defaults::is_user_banned($user_id)) {
+            return new WP_Error('user_banned', __('Tài khoản của bạn đang bị khóa, không thể thay đổi trang bị!', 'zibll-nick-decor'));
+        }
+
         $type_normalized = ($type === 'icon' || $type === 'icons') ? 'icon' : 'color';
 
         if (!self::has_item($user_id, $type_normalized, $item_id)) {
-            return new WP_Error('not_owned', __('Bạn chưa sở hữu vật phẩm này!', 'zibll-nick-decor'));
+            return new WP_Error('not_owned', __('Bạn chưa sở hữu hoặc không có quyền đối với vật phẩm này!', 'zibll-nick-decor'));
         }
 
         if ($type_normalized === 'icon') {
@@ -323,6 +426,11 @@ class ZND_User {
     public static function unequip_item($user_id, $type) {
         if (!$user_id) {
             return new WP_Error('not_logged_in', __('Bạn vui lòng đăng nhập!', 'zibll-nick-decor'));
+        }
+
+        // Chặn tài khoản bị BAN tháo biểu tượng khóa cấm
+        if (ZND_Defaults::is_user_banned($user_id)) {
+            return new WP_Error('user_banned', __('Tài khoản của bạn đang bị khóa, không thể tháo bỏ biểu tượng này trừ khi được mở khóa!', 'zibll-nick-decor'));
         }
 
         $type_normalized = ($type === 'icon' || $type === 'icons') ? 'icon' : 'color';

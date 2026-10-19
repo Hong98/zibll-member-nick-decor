@@ -2,7 +2,7 @@
 
 > **Plugin tùy biến màu sắc và icon hiển thị đầu nickname thời thượng dành cho thành viên Theme Zibll.**
 
-![Version](https://img.shields.io/badge/version-v1.0.29-blue.svg)
+![Version](https://img.shields.io/badge/version-v1.0.30-blue.svg)
 ![WordPress](https://img.shields.io/badge/WordPress-5.6%2B-blue.svg)
 ![PHP](https://img.shields.io/badge/PHP-7.2%2B-green.svg)
 
@@ -96,6 +96,30 @@ Plugin cung cấp hệ thống Cửa hàng (Shop) và Tủ đồ (Wardrobe) cá 
 ---
 
 ## Lịch sử thay đổi
+
+### v1.0.30 — 2026-10-19
+- Chuẩn hóa: Phân quyền icon và màu nick theo vai trò quản trị, điều hành và xử lý tài khoản bị khóa:
+  - Màu đỏ Ruby phát sáng (`color_ruby_glow`) & Icon Vương miện hoàng gia (`crown_gold`):
+    - Đặt làm đặc quyền chỉ dành cho Quản trị viên cấp cao (Admin / Super Admin).
+    - Thành viên thông thường không thể mua hay trang bị, hiển thị nhãn "Admin" trong shop.
+    - Tự động có sẵn vĩnh viễn trong Tủ đồ của Admin, có thể thay đổi hoặc trang bị tùy ý, không thể xóa bỏ trừ khi không còn quyền admin.
+  - Màu Ngọc lục bảo (`color_emerald`) & Icon Khiên hiệp sĩ (`shield_knight`):
+    - Đặt làm đặc quyền cho Điều hành viên (Moderator / Editor).
+    - Thành viên thông thường không thể mua hay trang bị, hiển thị nhãn "Mod" trong shop.
+    - Tự động có sẵn vĩnh viễn trong Tủ đồ của Điều hành viên, có thể thay đổi hoặc trang bị tùy ý, không thể xóa bỏ trừ khi không còn quyền.
+  - Màu Xám gạch ngang (`color_banned`) & Icon Khóa cấm (`lock_banned`):
+    - Tự động nhận diện và áp dụng mặc định cho các tài khoản đang bị khóa / cấm (BAN) trong hệ thống Theme Zibll (`zib_user_is_ban`).
+    - Cưỡng chế hiển thị tên nick màu xám gạch ngang và icon ổ khóa đỏ trên toàn bộ website (bài viết, bình luận, trang cá nhân, menu người dùng,...).
+    - Khóa toàn bộ thao tác trong Cửa hàng và Tủ đồ, không cho phép tháo bỏ icon hoặc màu trừ khi tài khoản được gỡ khóa (Unban).
+  - Thành viên thông thường: Giữ nguyên mặc định, mua sắm và trang bị các icon, màu sắc công khai bình thường.
+
+### v1.0.29 — 2026-10-19
+- Tối ưu hóa: Làm dịu hiệu ứng phát sáng chữ và bảo vệ huy hiệu không bị ám bóng:
+  - Loại bỏ quầng sáng neon cyan dày cộp (`rgba(0, 210, 255, 0.9)`) ở hiệu ứng glow, chuyển sang dạng nhịp thở dịu mắt kết hợp `brightness(1.12)` và `drop-shadow(0 0 2px rgba(255, 255, 255, 0.35))` thanh thoát.
+  - Tinh chỉnh hiệu ứng pulse và shimmer của màu chữ nickname về bóng mờ nhẹ 1.5px, loại bỏ giật phóng to chữ (`scale(1.12)`).
+  - Tinh chỉnh hiệu ứng hover trên icon nick về độ phóng nhẹ `scale(1.06)` và giảm nhẹ opacity theo quy chuẩn tương tác Theme Zibll.
+  - Bảo vệ các huy hiệu VIP, Level (`.badg`, `[class*="vip-"]`) và tích xanh xác minh (`.auth-mark`) không bị ám bóng đổ mờ từ hiệu ứng chữ.
+  - Giảm độ mờ `text-shadow` trong các preset màu nick mặc định từ 10px-12px xuống 1px-2px, tự động chuẩn hóa các style cũ đã lưu trong cơ sở dữ liệu.
 
 ### v1.0.28 — 2026-10-19
 - Bổ sung tùy chọn gói thời hạn và bảng giá linh hoạt khi mua icon và màu nick:
@@ -252,14 +276,6 @@ Plugin cung cấp hệ thống Cửa hàng (Shop) và Tủ đồ (Wardrobe) cá 
   - Bổ sung tùy chọn "Biểu tượng mở shop trên Header di động" (`znd_enable_mobile_header_btn`) trong Cài đặt Theme Zibll -> Màu & Icon đầu nick -> Cài đặt chung, cho phép quản trị viên chủ động bật hoặc tắt nút icon cọ vẽ (`.znd-mobile-header-btn`) trên thanh Header điện thoại.
   - Bổ sung tùy chọn "Biểu tượng mở shop trong Menu trượt di động" (`znd_enable_mobile_drawer_btn`) để quản lý nút icon mở shop ở hàng tiện ích trên cùng của Menu trượt (Mobile Drawer).
   - Tích hợp kiểm tra 2 lớp cả ở PHP Output CSS và JavaScript Client-side, đảm bảo phản hồi tức thì và tương thích hoàn hảo với bộ nhớ đệm trang.
-
-### v1.0.29 — 2026-10-19
-- Tối ưu hóa: Làm dịu hiệu ứng phát sáng chữ và bảo vệ huy hiệu không bị ám bóng:
-  - Loại bỏ quầng sáng neon cyan dày cộp (`rgba(0, 210, 255, 0.9)`) ở hiệu ứng glow, chuyển sang dạng nhịp thở dịu mắt kết hợp `brightness(1.12)` và `drop-shadow(0 0 2px rgba(255, 255, 255, 0.35))` thanh thoát.
-  - Tinh chỉnh hiệu ứng pulse và shimmer của màu chữ nickname về bóng mờ nhẹ 1.5px, loại bỏ giật phóng to chữ (`scale(1.12)`).
-  - Tinh chỉnh hiệu ứng hover trên icon nick về độ phóng nhẹ `scale(1.06)` và giảm nhẹ opacity theo quy chuẩn tương tác Theme Zibll.
-  - Bảo vệ các huy hiệu VIP, Level (`.badg`, `[class*="vip-"]`) và tích xanh xác minh (`.auth-mark`) không bị ám bóng đổ mờ từ hiệu ứng chữ.
-  - Giảm độ mờ `text-shadow` trong các preset màu nick mặc định từ 10px-12px xuống 1px-2px, tự động chuẩn hóa các style cũ đã lưu trong cơ sở dữ liệu.
 
 ### v1.0.10 — 2026-10-18
 - Thêm icon mở shop trên thiết bị di động và tối ưu tooltip thanh điều hướng (Navbar):

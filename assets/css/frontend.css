@@ -1102,5 +1102,67 @@ body:not(.logged-in) .znd-user-row {
     display: none !important;
 }
 
+/* ==========================================================================
+   10. CHUẨN HÓA VAI TRÒ (ADMIN, ĐIỀU HÀNH VIÊN VÀ TÀI KHOẢN BỊ KHÓA)
+   ========================================================================== */
+/* Tên nick và màu nick của tài khoản bị khóa / bị BAN: Xám gạch ngang mặc định */
+.znd-color-color_banned,
+.znd-color-banned,
+a.display-name.znd-color-color_banned,
+span.display-name.znd-color-color_banned,
+.display-name.znd-color-color_banned {
+    color: #8c939d !important;
+    -webkit-text-fill-color: #8c939d !important;
+    background: none !important;
+    text-decoration: line-through !important;
+    text-shadow: none !important;
+    filter: grayscale(100%) !important;
+    opacity: 0.65 !important;
+    font-weight: normal !important;
+}
+
+/* Huy hiệu đặc quyền hiển thị trên góc thẻ trong Shop */
+.znd-card {
+    position: relative;
+}
+
+.znd-card .znd-exclusive-badge {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-weight: 600;
+    line-height: 1.2;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+}
+
+.znd-exclusive-badge.badge-admin {
+    background: rgba(239, 71, 58, 0.15);
+    color: #ef473a;
+    border: 1px solid rgba(239, 71, 58, 0.35);
+}
+
+.znd-exclusive-badge.badge-mod {
+    background: rgba(17, 153, 142, 0.15);
+    color: #11998e;
+    border: 1px solid rgba(17, 153, 142, 0.35);
+}
+
+.znd-exclusive-badge.badge-banned {
+    background: rgba(140, 147, 157, 0.2);
+    color: #6c757d;
+    border: 1px solid rgba(140, 147, 157, 0.35);
+}
+
+/* Nút đặc quyền trong Drawer cố định */
+.znd-drawer-btn-wrap .znd-btn-exclusive-disabled {
+    cursor: not-allowed;
+    opacity: 0.8;
+}
+
 
 

@@ -418,8 +418,46 @@
         },
 
         // Helper sinh nút thao tác cho Action Drawer
-        getDrawerBtnHtml: function (type, itemId, status, priceText, duration) {
+        getDrawerBtnHtml: function (type, itemId, status, priceText, duration, exclusive) {
             duration = (typeof duration !== 'undefined') ? duration : 7;
+            exclusive = exclusive || '';
+
+            // Nếu người dùng đang bị khóa
+            if (typeof znd_vars !== 'undefined' && znd_vars.is_banned) {
+                return '<button type="button" class="but but-sm c-red radius disabled znd-btn-exclusive-disabled" disabled><i class="fa fa-lock mr3"></i> Tài khoản đang bị khóa</button>';
+            }
+
+            // Nếu là item đặc quyền Admin
+            if (exclusive === 'admin') {
+                if (typeof znd_vars !== 'undefined' && znd_vars.is_admin) {
+                    if (status === 'equipped') {
+                        return '<button type="button" class="but but-sm c-green radius znd-btn znd-btn-unequip" data-znd-act="unequip" data-type="' + type + '" data-id="' + itemId + '"><i class="fa fa-check-circle mr3"></i> Đang dùng (Tháo)</button>';
+                    } else {
+                        return '<button type="button" class="but but-sm c-blue radius znd-btn znd-btn-equip" data-znd-act="equip" data-type="' + type + '" data-id="' + itemId + '"><i class="fa fa-bolt mr3"></i> Trang bị (Admin)</button>';
+                    }
+                } else {
+                    return '<button type="button" class="but but-sm c-red radius disabled znd-btn-exclusive-disabled" disabled><i class="fa fa-lock mr3"></i> Đặc quyền Quản trị viên</button>';
+                }
+            }
+
+            // Nếu là item đặc quyền Điều hành viên (Mod/Editor)
+            if (exclusive === 'mod') {
+                if (typeof znd_vars !== 'undefined' && znd_vars.is_mod) {
+                    if (status === 'equipped') {
+                        return '<button type="button" class="but but-sm c-green radius znd-btn znd-btn-unequip" data-znd-act="unequip" data-type="' + type + '" data-id="' + itemId + '"><i class="fa fa-check-circle mr3"></i> Đang dùng (Tháo)</button>';
+                    } else {
+                        return '<button type="button" class="but but-sm c-blue radius znd-btn znd-btn-equip" data-znd-act="equip" data-type="' + type + '" data-id="' + itemId + '"><i class="fa fa-bolt mr3"></i> Trang bị (Điều hành)</button>';
+                    }
+                } else {
+                    return '<button type="button" class="but but-sm c-green radius disabled znd-btn-exclusive-disabled" disabled><i class="fa fa-lock mr3"></i> Đặc quyền Điều hành viên</button>';
+                }
+            }
+
+            // Nếu là item Banned
+            if (exclusive === 'banned') {
+                return '<button type="button" class="but but-sm c-red radius disabled znd-btn-exclusive-disabled" disabled><i class="fa fa-ban mr3"></i> Tài khoản vi phạm</button>';
+            }
+
             if (status === 'equipped') {
                 return '<button type="button" class="but but-sm c-green radius znd-btn znd-btn-unequip" data-znd-act="unequip" data-type="' + type + '" data-id="' + itemId + '"><i class="fa fa-check-circle mr3"></i> Đang dùng (Tháo)</button>';
             } else if (status === 'owned') {
@@ -577,6 +615,7 @@
                 var duration  = $card.data('duration') || '';
                 var status    = $card.data('status') || 'available';
                 var anim  = $card.data('anim');
+                var exclusive = $card.data('exclusive') || '';
 
                 var $wrapper = $card.closest('.znd-shop-wrapper');
 
@@ -618,7 +657,7 @@
                 var $packagesContainer = $drawer.find('#znd-drawer-packages');
                 var selectedDuration = 7;
 
-                if (status === 'available' && prices) {
+                if (status === 'available' && prices && !exclusive) {
                     var pillsHtml = '';
                     var order = [7, 30, 0];
                     order.forEach(function (days) {
@@ -662,7 +701,7 @@
                 }
 
                 // Nút thao tác tương ứng
-                var btnHtml = self.getDrawerBtnHtml(type, id, status, priceText, selectedDuration);
+                var btnHtml = self.getDrawerBtnHtml(type, id, status, priceText, selectedDuration, exclusive);
                 $drawer.find('#znd-drawer-btn-wrap').html(btnHtml);
 
                 if ($drawer.is(':hidden')) {
@@ -845,7 +884,7 @@
                             }
 
                             // Cập nhật lại nút trên thanh Drawer
-                            $wrapper.find('#znd-drawer-btn-wrap').html(self.getDrawerBtnHtml(type, itemId, 'equipped', $card.data('price-text')));
+                            $wrapper.find('#znd-drawer-btn-wrap').html(self.getDrawerBtnHtml(type, itemId, 'equipped', $card.data('price-text'), 7, $card.data('exclusive')));
                         } else {
                             var errMsg = (res && res.data && res.data.message) ? res.data.message : 'Có lỗi xảy ra!';
                             self.showToast(errMsg, 'error');
@@ -906,7 +945,7 @@
                             }
 
                             // Cập nhật lại nút trên thanh Drawer
-                            $wrapper.find('#znd-drawer-btn-wrap').html(self.getDrawerBtnHtml(type, itemId, 'owned', $card.data('price-text')));
+                            $wrapper.find('#znd-drawer-btn-wrap').html(self.getDrawerBtnHtml(type, itemId, 'owned', $card.data('price-text'), 7, $card.data('exclusive')));
                         } else {
                             var errMsg = (res && res.data && res.data.message) ? res.data.message : 'Có lỗi xảy ra!';
                             self.showToast(errMsg, 'error');

@@ -17,15 +17,16 @@ class ZND_Defaults {
     public static function get_default_icons() {
         return array(
             'crown_gold' => array(
-                'id'          => 'crown_gold',
-                'name'        => 'Vương miện hoàng gia',
-                'desc'        => 'Biểu tượng vương giả vàng kim đính ngọc ruby cao quý',
-                'price'       => 200,
-                'duration'    => 0, // 0 = Vĩnh viễn
-                'animation'   => 'shimmer',
-                'vip_level'   => 0,
-                'status'      => true,
-                'svg'         => '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="znd-svg"><path d="M3 17 L2 6.5 L7.5 11 L12 3 L16.5 11 L22 6.5 L21 17 Z" fill="#FFA751"/><rect x="2" y="18" width="20" height="3" rx="1.5" fill="#E65100"/><circle cx="2" cy="6.5" r="1.1" fill="#FFE259"/><circle cx="12" cy="3" r="1.4" fill="#FFE259"/><circle cx="22" cy="6.5" r="1.1" fill="#FFE259"/><circle cx="12" cy="14" r="1.5" fill="#FFFFFF"/><circle cx="6.5" cy="14.5" r="1.2" fill="#FFFFFF"/><circle cx="17.5" cy="14.5" r="1.2" fill="#FFFFFF"/></svg>',
+                'id'             => 'crown_gold',
+                'name'           => 'Vương miện hoàng gia',
+                'desc'           => 'Biểu tượng vương giả vàng kim đính ngọc ruby cao quý - Đặc quyền Quản trị viên cấp cao',
+                'price'          => 200,
+                'duration'       => 0, // 0 = Vĩnh viễn
+                'animation'      => 'shimmer',
+                'vip_level'      => 0,
+                'status'         => true,
+                'role_exclusive' => 'admin',
+                'svg'            => '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="znd-svg"><path d="M3 17 L2 6.5 L7.5 11 L12 3 L16.5 11 L22 6.5 L21 17 Z" fill="#FFA751"/><rect x="2" y="18" width="20" height="3" rx="1.5" fill="#E65100"/><circle cx="2" cy="6.5" r="1.1" fill="#FFE259"/><circle cx="12" cy="3" r="1.4" fill="#FFE259"/><circle cx="22" cy="6.5" r="1.1" fill="#FFE259"/><circle cx="12" cy="14" r="1.5" fill="#FFFFFF"/><circle cx="6.5" cy="14.5" r="1.2" fill="#FFFFFF"/><circle cx="17.5" cy="14.5" r="1.2" fill="#FFFFFF"/></svg>',
             ),
             'diamond_blue' => array(
                 'id'          => 'diamond_blue',
@@ -83,15 +84,16 @@ class ZND_Defaults {
                 'svg'         => '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="znd-svg"><defs><linearGradient id="znd_g_rocket" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#F857A6"/><stop offset="100%" stop-color="#FF5858"/></linearGradient></defs><path d="M13.5 2.5a10 10 0 0 0-3 3C9 7 9 9 9 9l-4 4 3 3 4-4s2 0 3.5-1.5a10 10 0 0 0 3-3c0-3-2.5-5-5-5z" fill="url(#znd_g_rocket)"/><path d="M5 13l-3 3 3 1-1 3 3-1 1 3 3-3" fill="#FFA07A"/><circle cx="15.5" cy="8.5" r="1.5" fill="#FFF"/></svg>',
             ),
             'shield_knight' => array(
-                'id'          => 'shield_knight',
-                'name'        => 'Khiên hiệp sĩ',
-                'desc'        => 'Tấm khiên danh dự bảo hộ kiên cường của dũng sĩ',
-                'price'       => 160,
-                'duration'    => 0,
-                'animation'   => 'shimmer',
-                'vip_level'   => 0,
-                'status'      => true,
-                'svg'         => '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="znd-svg"><defs><linearGradient id="znd_g_shield" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#4FACFE"/><stop offset="100%" stop-color="#00F2FE"/></linearGradient></defs><path d="M12 2L3 6v6c0 6.5 4 10 9 11 5-1 9-4.5 9-11V6l-9-4z" fill="url(#znd_g_shield)"/><path d="M12 5v14M7 11h10" stroke="#FFF" stroke-width="1.8" stroke-linecap="round"/></svg>',
+                'id'             => 'shield_knight',
+                'name'           => 'Khiên hiệp sĩ',
+                'desc'           => 'Tấm khiên danh dự bảo hộ kiên cường của dũng sĩ - Đặc quyền Điều hành viên',
+                'price'          => 160,
+                'duration'       => 0,
+                'animation'      => 'shimmer',
+                'vip_level'      => 0,
+                'status'         => true,
+                'role_exclusive' => 'mod',
+                'svg'            => '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="znd-svg"><defs><linearGradient id="znd_g_shield" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#4FACFE"/><stop offset="100%" stop-color="#00F2FE"/></linearGradient></defs><path d="M12 2L3 6v6c0 6.5 4 10 9 11 5-1 9-4.5 9-11V6l-9-4z" fill="url(#znd_g_shield)"/><path d="M12 5v14M7 11h10" stroke="#FFF" stroke-width="1.8" stroke-linecap="round"/></svg>',
             ),
             'star_glory' => array(
                 'id'          => 'star_glory',
@@ -192,6 +194,18 @@ class ZND_Defaults {
                 'status'      => true,
                 'svg'         => '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="znd-svg"><defs><linearGradient id="znd_g_cat" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#FBC2EB"/><stop offset="100%" stop-color="#A6C1EE"/></linearGradient></defs><path d="M12 8c4 0 7 3 7 7 0 4-3 6-7 6s-7-2-7-6c0-4 3-7 7-7zm-5-3l2 4M17 5l-2 4" stroke="url(#znd_g_cat)" stroke-width="1.5" stroke-linecap="round"/><circle cx="9" cy="14" r="1.2" fill="#333"/><circle cx="15" cy="14" r="1.2" fill="#333"/><path d="M11 16.5c.5.5 1.5.5 2 0" stroke="#FF5858" stroke-width="1.2" stroke-linecap="round"/><path d="M10 4l2-2 2 2-1 1h-2l-1-1z" fill="#FFA751"/></svg>',
             ),
+            'lock_banned' => array(
+                'id'             => 'lock_banned',
+                'name'           => 'Khóa cấm tài khoản',
+                'desc'           => 'Biểu tượng ổ khóa cảnh báo áp dụng cho tài khoản đang bị khóa do vi phạm',
+                'price'          => 0,
+                'duration'       => 0,
+                'animation'      => 'none',
+                'vip_level'      => 0,
+                'status'         => true,
+                'role_exclusive' => 'banned',
+                'svg'            => '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="znd-svg"><path d="M7 11V7a5 5 0 0 1 10 0v4" stroke="#e02424" stroke-width="2" stroke-linecap="round"/><rect x="4" y="11" width="16" height="11" rx="2.5" fill="#f05252"/><circle cx="12" cy="16" r="1.5" fill="#FFF"/><path d="M12 17.5v2" stroke="#FFF" stroke-width="1.5" stroke-linecap="round"/></svg>',
+            ),
         );
     }
 
@@ -261,16 +275,17 @@ class ZND_Defaults {
                 'status'      => true,
             ),
             'color_emerald' => array(
-                'id'          => 'color_emerald',
-                'name'        => 'Ngọc lục bảo',
-                'desc'        => 'Màu xanh ngọc bích lục bảo quý phái trường tồn và thanh lịch',
-                'price'       => 160,
-                'duration'    => 0,
-                'css_style'   => 'background: linear-gradient(135deg, #11998E 0%, #38EF7D 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 700;',
-                'animation'   => 'none',
-                'glow_color'  => 'rgba(56, 239, 125, 0.25)',
-                'vip_level'   => 0,
-                'status'      => true,
+                'id'             => 'color_emerald',
+                'name'           => 'Ngọc lục bảo',
+                'desc'           => 'Màu xanh ngọc bích lục bảo quý phái trường tồn - Đặc quyền Điều hành viên',
+                'price'          => 160,
+                'duration'       => 0,
+                'css_style'      => 'background: linear-gradient(135deg, #11998E 0%, #38EF7D 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 700;',
+                'animation'      => 'none',
+                'glow_color'     => 'rgba(56, 239, 125, 0.25)',
+                'vip_level'      => 0,
+                'status'         => true,
+                'role_exclusive' => 'mod',
             ),
             'color_sakura' => array(
                 'id'          => 'color_sakura',
@@ -333,16 +348,30 @@ class ZND_Defaults {
                 'status'      => true,
             ),
             'color_ruby_glow' => array(
-                'id'          => 'color_ruby_glow',
-                'name'        => 'Đỏ Ruby phát sáng',
-                'desc'        => 'Màu ngọc ruby huyết phượng hoàng phát sáng lộng lẫy',
-                'price'       => 240,
-                'duration'    => 0,
-                'css_style'   => 'background: linear-gradient(135deg, #CB2D3E 0%, #EF473A 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 700; text-shadow: 0 1px 2px rgba(239, 71, 58, 0.2);',
-                'animation'   => 'glow',
-                'glow_color'  => 'rgba(239, 71, 58, 0.25)',
-                'vip_level'   => 0,
-                'status'      => true,
+                'id'             => 'color_ruby_glow',
+                'name'           => 'Đỏ Ruby phát sáng',
+                'desc'           => 'Màu ngọc ruby huyết phượng hoàng phát sáng lộng lẫy - Đặc quyền Quản trị viên cấp cao',
+                'price'          => 240,
+                'duration'       => 0,
+                'css_style'      => 'background: linear-gradient(135deg, #CB2D3E 0%, #EF473A 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 700; text-shadow: 0 1px 2px rgba(239, 71, 58, 0.2);',
+                'animation'      => 'glow',
+                'glow_color'     => 'rgba(239, 71, 58, 0.25)',
+                'vip_level'      => 0,
+                'status'         => true,
+                'role_exclusive' => 'admin',
+            ),
+            'color_banned' => array(
+                'id'             => 'color_banned',
+                'name'           => 'Xám gạch ngang (Bị khóa)',
+                'desc'           => 'Màu xám gạch ngang nhận diện tài khoản đang bị khóa do vi phạm',
+                'price'          => 0,
+                'duration'       => 0,
+                'css_style'      => 'color: #8c939d !important; -webkit-text-fill-color: #8c939d !important; text-decoration: line-through !important; background: none !important; opacity: 0.65; filter: grayscale(100%); font-weight: normal;',
+                'animation'      => 'none',
+                'glow_color'     => '',
+                'vip_level'      => 0,
+                'status'         => true,
+                'role_exclusive' => 'banned',
             ),
         );
     }
@@ -373,6 +402,9 @@ class ZND_Defaults {
                     if (empty($item['svg']) || strpos($item['svg'], 'zm0-14') !== false || strpos($item['svg'], 'znd_g_crown') !== false) {
                         $item['svg'] = $defaults[$id]['svg'];
                     }
+                    if (isset($defaults[$id]['role_exclusive'])) {
+                        $item['role_exclusive'] = $defaults[$id]['role_exclusive'];
+                    }
                 }
                 $result[$id] = $item;
             }
@@ -400,23 +432,28 @@ class ZND_Defaults {
             $saved = get_option('znd_colors_list', null);
         }
 
+        $defaults = self::get_default_colors();
+
         if (empty($saved) || !is_array($saved)) {
-            return self::get_default_colors();
+            return $defaults;
         }
 
         $result = array();
         foreach ($saved as $item) {
             if (!empty($item['id'])) {
+                $id = $item['id'];
                 if (!empty($item['css_style'])) {
                     // Tự động làm sạch bóng mờ text-shadow cũ quá dày (10px, 12px...) xuống mức thanh mảnh 1px 2px
                     $item['css_style'] = preg_replace('/text-shadow:\s*0\s+0\s+(?:10|12|\d{2,})px\s+rgba\(([^,\)]+),([^,\)]+),([^,\)]+),\s*([0-9.]+)\);?/i', 'text-shadow: 0 1px 2px rgba($1,$2,$3,0.2);', $item['css_style']);
                 }
-                $result[$item['id']] = $item;
+                if (isset($defaults[$id]['role_exclusive'])) {
+                    $item['role_exclusive'] = $defaults[$id]['role_exclusive'];
+                }
+                $result[$id] = $item;
             }
         }
 
         // Bổ sung các màu mặc định nếu chưa có
-        $defaults = self::get_default_colors();
         foreach ($defaults as $id => $def_item) {
             if (!isset($result[$id])) {
                 $result[$id] = $def_item;
@@ -511,6 +548,92 @@ class ZND_Defaults {
             return $options[$duration_days]['price'];
         }
         return isset($options[7]) ? $options[7]['price'] : round((float)$base_price * 10);
+    }
+
+    /**
+     * Kiểm tra người dùng có phải Quản trị viên cấp cao (Admin) hay không
+     */
+    public static function is_user_admin($user_id = 0) {
+        if (!$user_id) {
+            $user_id = get_current_user_id();
+        }
+        if (!$user_id) {
+            return false;
+        }
+        return is_super_admin($user_id) || user_can($user_id, 'manage_options');
+    }
+
+    /**
+     * Kiểm tra người dùng có phải Điều hành viên (Mod/Editor - dưới Admin và trên thành viên) hay không
+     */
+    public static function is_user_mod($user_id = 0) {
+        if (!$user_id) {
+            $user_id = get_current_user_id();
+        }
+        if (!$user_id) {
+            return false;
+        }
+        // Nếu đã là admin thì không tính là mod (admin là cấp cao nhất)
+        if (self::is_user_admin($user_id)) {
+            return false;
+        }
+        // Kiểm tra quyền kiểm duyệt hoặc chỉnh sửa
+        if (user_can($user_id, 'moderate_comments') || user_can($user_id, 'edit_others_posts')) {
+            return true;
+        }
+        $user = get_userdata($user_id);
+        if ($user && !empty($user->roles)) {
+            $mod_roles = array('editor', 'moderator', 'bbp_moderator', 'zib_moderator');
+            if (array_intersect($mod_roles, (array)$user->roles)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Kiểm tra người dùng có đang bị khóa / bị BAN hay không
+     */
+    public static function is_user_banned($user_id = 0) {
+        if (!$user_id) {
+            $user_id = get_current_user_id();
+        }
+        if (!$user_id) {
+            return false;
+        }
+        // 1. Kiểm tra qua hàm zib_user_is_ban của Theme Zibll
+        if (function_exists('zib_user_is_ban') && zib_user_is_ban($user_id)) {
+            return true;
+        }
+        // 2. Kiểm tra trực tiếp qua user meta của Theme Zibll
+        $banned = get_user_meta($user_id, 'banned', true);
+        if (!empty($banned)) {
+            $ban_time = get_user_meta($user_id, 'banned_time', true);
+            if ($ban_time && strtotime($ban_time) < time()) {
+                return false;
+            }
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Kiểm tra người dùng có đủ điều kiện sở hữu một vật phẩm đặc quyền theo vai trò hay không
+     */
+    public static function can_user_own_item($user_id, $role_exclusive) {
+        if (empty($role_exclusive)) {
+            return true;
+        }
+        if ($role_exclusive === 'admin') {
+            return self::is_user_admin($user_id);
+        }
+        if ($role_exclusive === 'mod') {
+            return self::is_user_mod($user_id);
+        }
+        if ($role_exclusive === 'banned') {
+            return self::is_user_banned($user_id);
+        }
+        return false;
     }
 }
 
