@@ -2,7 +2,7 @@
 
 > **Plugin tùy biến màu sắc và icon hiển thị đầu nickname thời thượng dành cho thành viên Theme Zibll.**
 
-![Version](https://img.shields.io/badge/version-v1.0.31-blue.svg)
+![Version](https://img.shields.io/badge/version-v1.0.32-blue.svg)
 ![WordPress](https://img.shields.io/badge/WordPress-5.6%2B-blue.svg)
 ![PHP](https://img.shields.io/badge/PHP-7.2%2B-green.svg)
 
@@ -105,6 +105,17 @@ Plugin cung cấp hệ thống Cửa hàng (Shop) và Tủ đồ (Wardrobe) cá 
 ---
 
 ## Lịch sử thay đổi
+
+### v1.0.32 — 2026-10-19
+- Tích hợp popup xác nhận mua vật phẩm chuẩn Theme Zibll và hỗ trợ cập nhật giao diện thời gian thực (HTMX Reactive DOM Swap):
+  - Popup xác nhận mua vật phẩm chuẩn giao diện Zibll (`#znd-confirm-modal`):
+    - Thay thế hoàn toàn hộp thoại `window.confirm` mặc định của trình duyệt bằng modal xác nhận chuẩn Theme Zibll với Colorful Header vàng cam (`jb-yellow`), icon giỏ hàng to nổi bật, hiển thị chi tiết tên vật phẩm, bản xem trước trực quan (SVG icon hoặc mẫu chữ đổi màu), gói thời hạn và số tiền thanh toán.
+    - Thiết kế 2 nút hành động bo tròn chuẩn Zibll: Nút Hủy bỏ (`.but.radius.hollow`) và Nút Xác nhận mua (`.but.c-yellow.radius`).
+    - Tuân thủ nghiêm ngặt quy tắc đóng modal khi nhấp ra ngoài: Bắt buộc cả `mousedown` và `mouseup` cùng trên nền mờ (backdrop) mới đóng popup, tuyệt đối không đóng khi kéo chuột chọn văn bản từ trong popup ra ngoài; hỗ trợ đóng nhanh bằng phím Escape (`Esc`).
+  - Hỗ trợ cập nhật giao diện thời gian thực (HTMX-like Reactive DOM Swap):
+    - Khi thành viên Mua, Trang bị (Mặc) hoặc Tháo trang bị: Hệ thống tự động phản ứng và cập nhật diện mạo (Icon SVG và Class màu nickname) trên toàn bộ trang hiện tại mà không cần phải F5 hoặc tải lại trang.
+    - Tự động hoán đổi trực tiếp tại tất cả các vị trí hiển thị tên người dùng: Menu tài khoản thả xuống trên PC (`.sub-user-box`), Menu trượt di động (`.mobile-navbar`), Thanh điều hướng Header, Header Trang cá nhân (`.author-header`) và khung xem trước trực tiếp (Live Preview).
+    - Tự động cập nhật số dư ví/điểm tức thời trên giao diện ngay khi giao dịch hoàn tất.
 
 ### v1.0.31 — 2026-10-19
 - Nâng cấp icon Ban Quản trị tối cao và đa dạng hóa bảng màu nick (loại bỏ màu đỏ, xanh lá của BQT):

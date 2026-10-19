@@ -55,6 +55,50 @@ class ZND_Ajax {
     }
 
     /**
+     * Lấy dữ liệu decor hiện tại của thành viên để hỗ trợ HTMX / cập nhật DOM thời gian thực không cần tải lại trang
+     */
+    public static function get_user_decor_response($user_id) {
+        if (!$user_id) {
+            return array();
+        }
+
+        $equipped_icon  = ZND_User::get_equipped_icon($user_id);
+        $equipped_color = ZND_User::get_equipped_color($user_id);
+
+        $user_icon_html = '';
+        if (!empty($equipped_icon)) {
+            $icon_data = ZND_Defaults::get_icon($equipped_icon);
+            if ($icon_data && !empty($icon_data['svg'])) {
+                $anim_class = !empty($icon_data['animation']) && $icon_data['animation'] !== 'none' ? ' znd-anim-' . esc_attr($icon_data['animation']) : '';
+                $icon_name  = esc_attr($icon_data['name']);
+                $svg        = class_exists('ZND_Renderer') ? ZND_Renderer::prepare_svg($icon_data['svg']) : $icon_data['svg'];
+                $user_icon_html = '<span class="znd-nick-icon znd-icon-' . esc_attr($equipped_icon) . $anim_class . '" title="' . $icon_name . '">' . $svg . '</span>';
+            }
+        }
+
+        $user_color_class = '';
+        if (!empty($equipped_color)) {
+            $color_data = ZND_Defaults::get_color($equipped_color);
+            if ($color_data) {
+                $anim_class = !empty($color_data['animation']) && $color_data['animation'] !== 'none' ? ' znd-anim-' . esc_attr($color_data['animation']) : '';
+                $user_color_class = 'znd-color-' . esc_attr($equipped_color) . $anim_class;
+            }
+        }
+
+        $balance = ZND_User::get_user_currency_balance($user_id);
+
+        return array(
+            'equipped_icon'          => $equipped_icon,
+            'equipped_color'         => $equipped_color,
+            'user_icon_html'         => $user_icon_html,
+            'user_color_class'       => $user_color_class,
+            'user_balance'           => $balance,
+            'user_balance_formatted' => number_format($balance),
+            'currency_name'          => ZND_User::get_currency_name(),
+        );
+    }
+
+    /**
      * Xử lý mua màu hoặc icon
      */
     public static function ajax_buy_item() {
@@ -79,7 +123,10 @@ class ZND_Ajax {
             wp_send_json_error(array('message' => $result->get_error_message()));
         }
 
-        wp_send_json_success($result);
+        $decor = self::get_user_decor_response($user_id);
+        $response_data = array_merge((array)$result, $decor);
+
+        wp_send_json_success($response_data);
     }
 
     /**
@@ -106,7 +153,10 @@ class ZND_Ajax {
             wp_send_json_error(array('message' => $result->get_error_message()));
         }
 
-        wp_send_json_success($result);
+        $decor = self::get_user_decor_response($user_id);
+        $response_data = array_merge((array)$result, $decor);
+
+        wp_send_json_success($response_data);
     }
 
     /**
@@ -131,7 +181,10 @@ class ZND_Ajax {
             wp_send_json_error(array('message' => $result->get_error_message()));
         }
 
-        wp_send_json_success($result);
+        $decor = self::get_user_decor_response($user_id);
+        $response_data = array_merge((array)$result, $decor);
+
+        wp_send_json_success($response_data);
     }
 
     /**

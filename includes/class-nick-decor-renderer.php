@@ -573,6 +573,36 @@ class ZND_Renderer {
                 </div>
             </div>
         </div>
+
+        <!-- Zibll Member Nickname & Badge Pro Confirm Modal (Modal xác nhận chuẩn Theme Zibll) -->
+        <div class="modal fade znd-confirm-modal-wrap" id="znd-confirm-modal" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                    <?php if (function_exists('zib_get_modal_colorful_header')): ?>
+                        <?php echo zib_get_modal_colorful_header('jb-yellow', '<i class="fa fa-shopping-cart"></i>', '<div class="em12 font-bold">' . esc_html__('Xác nhận mua vật phẩm', 'zibll-nick-decor') . '</div>'); ?>
+                    <?php else: ?>
+                        <div class="modal-colorful-header colorful-bg jb-yellow">
+                            <button class="close znd-confirm-cancel" data-dismiss="modal"><i class="fa fa-times"></i></button>
+                            <div class="colorful-make"></div>
+                            <div class="text-center">
+                                <div class="em2x"><i class="fa fa-shopping-cart"></i></div>
+                                <div class="mt10 em12 padding-w10 font-bold"><?php esc_html_e('Xác nhận mua vật phẩm', 'zibll-nick-decor'); ?></div>
+                            </div>
+                        </div>
+                    <?php endif; ?>
+                    <div class="modal-body text-center" style="padding: 20px 20px 24px;">
+                        <div class="znd-confirm-preview mb15" style="min-height: 52px; display: flex; align-items: center; justify-content: center;"></div>
+                        <div class="em12 font-bold mb6 znd-confirm-title" style="color: var(--focus-color, #ff6f06);"></div>
+                        <div class="muted-2-color mb6 em09"><?php esc_html_e('Thời hạn sử dụng:', 'zibll-nick-decor'); ?> <b class="c-yellow znd-confirm-duration"></b></div>
+                        <div class="muted-2-color mb20 em09"><?php esc_html_e('Giá thanh toán:', 'zibll-nick-decor'); ?> <b class="c-red em12 font-bold znd-confirm-price"></b></div>
+                        <div class="flex jsb gap-10">
+                            <button type="button" class="but radius hollow flex1 znd-confirm-cancel" data-dismiss="modal"><?php esc_html_e('Hủy bỏ', 'zibll-nick-decor'); ?></button>
+                            <button type="button" class="but c-yellow radius flex1 znd-confirm-ok"><i class="fa fa-check mr3"></i> <?php esc_html_e('Xác nhận mua', 'zibll-nick-decor'); ?></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <?php
     }
 
