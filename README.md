@@ -2,7 +2,7 @@
 
 > **Plugin tùy biến màu sắc và icon hiển thị đầu nickname thời thượng dành cho thành viên Theme Zibll.**
 
-![Version](https://img.shields.io/badge/version-v1.0.30-blue.svg)
+![Version](https://img.shields.io/badge/version-v1.0.31-blue.svg)
 ![WordPress](https://img.shields.io/badge/WordPress-5.6%2B-blue.svg)
 ![PHP](https://img.shields.io/badge/PHP-7.2%2B-green.svg)
 
@@ -18,10 +18,13 @@ Plugin cung cấp hệ thống Cửa hàng (Shop) và Tủ đồ (Wardrobe) cá 
 
 ## Tính năng nổi bật
 
-### 1. Trọn bộ 16 icon hiển thị đầu nick tạo sẵn sắc nét
+### 1. Trọn bộ 19 icon hiển thị đầu nick tạo sẵn sắc nét
 - Thiết kế chuẩn vector SVG siêu nhẹ, tự động co giãn theo kích thước chữ (`1.15em`).
 - Hiển thị nổi bật ngay trước tên thành viên ở mọi nơi: bài viết, bình luận, diễn đàn BBS, trang cá nhân, widget thành viên...
-- Đi kèm các hiệu ứng chuyển động mượt mà:
+- Đi kèm các biểu tượng đặc quyền và hiệu ứng chuyển động mượt mà:
+  - 🌟 **Huy hiệu Quản trị tối cao** (Biểu tượng Ban Quản trị tối cao - Đặc quyền Admin)
+  - ⚖️ **Búa công lý điều hành** (Biểu tượng phán quyết công lý - Đặc quyền Mod)
+  - 🔒 **Khóa cấm tài khoản** (Biểu tượng cảnh báo tài khoản bị khóa)
   - 👑 **Vương miện hoàng gia** (Hiệu ứng Shimmer ánh kim)
   - 💎 **Kim cương chí tôn** (Hiệu ứng Glow phát sáng)
   - 🔥 **Ngọn lửa rực cháy** (Hiệu ứng Pulse bùng cháy)
@@ -39,20 +42,26 @@ Plugin cung cấp hệ thống Cửa hàng (Shop) và Tủ đồ (Wardrobe) cá 
   - 🎵 **Nốt nhạc thần tiên** (Hiệu ứng âm nhạc)
   - 🐱 **Mèo quý tộc** (Hiệu ứng cute đội vương miện)
 
-### 2. Trọn bộ 12 màu nick Gradient & Glow cao cấp
-- Đa dạng phong cách từ Gradient chuyển màu hiện đại đến phát sáng viền chữ:
+### 2. Trọn bộ 18 màu nick Gradient & Glow cao cấp
+- Đa dạng phong cách từ Gradient chuyển màu hiện đại đến phát sáng viền chữ, phân tầng nhận diện rõ rệt:
+  - 💎 **Đỏ Ruby phát sáng**: Đỏ huyết phượng hoàng phát sáng huyền bí - Đặc quyền Quản trị viên.
+  - 🍃 **Ngọc lục bảo**: Xanh ngọc bích lục bảo quý phái - Đặc quyền Điều hành viên.
+  - 🚫 **Xám gạch ngang**: Màu xám gạch ngang mặc định cho tài khoản bị khóa/BAN.
   - 🌈 **Cầu vồng rực rỡ**: Dải màu 7 sắc cầu vồng chuyển động trượt liên tục (`Rainbow Animation`).
   - 🌟 **Hoàng gia kim sắc**: Màu vàng kim loại ánh kim vương giả.
   - 🔮 **Cyberpunk Neon**: Tím hồng Neon công nghệ tương lai.
   - 💎 **Xanh lam đại dương**: Ngọc bích xanh sâu thẳm.
-  - 🔥 **Lửa đỏ rực cháy**: Đỏ cam bùng nổ nhiệt huyết.
-  - 🍃 **Ngọc lục bảo**: Xanh ngọc lục bảo quý phái.
-  - 🌸 **Hồng hoa anh đào**: Hồng phấn Sakura thơ mộng.
-  - ⚡ **Tím điện tử Storm**: Tím pha xanh neon cá tính.
+  - ❄️ **Băng tinh khiết**: Sắc xanh băng pha lê trắng phát sáng thanh tao.
+  - 🪙 **Bạch kim xà cừ**: Ánh bạc xà cừ lấp lánh phản chiếu hologram quý phái.
+  - 💜 **Thạch anh tím**: Tím đá quý thạch anh hoàng gia lung linh huyền diệu.
+  - 🍯 **Hổ phách mật ong**: Sắc vàng hổ phách ngọt ngào ấm áp tỏa ánh hào quang.
+  - 🌸 **Hồng hoa anh đào**: Hồng phấn Sakura thơ mộng dễ thương.
+  - 🍬 **Kẹo bông pastel**: Pha trộn ngọt ngào giữa hồng kẹo bông và xanh mộng mơ.
+  - 🌊 **Xanh biển sâu**: Xanh lam coban ngọc bích sâu thẳm kiêu sa.
+  - 💜 **Giấc mơ oải hương**: Tím oải hương ngát hương thanh nhã và thi vị.
+  - ⚡ **Tím điện tử Storm**: Tím pha xanh neon cá tính của những tia chớp bão từ.
   - ☀️ **Hoàng hôn nhiệt đới**: Cam đào hoàng hôn lãng mạn.
   - 🌌 **Dải ngân hà Cosmic**: Vũ trụ ánh sao huyền ảo.
-  - 🍃 **Bạc hà Neon Mint**: Xanh mint tươi mới.
-  - 💎 **Đỏ Ruby phát sáng**: Đỏ huyết phượng hoàng phát sáng huyền bí.
 - Tương thích hoàn hảo với cả nền sáng (Light mode) và nền tối (Dark mode) của Theme Zibll.
 
 ### 3. Hộp xem trước thời gian thực (Live Preview)
@@ -96,6 +105,17 @@ Plugin cung cấp hệ thống Cửa hàng (Shop) và Tủ đồ (Wardrobe) cá 
 ---
 
 ## Lịch sử thay đổi
+
+### v1.0.31 — 2026-10-19
+- Nâng cấp icon Ban Quản trị tối cao và đa dạng hóa bảng màu nick (loại bỏ màu đỏ, xanh lá của BQT):
+  - Thiết kế icon nhận diện đặc quyền mới cho Ban Quản trị:
+    - **Quản trị viên (Admin)**: Huy hiệu Quản trị tối cao (`admin_supreme`) - Khiên vương miện hoàng gia vàng rực rỡ lồng ngôi sao 5 cánh vinh quang và ngọc ruby trung tâm.
+    - **Điều hành viên (Mod)**: Búa công lý điều hành (`mod_justice`) - Biểu tượng chiếc búa phán quyết công lý mạ ngọc lục bảo và bạc sáng, biểu trưng cho sự công minh, nghiêm chính giữ gìn trật tự diễn đàn.
+    - **Mở bán icon thường**: Trả lại icon Vương miện hoàng gia (`crown_gold`) và Khiên hiệp sĩ (`shield_knight`) về trạng thái mở bán bình thường cho mọi thành viên tự do mua sắm.
+  - Tối ưu hóa và chuẩn hóa bảng màu nick:
+    - Loại bỏ các màu đỏ và xanh lá ("Lửa đỏ rực cháy" `color_fire_red`, "Bạc hà Neon Mint" `color_neon_mint`) khỏi danh sách mở bán để tránh trùng lặp nhận diện với màu đỏ Quản trị viên và màu xanh lá Điều hành viên.
+    - Bổ sung 7 màu nick thời thượng mới cực đẹp: Băng tinh khiết (`color_ice_crystal`), Bạch kim xà cừ (`color_platinum`), Thạch anh tím (`color_amethyst`), Hổ phách mật ong (`color_honey_amber`), Kẹo bông pastel (`color_cotton_candy`), Xanh biển sâu (`color_deep_abyss`), Giấc mơ oải hương (`color_lavender_dream`).
+    - Nâng cấp cơ chế tự động đồng bộ danh sách màu và icon vào cơ sở dữ liệu khi nâng cấp phiên bản plugin.
 
 ### v1.0.30 — 2026-10-19
 - Chuẩn hóa: Phân quyền icon và màu nick theo vai trò quản trị, điều hành và xử lý tài khoản bị khóa:

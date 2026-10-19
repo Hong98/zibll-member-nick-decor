@@ -62,19 +62,19 @@ class ZND_User {
         $is_mod    = ZND_Defaults::is_user_mod($user_id);
         $is_banned = ZND_Defaults::is_user_banned($user_id);
 
-        // 1. Quản trị viên (Admin / Cấp cao): Có sẵn vương miện hoàng gia và màu đỏ Ruby phát sáng vĩnh viễn
+        // 1. Quản trị viên (Admin / Cấp cao): Có sẵn Huy hiệu Quản trị tối cao và màu đỏ Ruby phát sáng vĩnh viễn
         if ($is_admin) {
-            if (!isset($inv['icons']['crown_gold'])) {
-                $inv['icons']['crown_gold'] = array('buy_time' => time(), 'expires_at' => 0, 'role_exclusive' => 'admin');
+            if (!isset($inv['icons']['admin_supreme'])) {
+                $inv['icons']['admin_supreme'] = array('buy_time' => time(), 'expires_at' => 0, 'role_exclusive' => 'admin');
             }
             if (!isset($inv['colors']['color_ruby_glow'])) {
                 $inv['colors']['color_ruby_glow'] = array('buy_time' => time(), 'expires_at' => 0, 'role_exclusive' => 'admin');
             }
         } else {
             // Không còn quyền admin: tự động thu hồi
-            if (isset($inv['icons']['crown_gold']) && !empty($inv['icons']['crown_gold']['role_exclusive'])) {
-                unset($inv['icons']['crown_gold']);
-                if (get_user_meta($user_id, self::META_EQUIPPED_ICON, true) === 'crown_gold') {
+            if (isset($inv['icons']['admin_supreme']) && !empty($inv['icons']['admin_supreme']['role_exclusive'])) {
+                unset($inv['icons']['admin_supreme']);
+                if (get_user_meta($user_id, self::META_EQUIPPED_ICON, true) === 'admin_supreme') {
                     delete_user_meta($user_id, self::META_EQUIPPED_ICON);
                 }
             }
@@ -86,19 +86,19 @@ class ZND_User {
             }
         }
 
-        // 2. Điều hành viên (Mod/Editor): Có sẵn khiên hiệp sĩ và màu xanh ngọc lục bảo vĩnh viễn
+        // 2. Điều hành viên (Mod/Editor): Có sẵn Búa công lý điều hành và màu xanh ngọc lục bảo vĩnh viễn
         if ($is_mod) {
-            if (!isset($inv['icons']['shield_knight'])) {
-                $inv['icons']['shield_knight'] = array('buy_time' => time(), 'expires_at' => 0, 'role_exclusive' => 'mod');
+            if (!isset($inv['icons']['mod_justice'])) {
+                $inv['icons']['mod_justice'] = array('buy_time' => time(), 'expires_at' => 0, 'role_exclusive' => 'mod');
             }
             if (!isset($inv['colors']['color_emerald'])) {
                 $inv['colors']['color_emerald'] = array('buy_time' => time(), 'expires_at' => 0, 'role_exclusive' => 'mod');
             }
         } else {
             // Không còn quyền mod: tự động thu hồi
-            if (isset($inv['icons']['shield_knight']) && !empty($inv['icons']['shield_knight']['role_exclusive'])) {
-                unset($inv['icons']['shield_knight']);
-                if (get_user_meta($user_id, self::META_EQUIPPED_ICON, true) === 'shield_knight') {
+            if (isset($inv['icons']['mod_justice']) && !empty($inv['icons']['mod_justice']['role_exclusive'])) {
+                unset($inv['icons']['mod_justice']);
+                if (get_user_meta($user_id, self::META_EQUIPPED_ICON, true) === 'mod_justice') {
                     delete_user_meta($user_id, self::META_EQUIPPED_ICON);
                 }
             }
@@ -108,6 +108,16 @@ class ZND_User {
                     delete_user_meta($user_id, self::META_EQUIPPED_COLOR);
                 }
             }
+        }
+
+        // Dọn dẹp cờ role_exclusive cũ trên crown_gold và shield_knight nếu có
+        if (isset($inv['icons']['crown_gold']) && !empty($inv['icons']['crown_gold']['role_exclusive'])) {
+            unset($inv['icons']['crown_gold']['role_exclusive']);
+            $changed = true;
+        }
+        if (isset($inv['icons']['shield_knight']) && !empty($inv['icons']['shield_knight']['role_exclusive'])) {
+            unset($inv['icons']['shield_knight']['role_exclusive']);
+            $changed = true;
         }
 
         // 3. Tài khoản bị khóa (Banned): Luôn có icon khóa cấm và màu xám gạch ngang
