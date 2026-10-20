@@ -188,26 +188,32 @@
             var self = this;
             var $modal = $('#znd-confirm-modal');
             if (!$modal.length) {
+                var closeIconSvg = '<svg class="ic-close" aria-hidden="true"><use xlink:href="#icon-close"></use></svg>';
+                var cartIconSvg  = '<svg class="icon" aria-hidden="true"><use xlink:href="#icon-shopping-cart"></use></svg>';
                 var modalHtml = '<div class="modal fade znd-confirm-modal-wrap" id="znd-confirm-modal" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">' +
                     '<div class="modal-dialog modal-sm" role="document">' +
                     '<div class="modal-content">' +
+                    '<div class="modal-body">' +
+                    '<div style="padding: 1px;">' +
                     '<div class="modal-colorful-header colorful-bg jb-yellow">' +
-                    '<button class="close znd-confirm-cancel" data-dismiss="modal"><i class="fa fa-times"></i></button>' +
+                    '<button class="close znd-confirm-cancel" data-dismiss="modal">' + closeIconSvg + '</button>' +
                     '<div class="colorful-make"></div>' +
                     '<div class="text-center">' +
-                    '<div class="em2x"><i class="fa fa-shopping-cart"></i></div>' +
+                    '<div class="em2x">' + cartIconSvg + '</div>' +
                     '<div class="mt10 em12 padding-w10 font-bold">Xác nhận mua vật phẩm</div>' +
                     '</div>' +
                     '</div>' +
-                    '<div class="modal-body text-center" style="padding: 24px 20px 0;">' +
-                    '<div class="znd-confirm-preview mb15" style="min-height: 52px; display: flex; align-items: center; justify-content: center;"></div>' +
-                    '<div class="em12 font-bold mb6 znd-confirm-title" style="color: var(--focus-color, #ff6f06);"></div>' +
-                    '<div class="muted-2-color mb6 em09">Thời hạn sử dụng: <b class="c-yellow znd-confirm-duration"></b></div>' +
-                    '<div class="muted-2-color mb20 em09">Giá thanh toán: <b class="c-red em12 font-bold znd-confirm-price"></b></div>' +
-                    '<div class="modal-buts but-average">' +
-                    '<button type="button" class="but padding-lg znd-confirm-cancel" data-dismiss="modal">Hủy bỏ</button>' +
-                    '<button type="button" class="but jb-yellow padding-lg znd-confirm-ok"><i class="fa fa-check mr6"></i>Xác nhận mua</button>' +
+                    '<div style="padding: 15px 15px 10px;">' +
+                    '<div class="znd-confirm-preview mb10" style="min-height: 48px; display: flex; align-items: center; justify-content: center;"></div>' +
+                    '<div class="em12 font-bold mb6 znd-confirm-title text-center" style="color: var(--focus-color, #ff6f06);"></div>' +
+                    '<div class="muted-2-color mb6 em09 text-center">Thời hạn sử dụng: <b class="c-yellow znd-confirm-duration"></b></div>' +
+                    '<div class="muted-2-color em09 text-center">Giá thanh toán: <b class="c-red em12 font-bold znd-confirm-price"></b></div>' +
                     '</div>' +
+                    '</div>' +
+                    '</div>' +
+                    '<div class="modal-buts but-average">' +
+                    '<a type="button" data-dismiss="modal" class="but znd-confirm-cancel" href="javascript:;">Hủy bỏ</a>' +
+                    '<a type="button" class="but c-yellow znd-confirm-ok" href="javascript:;">Xác nhận mua</a>' +
                     '</div>' +
                     '</div>' +
                     '</div>' +

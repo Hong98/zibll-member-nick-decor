@@ -2,7 +2,7 @@
 
 > **Plugin tùy biến màu sắc và icon hiển thị đầu nickname thời thượng dành cho thành viên Theme Zibll.**
 
-![Version](https://img.shields.io/badge/version-v1.0.34-blue.svg)
+![Version](https://img.shields.io/badge/version-v1.0.35-blue.svg)
 ![WordPress](https://img.shields.io/badge/WordPress-5.6%2B-blue.svg)
 ![PHP](https://img.shields.io/badge/PHP-7.2%2B-green.svg)
 
@@ -105,6 +105,12 @@ Plugin cung cấp hệ thống Cửa hàng (Shop) và Tủ đồ (Wardrobe) cá 
 ---
 
 ## Lịch sử thay đổi
+
+### v1.0.35 — 2026-10-20
+- Đồng bộ giao diện popup xác nhận mua và hệ thống nút bấm giống hoàn toàn với popup đăng xuất Theme Zibll:
+  - Tái cấu trúc chuẩn xác 100% theo kiến trúc `modal_signout` và `zib_modal()` của Theme Zibll: Colorful Header gradient vàng cam (`jb-yellow`), nút đóng góc trên, biểu tượng giỏ hàng nổi bật và tiêu đề "Xác nhận mua vật phẩm".
+  - Chuyển hệ thống nút bấm xuống đáy modal với cấu trúc phân bổ đều chuẩn Zibll (`.modal-buts.but-average`): Nút "Hủy bỏ" (`.but`) bên trái và nút "Xác nhận mua" (`.but.c-yellow`) bên phải với đường kẻ phân cách 1px, trải rộng trọn vẹn bề ngang và bo cong đồng bộ đáy modal.
+  - Tối ưu hóa trên cả mã nguồn máy chủ PHP (`class-nick-decor-renderer.php`), JavaScript Client-side (`frontend.js`) và CSS (`frontend.css`).
 
 ### v1.0.34 — 2026-10-20
 - Sửa lỗi lệch hàng: Căn giữa thẳng hàng tuyệt đối cho icon nick, tên thành viên và các huy hiệu trên menu di động:
