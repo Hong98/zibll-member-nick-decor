@@ -2,7 +2,7 @@
 
 > **Plugin tùy biến màu sắc và icon hiển thị đầu nickname thời thượng dành cho thành viên Theme Zibll.**
 
-![Version](https://img.shields.io/badge/version-v1.0.33-blue.svg)
+![Version](https://img.shields.io/badge/version-v1.0.34-blue.svg)
 ![WordPress](https://img.shields.io/badge/WordPress-5.6%2B-blue.svg)
 ![PHP](https://img.shields.io/badge/PHP-7.2%2B-green.svg)
 
@@ -105,6 +105,13 @@ Plugin cung cấp hệ thống Cửa hàng (Shop) và Tủ đồ (Wardrobe) cá 
 ---
 
 ## Lịch sử thay đổi
+
+### v1.0.34 — 2026-10-20
+- Sửa lỗi lệch hàng: Căn giữa thẳng hàng tuyệt đối cho icon nick, tên thành viên và các huy hiệu trên menu di động:
+  - Khắc phục triệt để tình trạng icon khiên bị nhô cao, tên nick ở giữa, còn tích xanh xác minh và huy hiệu Level bị chìm xuống dưới trong Menu trượt di động (`.mobile-navbar`) và Hộp thông tin người dùng (`.sub-user-box`).
+  - Chuẩn hóa thẻ `<b>` bọc ngoài thành `display: block`, ngăn ngừa lỗi vỡ dòng và co kéo khoảng cách của inline formatting context trong Theme Zibll.
+  - Đồng bộ thẻ `<name>` và thẻ tên `.display-name` sang cấu trúc `inline-flex` căn giữa theo trục ngang (`align-items: center !important`).
+  - Loại bỏ độ lệch chân dòng `-0.15em` của SVG tích xanh xác minh (`.user-auth-icon`) và hình ảnh huy hiệu cấp độ (`.img-icon` / Level), giúp toàn bộ icon khiên, tên nick, tích xanh và huy hiệu Level luôn thẳng tắp trên cùng một đường trục hoàn hảo.
 
 ### v1.0.33 — 2026-10-19
 - Chuẩn hóa nút xác nhận mua hàng theo đúng 100% cấu trúc Theme Zibll:

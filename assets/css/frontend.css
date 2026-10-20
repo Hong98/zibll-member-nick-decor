@@ -148,25 +148,50 @@
     min-width: 0;
 }
 
-.mobile-navbar .sub-user-box .display-name {
-    max-width: calc(100% - 45px) !important;
-    flex-shrink: 0;
-}
-
 .mobile-navbar {
     overflow-x: hidden !important;
 }
 
-/* 2. Thẻ tên và container flex ở mọi nơi có icon nick tự động co giãn linh hoạt */
+/* ==========================================================================
+   1.2. ĐỒNG BỘ CĂN GIỮA THẲNG HÀNG TUYỆT ĐỐI (ICON ĐẦU NICK, TÊN NICK & HUY HIỆU)
+   Khắc phục triệt để lỗi trên di động & PC: Icon khiên bị nhô cao, tích xanh & level bị chìm thấp
+   ========================================================================== */
+
+/* 1. Chuẩn hóa khối b bọc thẻ tên trong .sub-user-box (Theme Zibll dùng <b><name>...</name></b>) */
+.sub-user-box .user-right b,
+.mobile-navbar .sub-user-box .user-right b {
+    display: block;
+    line-height: normal;
+}
+
+/* 2. Chuẩn hóa thẻ <name> thành hàng flexbox căn giữa tuyệt đối */
+.sub-user-box name,
+.mobile-navbar .sub-user-box name,
 name:has(.znd-nick-icon),
 name.has-znd-icon {
+    display: inline-flex !important;
+    align-items: center !important;
+    vertical-align: middle;
+    line-height: 1.2;
     min-width: 0;
     max-width: 100%;
 }
 
+/* 3. Chuẩn hóa thẻ tên a.display-name thành inline-flex căn giữa thẳng hàng với icon nick */
+.sub-user-box .display-name,
+.mobile-navbar .sub-user-box .display-name,
 .display-name:has(.znd-nick-icon),
 .display-name.has-znd-icon {
+    display: inline-flex !important;
+    align-items: center !important;
+    vertical-align: middle;
+    line-height: 1.2;
     max-width: fit-content;
+}
+
+.mobile-navbar .sub-user-box .display-name {
+    max-width: calc(100% - 45px) !important;
+    flex-shrink: 0;
 }
 
 /* Trường hợp thẻ a.display-name nằm trong container flexbox bị text-ellipsis */
@@ -185,6 +210,88 @@ name.has-znd-icon {
 .comment-header a.has-znd-icon,
 .comment-header:has(.znd-nick-icon) a.text-ellipsis {
     max-width: fit-content !important;
+}
+
+/* 4. Căn giữa chuẩn xác cho Icon đầu nick (.znd-nick-icon) */
+.display-name .znd-nick-icon,
+.sub-user-box .znd-nick-icon,
+.mobile-navbar .znd-nick-icon,
+name .znd-nick-icon {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    vertical-align: middle !important;
+    align-self: center !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    margin-right: 4px !important;
+    flex-shrink: 0 !important;
+    line-height: 1 !important;
+}
+
+/* 5. Khắc phục lỗi tích xanh xác minh (.user-auth-icon) bị chìm thấp do vertical-align:-0.15em của SVG */
+.sub-user-box .user-auth-icon,
+.mobile-navbar .user-auth-icon,
+name .user-auth-icon,
+name:has(.znd-nick-icon) .user-auth-icon,
+name.has-znd-icon .user-auth-icon {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    vertical-align: middle !important;
+    align-self: center !important;
+    line-height: 1 !important;
+    height: 1em !important;
+    flex-shrink: 0 !important;
+}
+
+.sub-user-box .user-auth-icon svg,
+.sub-user-box .user-auth-icon .icon,
+.mobile-navbar .user-auth-icon svg,
+.mobile-navbar .user-auth-icon .icon,
+name .user-auth-icon svg,
+name .user-auth-icon .icon,
+name:has(.znd-nick-icon) .user-auth-icon svg,
+name.has-znd-icon .user-auth-icon svg {
+    display: block !important;
+    vertical-align: 0 !important;
+    margin: 0 !important;
+    width: 1em !important;
+    height: 1em !important;
+}
+
+/* 6. Khắc phục lỗi huy hiệu cấp độ (.img-icon / Level) và huy chương (.medal-icon) bị lệch hàng */
+.sub-user-box .img-icon,
+.mobile-navbar .sub-user-box .img-icon,
+name .img-icon,
+name:has(.znd-nick-icon) .img-icon,
+name.has-znd-icon .img-icon {
+    vertical-align: middle !important;
+    align-self: center !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    flex-shrink: 0 !important;
+    height: 1.15em !important;
+    display: inline-block !important;
+}
+
+/* 7. Các huy hiệu khác bên cạnh tên (VIP, Medal, Badg) đồng bộ căn giữa */
+.sub-user-box .medal-icon,
+.mobile-navbar .sub-user-box .medal-icon,
+name .medal-icon,
+name:has(.znd-nick-icon) .medal-icon,
+name.has-znd-icon .medal-icon,
+.sub-user-box [class*="vip-"],
+.mobile-navbar [class*="vip-"],
+name [class*="vip-"],
+.sub-user-box name .badg,
+.mobile-navbar name .badg,
+name .badg {
+    vertical-align: middle !important;
+    align-self: center !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    flex-shrink: 0 !important;
 }
 
 /* ==========================================================================
