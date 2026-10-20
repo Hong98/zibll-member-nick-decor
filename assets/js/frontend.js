@@ -700,6 +700,28 @@
                 self.applyUserPageDecor();
             });
 
+            // Tự động làm sạch trạng thái khi mở tab Màu & Icon trong trang cá nhân (Author Page) hoặc User Center
+            $(document).on('click show.bs.tab shown.bs.tab', '[data-target="#author-tab-nick_decor"], [data-target="#user-tab-nick_decor"], a[href="#author-tab-nick_decor"], a[href="#user-tab-nick_decor"], .icon-but-nick_decor', function () {
+                var tabSelector = '#author-tab-nick_decor, #user-tab-nick_decor';
+                $(tabSelector).find('.no-more').remove();
+                $(tabSelector).find('.post_ajax_loader').hide();
+                setTimeout(function () {
+                    $(tabSelector).find('.no-more').remove();
+                    $(tabSelector).find('.post_ajax_loader').hide();
+                }, 50);
+            });
+
+            // Lắng nghe khi Zibll hoàn tất post_ajax: gỡ bỏ .no-more nếu tab có chứa nội dung Shop
+            $(document).on('post_ajax.ed', function () {
+                $('#author-tab-nick_decor, #user-tab-nick_decor').each(function () {
+                    var $tab = $(this);
+                    if ($tab.find('.znd-shop-wrapper').length) {
+                        $tab.find('.no-more').remove();
+                        $tab.find('.post_ajax_loader').hide();
+                    }
+                });
+            });
+
             // =====================================================================
             // 1. MỞ & ĐÓNG MODAL (Tuân thủ modal-backdrop-close.md)
             // =====================================================================

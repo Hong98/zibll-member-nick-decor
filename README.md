@@ -2,7 +2,7 @@
 
 > **Plugin tùy biến màu sắc và icon hiển thị đầu nickname thời thượng dành cho thành viên Theme Zibll.**
 
-![Version](https://img.shields.io/badge/version-v1.0.42-blue.svg)
+![Version](https://img.shields.io/badge/version-v1.0.43-blue.svg)
 ![WordPress](https://img.shields.io/badge/WordPress-5.6%2B-blue.svg)
 ![PHP](https://img.shields.io/badge/PHP-7.2%2B-green.svg)
 
@@ -130,6 +130,13 @@ Plugin cung cấp hệ thống Cửa hàng (Shop) và Tủ đồ (Wardrobe) cá 
 ---
 
 ## Lịch sử thay đổi
+
+### v1.0.43 — 2026-10-20
+- Sửa lỗi khi bấm vào tab "Màu & Icon" trong trang cá nhân báo "Không còn nội dung nào nữa":
+  - Khắc phục xung đột cơ chế AJAX của Theme Zibll: Hàm `post_ajax` trong JavaScript của Theme Zibll chỉ nhận diện các phần tử con mang class `.ajax-item` và tìm kiếm bộ phân trang `.ajax-pag`; khi không tìm thấy, hệ thống tự động rơi vào trường hợp rỗng và chèn thông báo `ajax_nomore` ("Không còn nội dung nào nữa").
+  - Xuất trực tiếp nội dung tĩnh (`content`): Bổ sung trường dữ liệu `content` chứa sẵn HTML của Shop & Tủ đồ ngay trong khai báo `author_main_tabs_array` (trang tác giả) và `user_ctnter_main_tabs_array` (trung tâm người dùng), giúp Zibll in trực tiếp nội dung vào tab pane và loại bỏ thẻ kích hoạt AJAX ngầm `.post_ajax_trigger`. Nhờ đó khi người dùng nhấp vào tab, giao diện mở tức thì trong 0ms mà không phải gửi request AJAX dư thừa.
+  - Vỏ bọc chuẩn hóa đa tầng (`render_author_tab_content_wrapper`): Bọc nội dung Cửa hàng trong thẻ `<div class="ajax-item znd-tab-ajax-item">` kèm `<div class="noajax-pag hide"></div>`, đảm bảo ngay cả khi truy cập link trực tiếp hoặc qua cơ chế router của theme, hàm `find('.ajax-item')` của Zibll vẫn nhận diện đầy đủ 100% nội dung và không bao giờ fallback về thông báo rỗng.
+  - Phòng vệ giao diện (CSS & JS): Bổ sung quy tắc CSS và JavaScript tự động gỡ bỏ thẻ `.no-more` và ẩn spinner loader nếu tab xuất hiện nội dung Shop; gắn class `translate-ignore` vào nhãn tab để tránh Translate.js tự động dịch thành "Màu & Biểu tượng".
 
 ### v1.0.42 — 2026-10-20
 - Thêm tính năng: Bổ sung 12 icon nick và 12 màu nick mới phong phú cho Cửa hàng:

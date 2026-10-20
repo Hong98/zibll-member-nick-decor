@@ -1416,3 +1416,23 @@ body.dark-theme #znd-confirm-modal .modal-buts.but-average > .znd-confirm-ok {
     border-left-color: rgba(255, 255, 255, 0.1) !important;
 }
 
+/* ==========================================================================
+   10. TƯƠNG THÍCH TAB TRANG CÁ NHÂN (AUTHOR PAGE & USER CENTER)
+   ========================================================================== */
+#author-tab-nick_decor .no-more,
+#user-tab-nick_decor .no-more,
+.znd-author-tab-pane .no-more {
+    display: none !important;
+}
+
+#author-tab-nick_decor .post_ajax_loader,
+#user-tab-nick_decor .post_ajax_loader {
+    display: none !important;
+}
+
+.znd-author-tab-pane .znd-tab-ajax-item,
+#user-tab-nick_decor .znd-tab-ajax-item {
+    width: 100%;
+}
+
+

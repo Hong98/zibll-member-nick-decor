@@ -463,9 +463,13 @@ class ZND_Renderer {
             return $tabs_array;
         }
 
+        $user_id      = get_current_user_id();
+        $shop_content = self::render_author_tab_content_wrapper($user_id);
+
         $tabs_array['nick_decor'] = array(
-            'title'    => __('Màu & Icon', 'zibll-nick-decor'),
+            'title'    => '<span class="translate-ignore">' . __('Màu & Icon', 'zibll-nick-decor') . '</span>',
             'nav_attr' => 'drawer-title="' . __('Cửa hàng màu & Icon nick', 'zibll-nick-decor') . '"',
+            'content'  => $shop_content,
             'loader'   => '<div class="text-center padding-20 muted-color"><i class="fa fa-spinner fa-spin fa-2x"></i></div>',
         );
 
@@ -488,7 +492,7 @@ class ZND_Renderer {
         $buttons[] = array(
             'html' => '',
             'icon' => '<i class="fa fa-paint-brush" style="color:#f59e0b;"></i>',
-            'name' => __('Màu & Icon', 'zibll-nick-decor'),
+            'name' => '<span class="translate-ignore">' . __('Màu & Icon', 'zibll-nick-decor') . '</span>',
             'tab'  => 'nick_decor',
         );
 
@@ -496,10 +500,19 @@ class ZND_Renderer {
     }
 
     /**
+     * Render nội dung tab kèm vỏ bọc chuẩn AJAX của Zibll
+     * Đảm bảo hàm find('.ajax-item') và find('.noajax-pag') trong post_ajax của Zibll luôn nhận diện trọn vẹn
+     */
+    public static function render_author_tab_content_wrapper($user_id = 0) {
+        $shop_html = self::render_shop_html($user_id, false);
+        return '<div class="ajax-item znd-tab-ajax-item">' . $shop_html . '</div><div class="noajax-pag hide"></div>';
+    }
+
+    /**
      * Render nội dung tab trong Trung tâm người dùng (/user)
      */
     public function render_user_tab_content() {
-        return self::render_shop_html(get_current_user_id(), false);
+        return self::render_author_tab_content_wrapper(get_current_user_id());
     }
 
     /**
@@ -515,9 +528,13 @@ class ZND_Renderer {
             return $tabs_args;
         }
 
+        $target_user_id = !empty($author_id) ? (int) $author_id : get_current_user_id();
+        $shop_content   = self::render_author_tab_content_wrapper($target_user_id);
+
         $tabs_args['nick_decor'] = array(
-            'title'         => '<i class="fa fa-paint-brush mr3"></i>' . __('Màu & Icon', 'zibll-nick-decor'),
+            'title'         => '<i class="fa fa-paint-brush mr3"></i><span class="translate-ignore">' . __('Màu & Icon', 'zibll-nick-decor') . '</span>',
             'content_class' => 'znd-author-tab-pane',
+            'content'       => $shop_content,
             'route'         => true,
             'loader'        => '<div class="text-center padding-20 muted-color"><i class="fa fa-spinner fa-spin fa-2x"></i></div>',
         );
@@ -531,9 +548,9 @@ class ZND_Renderer {
     public function render_author_tab_content() {
         global $wp_query;
         $curauth = $wp_query->get_queried_object();
-        $target_user_id = !empty($curauth->ID) ? $curauth->ID : get_current_user_id();
+        $target_user_id = !empty($curauth->ID) ? (int) $curauth->ID : get_current_user_id();
 
-        return self::render_shop_html($target_user_id, false);
+        return self::render_author_tab_content_wrapper($target_user_id);
     }
 
     /**
