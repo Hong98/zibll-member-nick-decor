@@ -412,7 +412,6 @@ body.modal-open .footer-tabbar {
 
 .znd-preview-label {
     font-size: 13px;
-    font-weight: 700;
     color: #ff6f06; /* Màu c-yellow chuẩn Theme Zibll */
     margin-bottom: 10px;
     display: flex;
@@ -440,7 +439,6 @@ body.modal-open .footer-tabbar {
 
 .znd-preview-name-line {
     font-size: 16px;
-    font-weight: 700;
     display: flex;
     align-items: center;
     color: var(--key-color, #333);
@@ -527,7 +525,6 @@ body.modal-open .footer-tabbar {
 .znd-nav-tabs.tab-nav-theme li > a {
     padding: 6px 10px;
     font-size: 14.5px;
-    font-weight: 700;
     color: var(--muted-2-color, #888);
     display: inline-flex;
     align-items: center;
@@ -547,7 +544,6 @@ body.modal-open .footer-tabbar {
 
 .znd-nav-tabs.tab-nav-theme li .badg {
     font-size: 11px;
-    font-weight: 600;
     padding: 1px 6px;
     border-radius: 10px;
     transition: all 0.2s ease;
@@ -669,12 +665,11 @@ body.modal-open .footer-tabbar {
 
 .znd-sample-text {
     font-size: 14px;
-    font-weight: 700;
+    font-weight: 600;
 }
 
 .znd-card-name {
     font-size: 11.5px;
-    font-weight: 600;
     color: var(--key-color, #333);
     white-space: nowrap;
     overflow: hidden;
@@ -722,7 +717,7 @@ body.modal-open .footer-tabbar {
 
 .znd-drawer-name {
     font-size: 14px;
-    font-weight: 700;
+    font-weight: 500;
     color: var(--key-color, #333);
 }
 
@@ -776,7 +771,7 @@ body.modal-open .footer-tabbar {
 
 .znd-duration-pill .pill-time {
     font-size: 11.5px;
-    font-weight: 700;
+    font-weight: 500;
     color: var(--key-color, #333);
 }
 
@@ -792,7 +787,6 @@ body.modal-open .footer-tabbar {
 
 .znd-duration-pill.active .pill-price {
     color: var(--focus-color, #ffaa00);
-    font-weight: 600;
 }
 
 .znd-duration-pill .pill-badge {
@@ -805,13 +799,11 @@ body.modal-open .footer-tabbar {
     padding: 1px 4px;
     border-radius: 4px;
     line-height: 1.1;
-    font-weight: 600;
 }
 
 .znd-drawer-btn-wrap .znd-btn {
     padding: 6px 14px;
     font-size: 13px;
-    font-weight: 600;
     height: 34px;
     line-height: 20px;
     border-radius: 6px;
@@ -845,7 +837,7 @@ body.modal-open .footer-tabbar {
    ========================================================================== */
 .znd-section-title {
     font-size: 13px;
-    font-weight: 700;
+    font-weight: 500;
     color: var(--key-color, #333);
     margin: 0 0 10px 0;
     display: flex;
@@ -1240,7 +1232,6 @@ span.display-name.znd-color-color_banned,
     font-size: 10px;
     padding: 2px 6px;
     border-radius: 4px;
-    font-weight: 600;
     line-height: 1.2;
     z-index: 2;
     display: inline-flex;
@@ -1319,7 +1310,6 @@ span.display-name.znd-color-color_banned,
 
 #znd-confirm-modal .znd-confirm-preview .znd-sample-text {
     font-size: 24px;
-    font-weight: 700;
     padding: 6px 18px;
     border-radius: 8px;
     background: rgba(0, 0, 0, 0.04);
@@ -1342,7 +1332,6 @@ body.dark-theme #znd-confirm-modal .znd-confirm-preview .znd-sample-text {
     border-radius: 0 !important;
     padding: 12px 15px !important;
     font-size: 14px;
-    font-weight: 600;
     line-height: 1.4;
     text-align: center;
     background: transparent;

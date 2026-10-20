@@ -560,7 +560,7 @@ class ZND_Renderer {
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <?php if (function_exists('zib_get_modal_colorful_header')): ?>
-                        <?php echo zib_get_modal_colorful_header('jb-yellow', '<i class="fa fa-paint-brush"></i>', '<div class="em12 font-bold">' . esc_html__('Cửa hàng màu & Icon nick', 'zibll-nick-decor') . '</div><div class="em09 opacity8 mt6 font-normal">' . esc_html__('Tùy biến phong cách nickname độc bản và nổi bật cho thành viên', 'zibll-nick-decor') . '</div>'); ?>
+                        <?php echo zib_get_modal_colorful_header('jb-yellow', '<i class="fa fa-paint-brush"></i>', '<div class="em12">' . esc_html__('Cửa hàng màu & Icon nick', 'zibll-nick-decor') . '</div><div class="em09 opacity8 mt6 font-normal">' . esc_html__('Tùy biến phong cách nickname độc bản và nổi bật cho thành viên', 'zibll-nick-decor') . '</div>'); ?>
                     <?php else: ?>
                         <div class="box-body notop mb10 touch">
                             <button class="close" data-dismiss="modal"><i class="fa fa-times"></i></button>
@@ -599,9 +599,9 @@ class ZND_Renderer {
                             <?php endif; ?>
                             <div style="padding: 15px 15px 10px;">
                                 <div class="znd-confirm-preview mb10" style="min-height: 48px; display: flex; align-items: center; justify-content: center;"></div>
-                                <div class="em12 font-bold mb6 znd-confirm-title text-center" style="color: var(--focus-color, #ff6f06);"></div>
-                                <div class="muted-2-color mb6 em09 text-center"><?php esc_html_e('Thời hạn sử dụng:', 'zibll-nick-decor'); ?> <b class="c-yellow znd-confirm-duration"></b></div>
-                                <div class="muted-2-color em09 text-center"><?php esc_html_e('Giá thanh toán:', 'zibll-nick-decor'); ?> <b class="c-red em12 font-bold znd-confirm-price"></b></div>
+                                <div class="em12 mb6 znd-confirm-title text-center" style="color: var(--focus-color, #ff6f06);"></div>
+                                <div class="muted-2-color mb6 em09 text-center"><?php esc_html_e('Thời hạn sử dụng:', 'zibll-nick-decor'); ?> <span class="c-yellow znd-confirm-duration"></span></div>
+                                <div class="muted-2-color em09 text-center"><?php esc_html_e('Giá thanh toán:', 'zibll-nick-decor'); ?> <span class="c-red em11 znd-confirm-price"></span></div>
                             </div>
                         </div>
                     </div>
@@ -641,13 +641,13 @@ class ZND_Renderer {
 
             <!-- HỘP XEM TRƯỚC THỜI GIAN THỰC (LIVE PREVIEW) -->
             <div class="znd-live-preview-box muted-box padding-15 mb20 radius8">
-                <div class="znd-preview-label c-yellow font-bold mb10">
+                <div class="znd-preview-label c-yellow mb10">
                     <i class="fa fa-eye fa-fw mr6"></i><?php esc_html_e('Xem trước diện mạo của bạn:', 'zibll-nick-decor'); ?>
                 </div>
                 <div class="znd-preview-card flex ac padding-10 radius8">
                     <div class="znd-preview-avatar mr10"><?php echo $avatar; ?></div>
                     <div class="znd-preview-info flex1">
-                        <div class="znd-preview-name-line font-bold em11">
+                        <div class="znd-preview-name-line em11">
                             <span id="znd-preview-icon" class="znd-nick-icon">
                                 <?php
                                 if (!empty($equipped_icon) && isset($icons[$equipped_icon])) {
@@ -673,7 +673,7 @@ class ZND_Renderer {
                     <div class="znd-balance-info em09">
                         <i class="fa fa-wallet fa-fw c-yellow mr6"></i>
                         <span><?php esc_html_e('Số dư hiện có:', 'zibll-nick-decor'); ?></span>
-                        <strong id="znd-current-balance" class="c-yellow font-bold em11 ml3"><?php echo number_format($balance); ?></strong>
+                        <span id="znd-current-balance" class="c-yellow em11 ml3"><?php echo number_format($balance); ?></span>
                         <span class="muted-color ml3"><?php echo esc_html($currency_name); ?></span>
                     </div>
                     <?php
@@ -714,14 +714,14 @@ class ZND_Renderer {
                 <?php else: ?>
                 <div class="znd-login-notice muted-2-color em09 mt10 pt10">
                     <i class="fa fa-sign-in fa-fw mr6"></i><?php esc_html_e('Vui lòng', 'zibll-nick-decor'); ?>
-                    <a href="javascript:;" class="signin-loader c-yellow font-bold"><?php esc_html_e('Đăng nhập', 'zibll-nick-decor'); ?></a>
+                    <a href="javascript:;" class="signin-loader c-yellow"><?php esc_html_e('Đăng nhập', 'zibll-nick-decor'); ?></a>
                     <?php esc_html_e('để mua sắm và trang bị màu & icon cho nick của bạn!', 'zibll-nick-decor'); ?>
                 </div>
                 <?php endif; ?>
             </div>
 
             <!-- THANH ĐIỀU HƯỚNG TABS (CHUẨN THEME ZIBLL TAB-NAV-THEME) -->
-            <ul class="list-inline tab-nav-theme font-bold text-center znd-nav-tabs mb15">
+            <ul class="list-inline tab-nav-theme text-center znd-nav-tabs mb15">
                 <li class="active" data-tab="icons">
                     <a href="javascript:;" class="znd-tab-btn">
                         <i class="fa fa-star mr4"></i><?php esc_html_e('Icon nick', 'zibll-nick-decor'); ?>
@@ -932,7 +932,7 @@ class ZND_Renderer {
             ?>
             <div class="znd-empty-box text-center padding-30 muted-box radius8">
                 <i class="fa fa-box-open fa-3x muted-3-color mb10"></i>
-                <h4 class="font-bold"><?php esc_html_e('Tủ đồ của bạn đang trống!', 'zibll-nick-decor'); ?></h4>
+                <h4 class="em11 muted-color"><?php esc_html_e('Tủ đồ của bạn đang trống!', 'zibll-nick-decor'); ?></h4>
                 <p class="muted-color"><?php esc_html_e('Hãy chọn mua những icon và màu nick cực chất ở các tab bên cạnh để làm mới phong cách nhé.', 'zibll-nick-decor'); ?></p>
             </div>
             <?php
@@ -940,7 +940,7 @@ class ZND_Renderer {
             ?>
             <div class="znd-wardrobe-section">
                 <?php if (!empty($inv['icons'])): ?>
-                <h4 class="znd-section-title font-bold mb10"><i class="fa fa-star c-yellow mr6"></i><?php esc_html_e('Icon đã sở hữu', 'zibll-nick-decor'); ?></h4>
+                <h4 class="znd-section-title mb10"><i class="fa fa-star c-yellow mr6"></i><?php esc_html_e('Icon đã sở hữu', 'zibll-nick-decor'); ?></h4>
                 <div class="znd-grid">
                     <?php foreach ($inv['icons'] as $id => $data):
                         if (!isset($icons[$id])) continue;
@@ -996,7 +996,7 @@ class ZND_Renderer {
                 <?php endif; ?>
 
                 <?php if (!empty($inv['colors'])): ?>
-                <h4 class="znd-section-title font-bold mt20 mb10"><i class="fa fa-magic c-blue mr6"></i><?php esc_html_e('Màu nick đã sở hữu', 'zibll-nick-decor'); ?></h4>
+                <h4 class="znd-section-title mt20 mb10"><i class="fa fa-magic c-blue mr6"></i><?php esc_html_e('Màu nick đã sở hữu', 'zibll-nick-decor'); ?></h4>
                 <div class="znd-grid">
                     <?php foreach ($inv['colors'] as $id => $data):
                         if (!isset($colors[$id])) continue;

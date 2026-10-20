@@ -205,9 +205,9 @@
                     '</div>' +
                     '<div style="padding: 15px 15px 10px;">' +
                     '<div class="znd-confirm-preview mb10" style="min-height: 48px; display: flex; align-items: center; justify-content: center;"></div>' +
-                    '<div class="em12 font-bold mb6 znd-confirm-title text-center" style="color: var(--focus-color, #ff6f06);"></div>' +
-                    '<div class="muted-2-color mb6 em09 text-center">Thời hạn sử dụng: <b class="c-yellow znd-confirm-duration"></b></div>' +
-                    '<div class="muted-2-color em09 text-center">Giá thanh toán: <b class="c-red em12 font-bold znd-confirm-price"></b></div>' +
+                    '<div class="em12 mb6 znd-confirm-title text-center" style="color: var(--focus-color, #ff6f06);"></div>' +
+                    '<div class="muted-2-color mb6 em09 text-center">Thời hạn sử dụng: <span class="c-yellow znd-confirm-duration"></span></div>' +
+                    '<div class="muted-2-color em09 text-center">Giá thanh toán: <span class="c-red em11 znd-confirm-price"></span></div>' +
                     '</div>' +
                     '</div>' +
                     '</div>' +
@@ -405,7 +405,7 @@
             var icon = (type === 'success') ? 'fa-check-circle' : 'fa-exclamation-circle';
 
             $('.znd-toast-msg').remove();
-            var $toast = $('<div class="znd-toast-msg" style="position:fixed;top:30px;left:50%;transform:translateX(-50%);z-index:99999999;background:' + bg + ';color:#fff;padding:12px 24px;border-radius:50px;font-size:14px;font-weight:600;box-shadow:0 8px 30px rgba(0,0,0,0.35);display:flex;align-items:center;gap:10px;pointer-events:none;animation:znd-fade-in 0.3s ease;"><i class="fa ' + icon + '"></i> ' + message + '</div>');
+            var $toast = $('<div class="znd-toast-msg" style="position:fixed;top:30px;left:50%;transform:translateX(-50%);z-index:99999999;background:' + bg + ';color:#fff;padding:12px 24px;border-radius:50px;font-size:14px;font-weight:500;box-shadow:0 8px 30px rgba(0,0,0,0.35);display:flex;align-items:center;gap:10px;pointer-events:none;animation:znd-fade-in 0.3s ease;"><i class="fa ' + icon + '"></i> ' + message + '</div>');
             $('body').append($toast);
 
             setTimeout(function () {
@@ -1032,7 +1032,7 @@
                     var cssClass = $card.data('css') || '';
                     var anim = $card.data('anim') || '';
                     var animClass = anim ? ' znd-anim-' + anim : '';
-                    previewHtml = '<span class="znd-sample-text ' + cssClass + animClass + '" style="font-size: 26px; font-weight: 700; padding: 6px 18px; border-radius: 8px; background: rgba(0,0,0,0.04);">Aa</span>';
+                    previewHtml = '<span class="znd-sample-text ' + cssClass + animClass + '" style="font-size: 26px; padding: 6px 18px; border-radius: 8px; background: rgba(0,0,0,0.04);">Aa</span>';
                 }
 
                 // Mở popup xác nhận giao diện Zibll thay thế window.confirm

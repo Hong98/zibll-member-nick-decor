@@ -2,7 +2,7 @@
 
 > **Plugin tùy biến màu sắc và icon hiển thị đầu nickname thời thượng dành cho thành viên Theme Zibll.**
 
-![Version](https://img.shields.io/badge/version-v1.0.36-blue.svg)
+![Version](https://img.shields.io/badge/version-v1.0.37-blue.svg)
 ![WordPress](https://img.shields.io/badge/WordPress-5.6%2B-blue.svg)
 ![PHP](https://img.shields.io/badge/PHP-7.2%2B-green.svg)
 
@@ -105,6 +105,12 @@ Plugin cung cấp hệ thống Cửa hàng (Shop) và Tủ đồ (Wardrobe) cá 
 ---
 
 ## Lịch sử thay đổi
+
+### v1.0.37 — 2026-10-20
+- Chuẩn hóa kiểu chữ thanh thoát và loại bỏ hoàn toàn việc lạm dụng chữ in đậm:
+  - Loại bỏ các class `font-bold`, thẻ `<b>`, `<strong>` và CSS `font-weight: 700;` / `font-weight: 600;` dư thừa xuất hiện tràn lan ở các nhãn hộp xem trước, tên nick, số dư ví, thanh điều hướng tab, tiêu đề mục tủ đồ, thẻ card vật phẩm, thanh chi tiết Drawer và nút bấm.
+  - Kế thừa font-weight tự nhiên của Theme Zibll: Nhãn chữ, card, mô tả và nút bấm trở về độ đậm bình thường (`font-weight: normal` / `500`), giữ cho giao diện thanh thoát, tinh tế và không bị thô cứng.
+  - Cập nhật quy tắc thiết kế hệ thống (Rule) cấm tự ý bôi đậm linh tinh và bắt buộc đồng bộ kiểu chữ với Theme Zibll.
 
 ### v1.0.36 — 2026-10-20
 - Sửa lỗi nút Hủy bỏ đóng mất danh sách shop icon:
