@@ -610,7 +610,19 @@ body.modal-open .footer-tabbar {
 }
 
 .znd-card.is-equipped {
-    border-color: var(--green-color, #18a52a);
+    border-color: var(--green-color, #18a52a) !important;
+}
+
+.znd-card.is-equipped:hover {
+    border-color: var(--green-color, #18a52a) !important;
+    box-shadow: 0 3px 10px rgba(24, 165, 42, 0.25);
+}
+
+.znd-card.is-equipped.is-previewing,
+.znd-card.is-equipped.is-selected {
+    border-color: var(--green-color, #18a52a) !important;
+    box-shadow: 0 0 0 2px var(--green-color, #18a52a), 0 4px 12px rgba(24, 165, 42, 0.2) !important;
+    background: rgba(24, 165, 42, 0.04) !important;
 }
 
 .znd-badge-status {

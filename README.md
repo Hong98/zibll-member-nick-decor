@@ -2,7 +2,7 @@
 
 > **Plugin tùy biến màu sắc và icon hiển thị đầu nickname thời thượng dành cho thành viên Theme Zibll.**
 
-![Version](https://img.shields.io/badge/version-v1.0.39-blue.svg)
+![Version](https://img.shields.io/badge/version-v1.0.40-blue.svg)
 ![WordPress](https://img.shields.io/badge/WordPress-5.6%2B-blue.svg)
 ![PHP](https://img.shields.io/badge/PHP-7.2%2B-green.svg)
 
@@ -105,6 +105,12 @@ Plugin cung cấp hệ thống Cửa hàng (Shop) và Tủ đồ (Wardrobe) cá 
 ---
 
 ## Lịch sử thay đổi
+
+### v1.0.40 — 2026-10-20
+- Sửa lỗi mất vòng đường viền màu xanh thể hiện đang dùng khi trang bị trong tủ đồ:
+  - Khắc phục xung đột cập nhật DOM trong JavaScript: Sau khi tiêm HTML tủ đồ mới (`wardrobe_html`), biến tham chiếu card cũ bị tách rời khỏi DOM khiến các thao tác class và trạng thái tác động nhầm vào phần tử ma trong bộ nhớ; đồng thời vòng lặp xóa trạng thái tước nhầm `is-equipped` của card vừa được máy chủ render.
+  - Đồng bộ chính xác trạng thái trên toàn bộ giao diện: Tự động gắn class `is-equipped` và huy hiệu tích xanh "Đang dùng" cho đúng vật phẩm vừa trang bị, đồng thời gỡ bỏ trạng thái trang bị của các vật phẩm cùng loại khác trên toàn bộ các tab.
+  - Tối ưu hóa CSS viền xanh: Bổ sung định kiểu ưu tiên cho `.znd-card.is-equipped` và `.znd-card.is-equipped.is-selected`, bảo đảm vòng đường viền màu xanh lá kép 2px (`--green-color: #18a52a`) cùng huy hiệu check xanh hiển thị rõ nét ngay lập tức khi trang bị mà không bị đè bởi class chọn màu cam và không cần phải reload trình duyệt.
 
 ### v1.0.39 — 2026-10-20
 - Sửa lỗi hiển thị màu nick trong popup xác nhận mua bị biến thành ô xám rỗng:

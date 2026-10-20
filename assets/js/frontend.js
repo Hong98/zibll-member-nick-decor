@@ -1073,32 +1073,47 @@
                                 if (res && res.success) {
                                     self.showToast((res.data && res.data.message) || 'Mua thành công! Vật phẩm đã được thêm vào tủ đồ.', 'success');
 
-                                    // CẬP NHẬT GIAO DIỆN THỜI GIAN THỰC TOÀN TRANG (HTMX REACTIVE DOM SWAP)
+                                    // 1. CẬP NHẬT GIAO DIỆN THỜI GIAN THỰC TOÀN TRANG (HTMX REACTIVE DOM SWAP)
                                     self.updateUserDecorOnPage(res.data);
 
                                     // Ẩn thanh chọn gói vì đã sở hữu
                                     $wrapper.find('#znd-drawer-middle').hide();
 
-                                    // Đổi trạng thái các card cùng loại khác
+                                    // 2. ĐỒNG BỘ TRẠNG THÁI CÁC CARD TRÊN TOÀN BỘ WRAPPER (CẢ TAB SHOP VÀ TAB TỦ ĐỒ)
                                     $wrapper.find('.znd-card[data-type="' + type + '"]').each(function () {
-                                        if ($(this).data('status') === 'equipped') {
-                                            $(this).data('status', 'owned').removeClass('is-equipped');
-                                            $(this).find('.znd-badge-status').removeClass('status-equipped').addClass('status-owned').html('<i class="fa fa-circle"></i>');
+                                        var $c = $(this);
+                                        var cid = String($c.data('id'));
+
+                                        if (cid === String(itemId)) {
+                                            var newDurationText = (duration == 0) ? 'Vĩnh viễn' : 'Hết hạn: ' + duration + ' ngày';
+                                            $c.attr('data-status', 'equipped').data('status', 'equipped')
+                                              .attr('data-duration', newDurationText).data('duration', newDurationText)
+                                              .removeClass('is-owned').addClass('is-equipped is-selected');
+
+                                            var $st = $c.find('.znd-badge-status');
+                                            if (!$st.length) {
+                                                $c.append('<span class="znd-badge-status status-equipped" title="Đang dùng"><i class="fa fa-check"></i></span>');
+                                            } else {
+                                                $st.removeClass('status-owned').addClass('status-equipped')
+                                                   .attr('title', 'Đang dùng').html('<i class="fa fa-check"></i>');
+                                            }
+                                        } else {
+                                            if ($c.hasClass('is-equipped') || $c.data('status') === 'equipped') {
+                                                $c.attr('data-status', 'owned').data('status', 'owned')
+                                                  .removeClass('is-equipped').addClass('is-owned');
+
+                                                var $st = $c.find('.znd-badge-status');
+                                                if ($st.length) {
+                                                    $st.removeClass('status-equipped').addClass('status-owned')
+                                                       .attr('title', 'Đã sở hữu').html('<i class="fa fa-circle"></i>');
+                                                }
+                                            }
                                         }
                                     });
 
-                                    if ($card.length) {
-                                        var newDurationText = (duration == 0) ? 'Vĩnh viễn' : 'Hết hạn: ' + duration + ' ngày';
-                                        $card.data('status', 'equipped').data('duration', newDurationText).addClass('is-equipped is-owned');
-                                        $wrapper.find('#znd-drawer-price').text('Đang dùng');
-                                        $wrapper.find('#znd-drawer-duration').text(newDurationText);
-
-                                        if (!$card.find('.znd-badge-status').length) {
-                                            $card.append('<span class="znd-badge-status status-equipped" title="Đang dùng"><i class="fa fa-check"></i></span>');
-                                        } else {
-                                            $card.find('.znd-badge-status').removeClass('status-owned').addClass('status-equipped').html('<i class="fa fa-check"></i>');
-                                        }
-                                    }
+                                    var newDurText = (duration == 0) ? 'Vĩnh viễn' : 'Hết hạn: ' + duration + ' ngày';
+                                    $wrapper.find('#znd-drawer-price').text('Đang dùng');
+                                    $wrapper.find('#znd-drawer-duration').text(newDurText);
 
                                     // Cập nhật lại nút trên thanh Drawer
                                     $wrapper.find('#znd-drawer-btn-wrap').html(self.getDrawerBtnHtml(type, itemId, 'equipped', 'Đang dùng'));
@@ -1139,9 +1154,8 @@
                 if ($btn.prop('disabled')) return;
 
                 var type   = $btn.data('type');
-                var itemId = $btn.data('id');
+                var itemId = String($btn.data('id'));
                 var $wrapper = $btn.closest('.znd-shop-wrapper');
-                var $card  = $wrapper.find('.znd-card[data-type="' + type + '"][data-id="' + itemId + '"]');
 
                 var equipText = (znd_vars.i18n && znd_vars.i18n.equipping) ? znd_vars.i18n.equipping : 'Đang trang bị...';
                 $btn.prop('disabled', true).html('<i class="fa fa-spinner fa-spin mr3"></i> ' + equipText);
@@ -1161,28 +1175,46 @@
                         if (res && res.success) {
                             self.showToast((res.data && res.data.message) || 'Trang bị thành công!', 'success');
 
-                            // CẬP NHẬT GIAO DIỆN THỜI GIAN THỰC TOÀN TRANG (HTMX REACTIVE DOM SWAP)
+                            // 1. CẬP NHẬT GIAO DIỆN THỜI GIAN THỰC TOÀN TRANG (HTMX REACTIVE DOM SWAP)
                             self.updateUserDecorOnPage(res.data);
 
-                            // Bỏ trang bị các item cùng loại khác
+                            // 2. ĐỒNG BỘ TRẠNG THÁI CÁC CARD TRÊN TOÀN BỘ WRAPPER (CẢ TAB SHOP VÀ TAB TỦ ĐỒ)
                             $wrapper.find('.znd-card[data-type="' + type + '"]').each(function () {
-                                if ($(this).data('status') === 'equipped') {
-                                    $(this).data('status', 'owned').removeClass('is-equipped');
-                                    $(this).find('.znd-badge-status').removeClass('status-equipped').addClass('status-owned').html('<i class="fa fa-circle"></i>');
+                                var $c = $(this);
+                                var cid = String($c.data('id'));
+
+                                if (cid === itemId) {
+                                    $c.attr('data-status', 'equipped').data('status', 'equipped')
+                                      .removeClass('is-owned').addClass('is-equipped is-selected');
+
+                                    var $st = $c.find('.znd-badge-status');
+                                    if (!$st.length) {
+                                        $c.append('<span class="znd-badge-status status-equipped" title="Đang dùng"><i class="fa fa-check"></i></span>');
+                                    } else {
+                                        $st.removeClass('status-owned').addClass('status-equipped')
+                                           .attr('title', 'Đang dùng').html('<i class="fa fa-check"></i>');
+                                    }
+                                } else {
+                                    if ($c.hasClass('is-equipped') || $c.data('status') === 'equipped') {
+                                        $c.attr('data-status', 'owned').data('status', 'owned')
+                                          .removeClass('is-equipped').addClass('is-owned');
+
+                                        var $st = $c.find('.znd-badge-status');
+                                        if ($st.length) {
+                                            $st.removeClass('status-equipped').addClass('status-owned')
+                                               .attr('title', 'Đã sở hữu').html('<i class="fa fa-circle"></i>');
+                                        }
+                                    }
                                 }
                             });
 
-                            if ($card.length) {
-                                $card.data('status', 'equipped').addClass('is-equipped');
-                                if (!$card.find('.znd-badge-status').length) {
-                                    $card.append('<span class="znd-badge-status status-equipped" title="Đang dùng"><i class="fa fa-check"></i></span>');
-                                } else {
-                                    $card.find('.znd-badge-status').removeClass('status-owned').addClass('status-equipped').html('<i class="fa fa-check"></i>');
-                                }
-                            }
+                            // 3. Cập nhật lại nút trên thanh Drawer với thông tin card mới nhất trên DOM
+                            var $activeCard = $wrapper.find('.znd-card[data-type="' + type + '"][data-id="' + itemId + '"]').first();
+                            var priceText = $activeCard.length ? ($activeCard.data('price-text') || 'Đã sở hữu') : 'Đã sở hữu';
+                            var exclusive = $activeCard.length ? ($activeCard.data('exclusive') || '') : '';
 
-                            // Cập nhật lại nút trên thanh Drawer
-                            $wrapper.find('#znd-drawer-btn-wrap').html(self.getDrawerBtnHtml(type, itemId, 'equipped', $card.data('price-text'), 7, $card.data('exclusive')));
+                            $wrapper.find('#znd-drawer-price').text('Đang dùng');
+                            $wrapper.find('#znd-drawer-btn-wrap').html(self.getDrawerBtnHtml(type, itemId, 'equipped', priceText, 7, exclusive));
                         } else {
                             var errMsg = (res && res.data && res.data.message) ? res.data.message : 'Có lỗi xảy ra!';
                             self.showToast(errMsg, 'error');
@@ -1206,9 +1238,8 @@
                 if ($btn.prop('disabled')) return;
 
                 var type   = $btn.data('type');
-                var itemId = $btn.data('id');
+                var itemId = String($btn.data('id'));
                 var $wrapper = $btn.closest('.znd-shop-wrapper');
-                var $card  = $wrapper.find('.znd-card[data-type="' + type + '"][data-id="' + itemId + '"]');
 
                 var unequipText = (znd_vars.i18n && znd_vars.i18n.unequipping) ? znd_vars.i18n.unequipping : 'Đang tháo...';
                 $btn.prop('disabled', true).html('<i class="fa fa-spinner fa-spin mr3"></i> ' + unequipText);
@@ -1227,16 +1258,31 @@
                         if (res && res.success) {
                             self.showToast((res.data && res.data.message) || 'Đã tháo trang bị!', 'success');
 
-                            // CẬP NHẬT GIAO DIỆN THỜI GIAN THỰC TOÀN TRANG (HTMX REACTIVE DOM SWAP)
+                            // 1. CẬP NHẬT GIAO DIỆN THỜI GIAN THỰC TOÀN TRANG (HTMX REACTIVE DOM SWAP)
                             self.updateUserDecorOnPage(res.data);
 
-                            if ($card.length) {
-                                $card.data('status', 'owned').removeClass('is-equipped');
-                                $card.find('.znd-badge-status').removeClass('status-equipped').addClass('status-owned').html('<i class="fa fa-circle"></i>');
-                            }
+                            // 2. ĐỒNG BỘ TRẠNG THÁI CÁC CARD TRÊN TOÀN BỘ WRAPPER
+                            $wrapper.find('.znd-card[data-type="' + type + '"]').each(function () {
+                                var $c = $(this);
+                                if ($c.hasClass('is-equipped') || $c.data('status') === 'equipped') {
+                                    $c.attr('data-status', 'owned').data('status', 'owned')
+                                      .removeClass('is-equipped').addClass('is-owned');
 
-                            // Cập nhật lại nút trên thanh Drawer
-                            $wrapper.find('#znd-drawer-btn-wrap').html(self.getDrawerBtnHtml(type, itemId, 'owned', $card.data('price-text'), 7, $card.data('exclusive')));
+                                    var $st = $c.find('.znd-badge-status');
+                                    if ($st.length) {
+                                        $st.removeClass('status-equipped').addClass('status-owned')
+                                           .attr('title', 'Đã sở hữu').html('<i class="fa fa-circle"></i>');
+                                    }
+                                }
+                            });
+
+                            // 3. Cập nhật lại nút trên thanh Drawer với thông tin card mới nhất trên DOM
+                            var $activeCard = $wrapper.find('.znd-card[data-type="' + type + '"][data-id="' + itemId + '"]').first();
+                            var priceText = $activeCard.length ? ($activeCard.data('price-text') || 'Đã sở hữu') : 'Đã sở hữu';
+                            var exclusive = $activeCard.length ? ($activeCard.data('exclusive') || '') : '';
+
+                            $wrapper.find('#znd-drawer-price').text(priceText);
+                            $wrapper.find('#znd-drawer-btn-wrap').html(self.getDrawerBtnHtml(type, itemId, 'owned', priceText, 7, exclusive));
                         } else {
                             var errMsg = (res && res.data && res.data.message) ? res.data.message : 'Có lỗi xảy ra!';
                             self.showToast(errMsg, 'error');
