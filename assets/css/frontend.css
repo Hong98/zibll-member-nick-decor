@@ -593,7 +593,9 @@ body.modal-open .footer-tabbar {
     box-shadow: 0 1px 3px var(--main-shadow, rgba(0, 0, 0, 0.02));
     cursor: pointer;
     user-select: none;
-    min-height: 82px;
+    min-height: 86px;
+    overflow: hidden;
+    box-sizing: border-box;
 }
 
 .znd-card:hover {
@@ -652,14 +654,15 @@ body.modal-open .footer-tabbar {
 .znd-card-icon-preview,
 .znd-card-color-sample {
     width: 100%;
-    height: 42px;
+    height: 44px;
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     justify-content: center;
     background: var(--muted-border-color, rgba(136, 136, 136, 0.05));
     border-radius: var(--mini-radius, 4px);
     margin-bottom: 6px;
-    padding: 4px;
+    padding: 4px 4px 5px;
+    box-sizing: border-box;
     transition: background 0.15s ease;
 }
 
@@ -671,13 +674,23 @@ body.modal-open .footer-tabbar {
 }
 
 .znd-card-icon-preview .znd-nick-icon {
-    width: 28px;
-    height: 28px;
+    width: 25px;
+    height: 25px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.znd-card-icon-preview .znd-nick-icon svg {
+    width: 100%;
+    height: 100%;
+    display: block;
 }
 
 .znd-sample-text {
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 500;
+    line-height: 1;
 }
 
 .znd-card-name {
@@ -1232,40 +1245,51 @@ span.display-name.znd-color-color_banned,
     font-weight: normal !important;
 }
 
-/* Huy hiệu đặc quyền hiển thị trên góc thẻ trong Shop */
-.znd-card {
-    position: relative;
-}
-
+/* Huy hiệu đặc quyền hiển thị trên góc thẻ trong Shop (Corner Tag phong cách Theme Zibll) */
 .znd-card .znd-exclusive-badge {
     position: absolute;
-    top: 6px;
-    left: 6px;
-    font-size: 10px;
-    padding: 2px 6px;
-    border-radius: 4px;
-    line-height: 1.2;
-    z-index: 2;
+    top: 0;
+    left: 0;
+    font-size: 9px;
+    padding: 2px 6px 2px 5px;
+    border-radius: 0 0 6px 0;
+    line-height: 1.1;
+    z-index: 3;
     display: inline-flex;
     align-items: center;
+    font-weight: 500;
+}
+
+.znd-card .znd-exclusive-badge i {
+    margin-right: 2px;
+    font-size: 8.5px;
 }
 
 .znd-exclusive-badge.badge-admin {
     background: rgba(239, 71, 58, 0.15);
     color: #ef473a;
-    border: 1px solid rgba(239, 71, 58, 0.35);
+    border-bottom: 1px solid rgba(239, 71, 58, 0.3);
+    border-right: 1px solid rgba(239, 71, 58, 0.3);
+    border-top: none;
+    border-left: none;
 }
 
 .znd-exclusive-badge.badge-mod {
     background: rgba(17, 153, 142, 0.15);
     color: #11998e;
-    border: 1px solid rgba(17, 153, 142, 0.35);
+    border-bottom: 1px solid rgba(17, 153, 142, 0.3);
+    border-right: 1px solid rgba(17, 153, 142, 0.3);
+    border-top: none;
+    border-left: none;
 }
 
 .znd-exclusive-badge.badge-banned {
     background: rgba(140, 147, 157, 0.2);
     color: #6c757d;
-    border: 1px solid rgba(140, 147, 157, 0.35);
+    border-bottom: 1px solid rgba(140, 147, 157, 0.3);
+    border-right: 1px solid rgba(140, 147, 157, 0.3);
+    border-top: none;
+    border-left: none;
 }
 
 /* Nút đặc quyền trong Drawer cố định */

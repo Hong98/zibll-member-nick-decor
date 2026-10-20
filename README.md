@@ -2,7 +2,7 @@
 
 > **Plugin tùy biến màu sắc và icon hiển thị đầu nickname thời thượng dành cho thành viên Theme Zibll.**
 
-![Version](https://img.shields.io/badge/version-v1.0.40-blue.svg)
+![Version](https://img.shields.io/badge/version-v1.0.41-blue.svg)
 ![WordPress](https://img.shields.io/badge/WordPress-5.6%2B-blue.svg)
 ![PHP](https://img.shields.io/badge/PHP-7.2%2B-green.svg)
 
@@ -105,6 +105,12 @@ Plugin cung cấp hệ thống Cửa hàng (Shop) và Tủ đồ (Wardrobe) cá 
 ---
 
 ## Lịch sử thay đổi
+
+### v1.0.41 — 2026-10-20
+- Sửa lỗi huy hiệu đặc quyền Admin và Mod che đè lên icon và mẫu màu chữ ở trung tâm thẻ:
+  - Tái cấu trúc huy hiệu đặc quyền chuẩn phong cách nhãn góc (Corner Tag) Theme Zibll: Chuyển badge Admin/Mod sang dạng nhãn góc ghim đỉnh (`top: 0; left: 0; border-radius: 0 0 6px 0;`), bo cong liền mạch với góc ngoài của thẻ card.
+  - Tối ưu hóa không gian hiển thị trong khung xem trước: Điều chỉnh chiều cao và căn chỉnh icon SVG cùng chữ mẫu `Aa` xuống nửa dưới của khung preview (`align-items: flex-end; padding-bottom: 5px;`), chừa khoảng đệm đỉnh hoàn toàn thông thoáng cho badge độc quyền và huy hiệu trạng thái trang bị ở hai góc.
+  - Khắc phục triệt để hiện tượng che đè: Giữ nguyên vẹn 100% khả năng hiển thị nổi bật của huy hiệu đặc quyền "🛡 Admin" và "🛡 Mod", đồng thời icon và màu sắc hiển thị trọn vẹn, sắc nét, đồng bộ và thẳng hàng hoàn hảo trên toàn bộ lưới thẻ.
 
 ### v1.0.40 — 2026-10-20
 - Sửa lỗi mất vòng đường viền màu xanh thể hiện đang dùng khi trang bị trong tủ đồ:
