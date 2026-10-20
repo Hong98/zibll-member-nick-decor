@@ -2,7 +2,7 @@
 
 > **Plugin tùy biến màu sắc và icon hiển thị đầu nickname thời thượng dành cho thành viên Theme Zibll.**
 
-![Version](https://img.shields.io/badge/version-v1.0.35-blue.svg)
+![Version](https://img.shields.io/badge/version-v1.0.36-blue.svg)
 ![WordPress](https://img.shields.io/badge/WordPress-5.6%2B-blue.svg)
 ![PHP](https://img.shields.io/badge/PHP-7.2%2B-green.svg)
 
@@ -105,6 +105,12 @@ Plugin cung cấp hệ thống Cửa hàng (Shop) và Tủ đồ (Wardrobe) cá 
 ---
 
 ## Lịch sử thay đổi
+
+### v1.0.36 — 2026-10-20
+- Sửa lỗi nút Hủy bỏ đóng mất danh sách shop icon:
+  - Khắc phục xung đột lắng nghe sự kiện đóng modal: Cô lập bộ chọn `[data-dismiss="modal"]` chỉ áp dụng cho riêng `#znd-shop-modal`, không bắt nhầm các nút đóng của popup xác nhận con `#znd-confirm-modal`.
+  - Bổ sung cờ chặn lan truyền sự kiện (`stopPropagation`) trên các nút Hủy bỏ và đóng của `#znd-confirm-modal`, đồng thời loại bỏ thuộc tính `data-dismiss="modal"` mặc định để ngăn Bootstrap 3 đóng nhầm modal cha.
+  - Tích hợp cơ chế tự động khôi phục và duy trì trạng thái mở (`znd-modal-open`, `display: flex` và lớp nền mờ `.modal-backdrop`) cho Cửa hàng khi thành viên bấm Hủy bỏ trên popup xác nhận, giúp người dùng tiếp tục xem và mua sắm các vật phẩm khác liền mạch.
 
 ### v1.0.35 — 2026-10-20
 - Đồng bộ giao diện popup xác nhận mua và hệ thống nút bấm giống hoàn toàn với popup đăng xuất Theme Zibll:

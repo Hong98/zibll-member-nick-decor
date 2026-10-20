@@ -212,7 +212,7 @@
                     '</div>' +
                     '</div>' +
                     '<div class="modal-buts but-average">' +
-                    '<a type="button" data-dismiss="modal" class="but znd-confirm-cancel" href="javascript:;">Hủy bỏ</a>' +
+                    '<a type="button" class="but znd-confirm-cancel" href="javascript:;">Hủy bỏ</a>' +
                     '<a type="button" class="but c-yellow znd-confirm-ok" href="javascript:;">Xác nhận mua</a>' +
                     '</div>' +
                     '</div>' +
@@ -260,8 +260,16 @@
             $modal.css('display', 'none');
             this.confirmCallback = null;
 
-            if ($('#znd-shop-modal').is(':visible') || $('#znd-shop-modal').hasClass('in')) {
+            // Luôn đảm bảo giữ nguyên modal Cửa hàng (#znd-shop-modal) mở để thành viên tiếp tục duyệt xem vật phẩm khác
+            var $shopModal = $('#znd-shop-modal');
+            if ($shopModal.length && ($shopModal.hasClass('in') || $shopModal.is(':visible'))) {
+                $shopModal.css('display', 'flex');
                 $('body').addClass('znd-modal-open modal-open');
+                setTimeout(function () {
+                    if ($shopModal.is(':visible') && !$('.modal-backdrop.in, .modal-backdrop.show').length) {
+                        $('<div class="modal-backdrop fade in"></div>').appendTo('body');
+                    }
+                }, 50);
             }
         },
 
@@ -699,7 +707,12 @@
                 self.openModal();
             });
 
-            $(document).on('click', '.znd-modal-close, [data-dismiss="modal"]', function (e) {
+            // Đóng Modal Cửa hàng (#znd-shop-modal) khi click nút đóng của chính nó
+            $(document).on('click', '#znd-shop-modal .znd-modal-close, #znd-shop-modal [data-dismiss="modal"]', function (e) {
+                // Tuyệt đối không đóng shop modal nếu click nút hủy/đóng của popup xác nhận mua
+                if ($(this).closest('#znd-confirm-modal').length) {
+                    return;
+                }
                 e.preventDefault();
                 self.closeModal();
             });
@@ -731,13 +744,15 @@
                 confirmBackdropMouseDownTarget = null;
             });
 
-            $(document).on('click', '.znd-confirm-cancel', function (e) {
+            $(document).on('click', '.znd-confirm-cancel, #znd-confirm-modal .close, #znd-confirm-modal [data-dismiss="modal"]', function (e) {
                 e.preventDefault();
+                e.stopPropagation();
                 self.closeConfirmModal();
             });
 
             $(document).on('click', '.znd-confirm-ok', function (e) {
                 e.preventDefault();
+                e.stopPropagation();
                 var cb = self.confirmCallback;
                 self.closeConfirmModal();
                 if (typeof cb === 'function') {
@@ -759,13 +774,26 @@
                 }
             });
 
-            // Đồng bộ trạng thái lớp body khi đóng/mở qua Bootstrap Modal
+            // Đồng bộ trạng thái lớp body khi đóng/mở Shop Modal qua Bootstrap Modal
             $('#znd-shop-modal').on('hidden.bs.modal', function () {
                 $('body').removeClass('znd-modal-open');
                 $(this).css('display', 'none');
             }).on('shown.bs.modal', function () {
                 $('body').addClass('znd-modal-open');
                 $(this).css('display', 'flex');
+            });
+
+            // Khi popup xác nhận mua đóng: Đảm bảo giữ nguyên trạng thái mở và backdrop cho Shop Modal
+            $(document).on('hidden.bs.modal', '#znd-confirm-modal', function () {
+                $(this).css('display', 'none');
+                var $shopModal = $('#znd-shop-modal');
+                if ($shopModal.length && ($shopModal.hasClass('in') || $shopModal.is(':visible'))) {
+                    $('body').addClass('modal-open znd-modal-open');
+                    $shopModal.css('display', 'flex');
+                    if (!$('.modal-backdrop.in, .modal-backdrop.show').length) {
+                        $('<div class="modal-backdrop fade in"></div>').appendTo('body');
+                    }
+                }
             });
 
             // =====================================================================

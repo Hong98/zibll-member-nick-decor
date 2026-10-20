@@ -606,7 +606,7 @@ class ZND_Renderer {
                         </div>
                     </div>
                     <div class="modal-buts but-average">
-                        <a type="button" data-dismiss="modal" class="but znd-confirm-cancel" href="javascript:;"><?php esc_html_e('Hủy bỏ', 'zibll-nick-decor'); ?></a>
+                        <a type="button" class="but znd-confirm-cancel" href="javascript:;"><?php esc_html_e('Hủy bỏ', 'zibll-nick-decor'); ?></a>
                         <a type="button" class="but c-yellow znd-confirm-ok" href="javascript:;"><?php esc_html_e('Xác nhận mua', 'zibll-nick-decor'); ?></a>
                     </div>
                 </div>
