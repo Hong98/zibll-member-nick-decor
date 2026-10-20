@@ -1308,15 +1308,27 @@ span.display-name.znd-color-color_banned,
     font-size: 40px;
 }
 
-#znd-confirm-modal .znd-confirm-preview .znd-sample-text {
-    font-size: 24px;
-    padding: 6px 18px;
-    border-radius: 8px;
-    background: rgba(0, 0, 0, 0.04);
+#znd-confirm-modal .znd-confirm-preview .znd-confirm-color-sample {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 68px;
+    height: 48px;
+    padding: 0 18px;
+    border-radius: var(--main-radius, 8px);
+    background: var(--muted-border-color, rgba(136, 136, 136, 0.08));
+    border: 1px solid var(--main-border-color, rgba(0, 0, 0, 0.06));
 }
 
-body.dark-theme #znd-confirm-modal .znd-confirm-preview .znd-sample-text {
+body.dark-theme #znd-confirm-modal .znd-confirm-preview .znd-confirm-color-sample {
     background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.08);
+}
+
+#znd-confirm-modal .znd-confirm-preview .znd-sample-text {
+    font-size: 26px;
+    line-height: 1;
+    display: inline-block;
 }
 
 #znd-confirm-modal .modal-buts.but-average {

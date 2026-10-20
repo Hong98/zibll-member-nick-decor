@@ -2,7 +2,7 @@
 
 > **Plugin tùy biến màu sắc và icon hiển thị đầu nickname thời thượng dành cho thành viên Theme Zibll.**
 
-![Version](https://img.shields.io/badge/version-v1.0.38-blue.svg)
+![Version](https://img.shields.io/badge/version-v1.0.39-blue.svg)
 ![WordPress](https://img.shields.io/badge/WordPress-5.6%2B-blue.svg)
 ![PHP](https://img.shields.io/badge/PHP-7.2%2B-green.svg)
 
@@ -105,6 +105,11 @@ Plugin cung cấp hệ thống Cửa hàng (Shop) và Tủ đồ (Wardrobe) cá 
 ---
 
 ## Lịch sử thay đổi
+
+### v1.0.39 — 2026-10-20
+- Sửa lỗi hiển thị màu nick trong popup xác nhận mua bị biến thành ô xám rỗng:
+  - Khắc phục xung đột thuộc tính CSS `background`: Loại bỏ thuộc tính background gán trực tiếp lên thẻ chữ `.znd-sample-text`, ngăn chặn việc background xám đè mất dải màu gradient (`linear-gradient`) và làm mất clip chữ (`-webkit-background-clip: text`).
+  - Thiết kế khung bọc chứa chuyên biệt `.znd-confirm-color-sample` độc lập, giữ nguyên toàn vẹn hiệu ứng màu sắc rực rỡ và chuyển động động của mẫu chữ "Aa" ở trung tâm popup xác nhận.
 
 ### v1.0.38 — 2026-10-20
 - Tự động cập nhật số lượng vật phẩm trong huy hiệu tab Tủ đồ khi mua hàng:

@@ -1044,7 +1044,7 @@
                     var cssClass = $card.data('css') || '';
                     var anim = $card.data('anim') || '';
                     var animClass = anim ? ' znd-anim-' + anim : '';
-                    previewHtml = '<span class="znd-sample-text ' + cssClass + animClass + '" style="font-size: 26px; padding: 6px 18px; border-radius: 8px; background: rgba(0,0,0,0.04);">Aa</span>';
+                    previewHtml = '<div class="znd-confirm-color-sample"><span class="znd-sample-text ' + cssClass + animClass + '">Aa</span></div>';
                 }
 
                 // Mở popup xác nhận giao diện Zibll thay thế window.confirm
