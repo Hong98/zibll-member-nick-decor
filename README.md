@@ -2,7 +2,7 @@
 
 > **Plugin tùy biến màu sắc và icon hiển thị đầu nickname thời thượng dành cho thành viên Theme Zibll.**
 
-![Version](https://img.shields.io/badge/version-v1.0.41-blue.svg)
+![Version](https://img.shields.io/badge/version-v1.0.42-blue.svg)
 ![WordPress](https://img.shields.io/badge/WordPress-5.6%2B-blue.svg)
 ![PHP](https://img.shields.io/badge/PHP-7.2%2B-green.svg)
 
@@ -18,7 +18,7 @@ Plugin cung cấp hệ thống Cửa hàng (Shop) và Tủ đồ (Wardrobe) cá 
 
 ## Tính năng nổi bật
 
-### 1. Trọn bộ 19 icon hiển thị đầu nick tạo sẵn sắc nét
+### 1. Trọn bộ 31 icon hiển thị đầu nick tạo sẵn sắc nét
 - Thiết kế chuẩn vector SVG siêu nhẹ, tự động co giãn theo kích thước chữ (`1.15em`).
 - Hiển thị nổi bật ngay trước tên thành viên ở mọi nơi: bài viết, bình luận, diễn đàn BBS, trang cá nhân, widget thành viên...
 - Đi kèm các biểu tượng đặc quyền và hiệu ứng chuyển động mượt mà:
@@ -41,8 +41,20 @@ Plugin cung cấp hệ thống Cửa hàng (Shop) và Tủ đồ (Wardrobe) cá 
   - 🪄 **Đũa phép ma thuật** (Hiệu ứng tinh tú)
   - 🎵 **Nốt nhạc thần tiên** (Hiệu ứng âm nhạc)
   - 🐱 **Mèo quý tộc** (Hiệu ứng cute đội vương miện)
+  - 🔥 **Phượng hoàng lửa** (Hiệu ứng Glow rực sáng)
+  - 🎮 **Tay cầm Game thủ** (Hiệu ứng Pulse eSport)
+  - 🥷 **Phi tiêu Ninja** (Hiệu ứng Shimmer ánh thép)
+  - ☀️ **Mặt trời rạng rỡ** (Hiệu ứng Shimmer hào quang)
+  - 🔮 **Quả cầu pha lê** (Hiệu ứng Glow huyền bí)
+  - ☕ **Tách cà phê Chill** (Hiệu ứng Float thư thái)
+  - 🌠 **Sao băng ước nguyện** (Hiệu ứng Shimmer vệt sáng)
+  - 🎖️ **Huy chương danh vọng** (Hiệu ứng Shimmer vinh dự)
+  - 💀 **Đầu lâu Cyber Neon** (Hiệu ứng Glow công nghệ tương lai)
+  - 🔔 **Chuông vàng may mắn** (Hiệu ứng Pulse phúc lộc)
+  - 🌙 **Trăng khuyết huyền bí** (Hiệu ứng Float ánh nguyệt)
+  - 🧋 **Trà sữa trân châu** (Hiệu ứng Pulse ngọt ngào)
 
-### 2. Trọn bộ 18 màu nick Gradient & Glow cao cấp
+### 2. Trọn bộ 30 màu nick Gradient & Glow cao cấp
 - Đa dạng phong cách từ Gradient chuyển màu hiện đại đến phát sáng viền chữ, phân tầng nhận diện rõ rệt:
   - 💎 **Đỏ Ruby phát sáng**: Đỏ huyết phượng hoàng phát sáng huyền bí - Đặc quyền Quản trị viên.
   - 🍃 **Ngọc lục bảo**: Xanh ngọc bích lục bảo quý phái - Đặc quyền Điều hành viên.
@@ -62,7 +74,20 @@ Plugin cung cấp hệ thống Cửa hàng (Shop) và Tủ đồ (Wardrobe) cá 
   - ⚡ **Tím điện tử Storm**: Tím pha xanh neon cá tính của những tia chớp bão từ.
   - ☀️ **Hoàng hôn nhiệt đới**: Cam đào hoàng hôn lãng mạn.
   - 🌌 **Dải ngân hà Cosmic**: Vũ trụ ánh sao huyền ảo.
+  - 🌌 **Cực quang Bắc cực**: Gradient tím mộng mơ hòa quyện cyan phát sáng.
+  - ☕ **Caramel Macchiato**: Sắc vàng nâu caramel ấm áp ngọt ngào ánh kim.
+  - ✨ **Vàng hồng Rose Gold**: Ánh kim vàng hồng quý tộc sang trọng.
+  - 🌆 **Hoàng hôn tím Twilight**: Gradient tím hoàng hôn chuyển giao xanh thẫm đêm sâu.
+  - 🥂 **Rượu vang Champagne**: Màu vàng champagne ánh kim lấp lánh tiệc tùng vương giả.
+  - 🍊 **Cam san hô Citrus**: Cam san hô rực sáng tràn đầy năng lượng tươi trẻ.
+  - ⚡ **Xanh băng Neon Cyan**: Xanh lam neon điện quang sắc lạnh phát sáng.
+  - 🍇 **Mận tím huyền thuật**: Tím mận chín quý tộc lung linh ánh phép thuật.
+  - 🌃 **Đêm sâu Midnight Blue**: Xanh đen huyền bí của bầu trời đêm vô tận.
+  - 🍑 **Đào san hô ngọc trai**: Hồng cam đào dịu ngọt thanh lịch.
+  - 🛡️ **Kim loại Titanium**: Xám bạc titan ánh thép hiện đại kiên cố.
+  - 🍬 **Kẹo ngọt Bubblegum**: Hồng phấn dâu pastel dễ thương bừng sáng.
 - Tương thích hoàn hảo với cả nền sáng (Light mode) và nền tối (Dark mode) của Theme Zibll.
+- **Ràng buộc an toàn**: Tuyệt đối không trùng lắp tông màu đỏ độc quyền của Quản trị viên (Admin) và màu xanh lá cây độc quyền của Điều hành viên (Mod).
 
 ### 3. Hộp xem trước thời gian thực (Live Preview)
 - Thành viên chỉ cần nhấp vào bất kỳ màu hoặc icon nào trong Shop là có thể xem trước diện mạo nickname của mình ngay lập tức trên đầu cửa sổ trước khi quyết định mua.
@@ -88,7 +113,7 @@ Plugin cung cấp hệ thống Cửa hàng (Shop) và Tủ đồ (Wardrobe) cá 
 
 ### 1. Kích hoạt plugin
 - Truy cập **Quản trị WordPress > Plugins > Đã cài đặt**, tìm **Zibll Member Nickname & Badge Pro** và nhấn **Kích hoạt**.
-- Plugin sẽ tự động điền sẵn trọn bộ 16 icon và 12 bảng màu vào hệ thống.
+- Plugin sẽ tự động điền sẵn trọn bộ 31 icon và 30 bảng màu vào hệ thống.
 
 ### 2. Cấu hình
 - Truy cập **Zibll Theme Settings (Cài đặt theme Zibll)**, tìm đến mục **Màu & Icon đầu nick** (ngay dưới menu *Dịch thuật JS*):
@@ -105,6 +130,13 @@ Plugin cung cấp hệ thống Cửa hàng (Shop) và Tủ đồ (Wardrobe) cá 
 ---
 
 ## Lịch sử thay đổi
+
+### v1.0.42 — 2026-10-20
+- Thêm tính năng: Bổ sung 12 icon nick và 12 màu nick mới phong phú cho Cửa hàng:
+  - Mở rộng kho biểu tượng đầu nick lên 31 icon với 12 mẫu SVG thiết kế chuẩn vector sắc nét, hỗ trợ hiệu ứng chuyển động sống động: Phượng hoàng lửa (`Glow`), Tay cầm Game thủ (`Pulse`), Phi tiêu Ninja (`Shimmer`), Mặt trời rạng rỡ (`Shimmer`), Quả cầu pha lê (`Glow`), Tách cà phê Chill (`Float`), Sao băng ước nguyện (`Shimmer`), Huy chương danh vọng (`Shimmer`), Đầu lâu Cyber Neon (`Glow`), Chuông vàng may mắn (`Pulse`), Trăng khuyết huyền bí (`Float`), Trà sữa trân châu (`Pulse`).
+  - Mở rộng kho màu nick lên 30 bảng màu Gradient và Glow cao cấp với 12 preset màu sắc thời thượng: Cực quang Bắc cực, Caramel Macchiato, Vàng hồng Rose Gold, Hoàng hôn tím Twilight, Rượu vang Champagne, Cam san hô Citrus, Xanh băng Neon Cyan, Mận tím huyền thuật, Đêm sâu Midnight Blue, Đào san hô ngọc trai, Kim loại Titanium, Kẹo ngọt Bubblegum.
+  - Ràng buộc phân quyền màu sắc: Tuyệt đối tránh toàn bộ dải màu đỏ/ruby (đặc quyền Ban Quản trị) và xanh lá cây/ngọc lục bảo (đặc quyền Điều hành viên Mod), đảm bảo sự phân cấp nhận diện rõ ràng và trang trọng cho đội ngũ quản trị viên.
+  - Tự động đồng bộ vào cơ sở dữ liệu: Cơ chế cập nhật phiên bản thông minh tự động nạp toàn bộ các item mới vào danh sách Cửa hàng ngay khi cập nhật plugin mà không ảnh hưởng tới dữ liệu tùy biến hiện có.
 
 ### v1.0.41 — 2026-10-20
 - Sửa lỗi huy hiệu đặc quyền Admin và Mod che đè lên icon và mẫu màu chữ ở trung tâm thẻ:
