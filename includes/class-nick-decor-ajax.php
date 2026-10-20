@@ -88,7 +88,9 @@ class ZND_Ajax {
             }
         }
 
-        $balance = ZND_User::get_user_currency_balance($user_id);
+        $inv           = ZND_User::get_inventory($user_id);
+        $owned_count   = (isset($inv['icons']) ? count($inv['icons']) : 0) + (isset($inv['colors']) ? count($inv['colors']) : 0);
+        $balance       = ZND_User::get_user_currency_balance($user_id);
         $wardrobe_html = class_exists('ZND_Renderer') ? ZND_Renderer::render_wardrobe_content($user_id) : '';
 
         return array(
@@ -100,6 +102,7 @@ class ZND_Ajax {
             'user_balance_formatted' => number_format($balance),
             'currency_name'          => ZND_User::get_currency_name(),
             'wardrobe_html'          => $wardrobe_html,
+            'owned_count'            => $owned_count,
         );
     }
 
@@ -399,10 +402,13 @@ class ZND_Ajax {
             wp_send_json_error(array('message' => __('Vui lòng đăng nhập!', 'zibll-nick-decor')));
         }
 
-        $html = class_exists('ZND_Renderer') ? ZND_Renderer::render_wardrobe_content($user_id) : '';
+        $inv         = ZND_User::get_inventory($user_id);
+        $owned_count = (isset($inv['icons']) ? count($inv['icons']) : 0) + (isset($inv['colors']) ? count($inv['colors']) : 0);
+        $html        = class_exists('ZND_Renderer') ? ZND_Renderer::render_wardrobe_content($user_id) : '';
 
         wp_send_json_success(array(
             'wardrobe_html' => $html,
+            'owned_count'   => $owned_count,
         ));
     }
 }

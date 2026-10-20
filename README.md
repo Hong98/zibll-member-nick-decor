@@ -2,7 +2,7 @@
 
 > **Plugin tùy biến màu sắc và icon hiển thị đầu nickname thời thượng dành cho thành viên Theme Zibll.**
 
-![Version](https://img.shields.io/badge/version-v1.0.37-blue.svg)
+![Version](https://img.shields.io/badge/version-v1.0.38-blue.svg)
 ![WordPress](https://img.shields.io/badge/WordPress-5.6%2B-blue.svg)
 ![PHP](https://img.shields.io/badge/PHP-7.2%2B-green.svg)
 
@@ -105,6 +105,11 @@ Plugin cung cấp hệ thống Cửa hàng (Shop) và Tủ đồ (Wardrobe) cá 
 ---
 
 ## Lịch sử thay đổi
+
+### v1.0.38 — 2026-10-20
+- Tự động cập nhật số lượng vật phẩm trong huy hiệu tab Tủ đồ khi mua hàng:
+  - Bổ sung trường dữ liệu `owned_count` trong phản hồi AJAX của các hành vi Mua (`ajax_buy_item`), Trang bị (`ajax_equip_item`), Tháo (`ajax_unequip_item`) và làm mới tủ đồ (`ajax_get_wardrobe_html`).
+  - Phía trình duyệt (JavaScript): Tự động đồng bộ số lượng vật phẩm hiển thị trên huy hiệu badge của tab Tủ đồ (`.znd-owned-count`) theo thời gian thực (Reactive DOM update), đảm bảo con số sau chữ "Tủ đồ" tăng ngay lập tức sau khi hoàn tất mua sắm mà không cần tải lại trang.
 
 ### v1.0.37 — 2026-10-20
 - Chuẩn hóa kiểu chữ thanh thoát và loại bỏ hoàn toàn việc lạm dụng chữ in đậm:

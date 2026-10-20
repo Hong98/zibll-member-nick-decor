@@ -382,6 +382,18 @@
                 }
             }
 
+            // 4.2. Cập nhật số lượng vật phẩm hiển thị ở badge tab Tủ đồ
+            var ownedCount = (typeof data.owned_count !== 'undefined') ? data.owned_count : null;
+            if (ownedCount === null && typeof data.wardrobe_html !== 'undefined' && data.wardrobe_html) {
+                var $wTab = $('#znd-tab-wardrobe');
+                if ($wTab.length) {
+                    ownedCount = $wTab.find('.znd-card').length;
+                }
+            }
+            if (ownedCount !== null) {
+                $('.znd-owned-count').text(ownedCount);
+            }
+
             // 5. Kích hoạt Custom Event cho các script khác nếu có
             $(document).trigger('znd:decorChanged', [data]);
         },
