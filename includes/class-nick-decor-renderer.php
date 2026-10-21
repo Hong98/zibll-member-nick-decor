@@ -66,6 +66,11 @@ class ZND_Renderer {
         add_filter('zib_user_center_page_sidebar_button_1_args', array($this, 'add_user_center_sidebar_button'), 20);
         add_filter('main_user_tab_content_nick_decor', array($this, 'render_user_tab_content'));
 
+        // Bổ sung quy tắc rewrite & request vars cho tab nick_decor trong Trung tâm người dùng (/user/nick_decor)
+        add_filter('rewrite_rules_array', array($this, 'filter_rewrite_rules'));
+        add_action('generate_rewrite_rules', array($this, 'add_generate_rewrite_rules'));
+        add_filter('request', array($this, 'filter_request_vars'));
+
         // Tích hợp tab vào Trang tác giả (Author Page - /author/xxx)
         add_filter('author_main_tabs_array', array($this, 'add_author_main_tab'), 20, 2);
         add_filter('main_author_tab_content_nick_decor', array($this, 'render_author_tab_content'));
@@ -463,13 +468,9 @@ class ZND_Renderer {
             return $tabs_array;
         }
 
-        $user_id      = get_current_user_id();
-        $shop_content = self::render_author_tab_content_wrapper($user_id);
-
         $tabs_array['nick_decor'] = array(
             'title'    => '<span class="translate-ignore">' . __('Màu & Icon', 'zibll-nick-decor') . '</span>',
             'nav_attr' => 'drawer-title="' . __('Cửa hàng màu & Icon nick', 'zibll-nick-decor') . '"',
-            'content'  => $shop_content,
             'loader'   => '<div class="text-center padding-20 muted-color"><i class="fa fa-spinner fa-spin fa-2x"></i></div>',
         );
 
@@ -511,7 +512,7 @@ class ZND_Renderer {
     /**
      * Render nội dung tab trong Trung tâm người dùng (/user)
      */
-    public function render_user_tab_content() {
+    public function render_user_tab_content($content = '', $opt = array()) {
         return self::render_author_tab_content_wrapper(get_current_user_id());
     }
 
@@ -528,13 +529,9 @@ class ZND_Renderer {
             return $tabs_args;
         }
 
-        $target_user_id = !empty($author_id) ? (int) $author_id : get_current_user_id();
-        $shop_content   = self::render_author_tab_content_wrapper($target_user_id);
-
         $tabs_args['nick_decor'] = array(
             'title'         => '<i class="fa fa-paint-brush mr3"></i><span class="translate-ignore">' . __('Màu & Icon', 'zibll-nick-decor') . '</span>',
             'content_class' => 'znd-author-tab-pane',
-            'content'       => $shop_content,
             'route'         => true,
             'loader'        => '<div class="text-center padding-20 muted-color"><i class="fa fa-spinner fa-spin fa-2x"></i></div>',
         );
@@ -545,12 +542,62 @@ class ZND_Renderer {
     /**
      * Render nội dung tab Màu & Icon trong trang cá nhân
      */
-    public function render_author_tab_content() {
+    public function render_author_tab_content($content = '', $opt = array()) {
         global $wp_query;
         $curauth = $wp_query->get_queried_object();
         $target_user_id = !empty($curauth->ID) ? (int) $curauth->ID : get_current_user_id();
 
         return self::render_author_tab_content_wrapper($target_user_id);
+    }
+
+    /**
+     * Bổ sung quy tắc rewrite động cho /user/nick_decor
+     * Khắc phục việc regex mặc định của Theme Zibll ([A-Za-z]+)$ không nhận ký tự gạch dưới (_)
+     */
+    public function filter_rewrite_rules($rules) {
+        if (!is_array($rules) || !get_option('permalink_structure')) {
+            return $rules;
+        }
+
+        $rewrite_slug = function_exists('_pz') ? trim(_pz('user_center_rewrite_slug', 'user')) : 'user';
+        $rewrite_slug = $rewrite_slug ? $rewrite_slug : 'user';
+
+        $new_rules = array(
+            $rewrite_slug . '/(nick_decor)$' => 'index.php?user_center=$matches[1]',
+        );
+
+        return $new_rules + $rules;
+    }
+
+    /**
+     * Đăng ký quy tắc rewrite khi WordPress flush permalinks
+     */
+    public function add_generate_rewrite_rules($wp_rewrite) {
+        if (get_option('permalink_structure')) {
+            $rewrite_slug = function_exists('_pz') ? trim(_pz('user_center_rewrite_slug', 'user')) : 'user';
+            $rewrite_slug = $rewrite_slug ? $rewrite_slug : 'user';
+
+            $new_rules = array(
+                $rewrite_slug . '/(nick_decor)$' => 'index.php?user_center=$matches[1]',
+            );
+            $wp_rewrite->rules = $new_rules + $wp_rewrite->rules;
+        }
+    }
+
+    /**
+     * Tự động nhận diện query var user_center=nick_decor nếu truy cập trực tiếp /user/nick_decor
+     */
+    public function filter_request_vars($query_vars) {
+        if (!isset($query_vars['user_center']) && !empty($_SERVER['REQUEST_URI'])) {
+            $rewrite_slug = function_exists('_pz') ? trim(_pz('user_center_rewrite_slug', 'user')) : 'user';
+            $rewrite_slug = $rewrite_slug ? $rewrite_slug : 'user';
+
+            $path = trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/');
+            if (preg_match('#(?:^|/)' . preg_quote($rewrite_slug, '#') . '/nick_decor$#i', $path)) {
+                $query_vars['user_center'] = 'nick_decor';
+            }
+        }
+        return $query_vars;
     }
 
     /**

@@ -696,8 +696,14 @@
             });
 
             // Tự động áp dụng lại trang trí khi chuyển tab hoặc route AJAX
-            $(document).on('shown.bs.tab route_back ajax_loaded', function () {
+            $(document).on('shown.bs.tab route_back ajax_loaded', function (e) {
                 self.applyUserPageDecor();
+
+                // Cơ chế phòng thủ: Đảm bảo các tab cá nhân khác (Bảo mật, Hồ sơ, ...) không bị chèn nhầm Shop
+                var target = e && e.target ? ($(e.target).attr('data-target') || $(e.target).attr('href')) : '';
+                if (target && target !== '#author-tab-nick_decor' && target !== '#user-tab-nick_decor') {
+                    $(target).find('.znd-shop-wrapper, .znd-tab-ajax-item').remove();
+                }
             });
 
             // Tự động làm sạch trạng thái khi mở tab Màu & Icon trong trang cá nhân (Author Page) hoặc User Center
@@ -720,6 +726,9 @@
                         $tab.find('.post_ajax_loader').hide();
                     }
                 });
+
+                // Cơ chế phòng thủ: Loại bỏ nội dung Shop nếu bị gán nhầm vào các tab cá nhân khác
+                $('.tab-pane:not(#author-tab-nick_decor):not(#user-tab-nick_decor)').find('.znd-shop-wrapper, .znd-tab-ajax-item').remove();
             });
 
             // =====================================================================

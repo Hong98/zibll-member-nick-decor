@@ -2,7 +2,7 @@
 
 > **Plugin tùy biến màu sắc và icon hiển thị đầu nickname thời thượng dành cho thành viên Theme Zibll.**
 
-![Version](https://img.shields.io/badge/version-v1.0.43-blue.svg)
+![Version](https://img.shields.io/badge/version-v1.0.44-blue.svg)
 ![WordPress](https://img.shields.io/badge/WordPress-5.6%2B-blue.svg)
 ![PHP](https://img.shields.io/badge/PHP-7.2%2B-green.svg)
 
@@ -130,6 +130,13 @@ Plugin cung cấp hệ thống Cửa hàng (Shop) và Tủ đồ (Wardrobe) cá 
 ---
 
 ## Lịch sử thay đổi
+
+### v1.0.44 — 2026-10-21
+- Sửa lỗi hiển thị nhầm Màu & Icon bên dưới các tab cá nhân (Bảo mật, Hồ sơ...):
+  - Khắc phục xung đột gán nội dung tĩnh trong khai báo tab: Việc gán trực tiếp `content => $shop_content` trong `user_ctnter_main_tabs_array` và `author_main_tabs_array` khiến Theme Zibll luôn xuất mã HTML của tab Màu & Icon vào phản hồi của mọi yêu cầu AJAX. Do hàm `post_ajax` trong JavaScript của Zibll tìm kiếm toàn bộ `.ajaxpager` và lấy các khối `.ajax-item`, nó đã thu gom cả khung Cửa hàng và nối nhầm vào cuối nội dung của tab hiện hành (như Bảo mật, Hồ sơ cá nhân,...).
+  - Tách nội dung động chuẩn Theme Zibll: Loại bỏ trường `content` tĩnh khỏi khai báo tab, chuyển hoàn toàn việc xuất nội dung sang các bộ lọc native của Zibll (`main_user_tab_content_nick_decor` và `main_author_tab_content_nick_decor`). Khi người dùng xem các tab khác, tab Màu & Icon chỉ xuất thẻ kích hoạt ngầm rỗng mà không chứa bất kỳ thẻ `.ajax-item` nào, ngăn chặn triệt để hiện tượng rò rỉ nội dung vào các tab khác.
+  - Tương thích định tuyến URL và Rewrite Rule cho `/user/nick_decor`: Do quy tắc regex mặc định của Zibll (`[A-Za-z]+$`) không khớp với ký tự gạch dưới (`_`), plugin bổ sung bộ lọc `rewrite_rules_array`, `generate_rewrite_rules` và `request` để tự động nhận diện chính xác đường dẫn `/user/nick_decor` tương ứng với `user_center=nick_decor` ngay cả khi chưa flush permalink cache.
+  - Phòng vệ giao diện đa tầng phía JavaScript: Tự động phát hiện và dọn dẹp sạch sẽ phần tử Shop nếu bị chèn nhầm vào các tab cá nhân khác khi Zibll hoàn tất sự kiện AJAX (`post_ajax.ed`) hoặc khi chuyển đổi tab (`shown.bs.tab`).
 
 ### v1.0.43 — 2026-10-20
 - Sửa lỗi khi bấm vào tab "Màu & Icon" trong trang cá nhân báo "Không còn nội dung nào nữa":
