@@ -344,6 +344,39 @@
                 }
             });
 
+            // Cập nhật tên trong Widget Bình luận gần đây (nếu comment thuộc về user hiện tại)
+            if (typeof znd_vars !== 'undefined' && znd_vars.user_id) {
+                $('.comment-mini-lists .comment-widget-item').each(function () {
+                    var $item = $(this);
+                    var hasAuthor = $item.find('.avatar-id-' + znd_vars.user_id).length > 0 ||
+                                   $item.find('a[href*="/author/' + znd_vars.user_id + '"]').length > 0;
+                    if (hasAuthor) {
+                        var $a = $item.find('name a.text-ellipsis, name a');
+                        if ($a.length) {
+                            var rawClass = $a.attr('class') || '';
+                            var keptClasses = rawClass.split(/\s+/).filter(function (cls) {
+                                return cls && !cls.startsWith('znd-color-') && !cls.startsWith('znd-anim-');
+                            });
+                            if (colorClass) {
+                                keptClasses.push(colorClass);
+                            }
+                            $a.attr('class', keptClasses.join(' '));
+
+                            $a.find('.znd-nick-icon').remove();
+                            if (iconHtml) {
+                                $a.addClass('has-znd-icon');
+                                $a.closest('name').addClass('has-znd-icon');
+                                var freshSvg = self.prepareSvg(iconHtml);
+                                $a.prepend(freshSvg);
+                            } else {
+                                $a.removeClass('has-znd-icon');
+                                $a.closest('name').removeClass('has-znd-icon');
+                            }
+                        }
+                    }
+                });
+            }
+
             // Tự động giãn nở container và sửa ID SVG trên mobile drawer
             self.autoExpandIconContainers();
             self.fixMobileNavbarSvgIds();

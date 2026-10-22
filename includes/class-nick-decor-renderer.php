@@ -58,6 +58,9 @@ class ZND_Renderer {
         // Can thiệp hiển thị tên thành viên trong Bình luận
         add_filter('comment_header', array($this, 'filter_comment_header'), 20, 2);
 
+        // Can thiệp hiển thị tên thành viên trong Widget Bình luận mới nhất
+        add_filter('csf_widget_ui_new_comment_args', array($this, 'filter_comment_widget_args'), 20);
+
         // Nút mở nhanh trên thanh Header của Theme Zibll
         add_filter('zib_nav_radius_button', array($this, 'filter_nav_radius_button'), 20, 2);
 
@@ -380,8 +383,13 @@ class ZND_Renderer {
         }
 
         $user_id  = $comment->user_id;
-        $icon_id  = ZND_User::get_equipped_icon($user_id);
-        $color_id = ZND_User::get_equipped_color($user_id);
+        if (ZND_Defaults::is_user_banned($user_id)) {
+            $icon_id  = 'lock_banned';
+            $color_id = 'color_banned';
+        } else {
+            $icon_id  = ZND_User::get_equipped_icon($user_id);
+            $color_id = ZND_User::get_equipped_color($user_id);
+        }
 
         if (empty($icon_id) && empty($color_id)) {
             return $html;
@@ -430,6 +438,147 @@ class ZND_Renderer {
         }
 
         return $html;
+    }
+
+    /**
+     * Callback gốc của widget_ui_new_comment
+     *
+     * @var callable|string
+     */
+    private $original_comment_widget_callback = '';
+
+    /**
+     * Lọc tham số Widget Bình luận mới nhất (csf_widget_ui_new_comment_args)
+     * Bọc callback hiển thị widget để trang trí icon và màu nick cho các bình luận
+     */
+    public function filter_comment_widget_args($args) {
+        if (!self::is_enabled()) {
+            return $args;
+        }
+
+        $this->original_comment_widget_callback = !empty($args['callback']) ? $args['callback'] : 'zib_widget_ui_new_comment';
+        $args['callback'] = array($this, 'render_comment_widget');
+
+        return $args;
+    }
+
+    /**
+     * Bọc render widget bình luận mới nhất và can thiệp HTML
+     */
+    public function render_comment_widget($args, $instance) {
+        ob_start();
+        if (!empty($this->original_comment_widget_callback) && is_callable($this->original_comment_widget_callback)) {
+            call_user_func($this->original_comment_widget_callback, $args, $instance);
+        } elseif (function_exists('zib_widget_ui_new_comment')) {
+            zib_widget_ui_new_comment($args, $instance);
+        }
+        $html = ob_get_clean();
+
+        echo $this->filter_comment_widget_html($html);
+    }
+
+    /**
+     * Trang trí Icon và Màu nick cho danh sách bình luận trong Widget Bình luận mới nhất
+     */
+    public function filter_comment_widget_html($html) {
+        if (empty($html) || !self::is_enabled()) {
+            return $html;
+        }
+
+        return preg_replace_callback(
+            '/(<div class="[^"]*comment-widget-item[^"]*"[^>]*>[\s\S]*?)(?=<div class="[^"]*comment-widget-item|$)/is',
+            function ($item_matches) {
+                $item_html = $item_matches[1];
+
+                // Nếu đã được trang trí thì bỏ qua
+                if (strpos($item_html, 'znd-nick-icon') !== false) {
+                    return $item_html;
+                }
+
+                $user_id = 0;
+                if (preg_match('/avatar-id-(\d+)/', $item_html, $m_id)) {
+                    $user_id = (int)$m_id[1];
+                } elseif (preg_match('/\/author\/(\d+)/', $item_html, $m_id)) {
+                    $user_id = (int)$m_id[1];
+                } elseif (preg_match('/\/author\/([^\/"\s\?]+)/', $item_html, $m_slug)) {
+                    $user = get_user_by('slug', $m_slug[1]);
+                    if ($user) {
+                        $user_id = $user->ID;
+                    }
+                }
+
+                if (!$user_id) {
+                    return $item_html;
+                }
+
+                if (ZND_Defaults::is_user_banned($user_id)) {
+                    $icon_id  = 'lock_banned';
+                    $color_id = 'color_banned';
+                } else {
+                    $icon_id  = ZND_User::get_equipped_icon($user_id);
+                    $color_id = ZND_User::get_equipped_color($user_id);
+                }
+
+                if (empty($icon_id) && empty($color_id)) {
+                    return $item_html;
+                }
+
+                $icon_html = '';
+                if (!empty($icon_id)) {
+                    $icon_data = ZND_Defaults::get_icon($icon_id);
+                    if ($icon_data && !empty($icon_data['svg'])) {
+                        $anim_class = !empty($icon_data['animation']) && $icon_data['animation'] !== 'none' ? ' znd-anim-' . esc_attr($icon_data['animation']) : '';
+                        $icon_name  = esc_attr($icon_data['name']);
+                        $svg        = self::prepare_svg($icon_data['svg']);
+                        $icon_html  = '<span class="znd-nick-icon znd-icon-' . esc_attr($icon_id) . $anim_class . '" title="' . $icon_name . '">' . $svg . '</span>';
+                    }
+                }
+
+                $color_class = '';
+                if (!empty($color_id)) {
+                    $color_data = ZND_Defaults::get_color($color_id);
+                    if ($color_data) {
+                        $anim_class  = !empty($color_data['animation']) && $color_data['animation'] !== 'none' ? ' znd-anim-' . esc_attr($color_data['animation']) : '';
+                        $color_class = ' znd-color-' . esc_attr($color_id) . $anim_class;
+                    }
+                }
+
+                // Tìm và thay thế thẻ tên bên trong <name>
+                $item_html = preg_replace_callback(
+                    '/(<name[^>]*>)([\s\S]*?)(<(?:a|span)[^>]*class=["\'])([^"\']*(?:text-ellipsis|font-bold)[^"\']*)(["\'][^>]*>)(.*?)(<\/(?:a|span)>)/is',
+                    function ($n_matches) use ($icon_html, $color_class) {
+                        $name_open   = $n_matches[1];
+                        $pre_a       = $n_matches[2];
+                        $a_open_pre  = $n_matches[3];
+                        $a_classes   = $n_matches[4];
+                        $a_open_post = $n_matches[5];
+                        $inner_text  = $n_matches[6];
+                        $a_close     = $n_matches[7];
+
+                        if (!empty($icon_html)) {
+                            if (strpos($name_open, 'class=') !== false) {
+                                $name_open = preg_replace('/class=["\']([^"\']*)["\']/', 'class="$1 has-znd-icon"', $name_open);
+                            } else {
+                                $name_open = '<name class="has-znd-icon">';
+                            }
+                            $a_classes .= ' has-znd-icon';
+                            $inner_text = $icon_html . $inner_text;
+                        }
+
+                        if (!empty($color_class)) {
+                            $a_classes .= $color_class;
+                        }
+
+                        return $name_open . $pre_a . $a_open_pre . $a_classes . $a_open_post . $inner_text . $a_close;
+                    },
+                    $item_html,
+                    1
+                );
+
+                return $item_html;
+            },
+            $html
+        );
     }
 
     /**

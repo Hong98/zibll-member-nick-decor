@@ -212,6 +212,20 @@ name.has-znd-icon {
     max-width: fit-content !important;
 }
 
+/* Trong widget bình luận gần đây (Comment Widget Mini Lists) */
+.comment-mini-lists a.has-znd-icon,
+.comment-mini-lists:has(.znd-nick-icon) a.text-ellipsis,
+.comment-widget-item a.has-znd-icon,
+.comment-widget-item:has(.znd-nick-icon) a.text-ellipsis {
+    max-width: fit-content !important;
+}
+
+.comment-widget-item name a.has-znd-icon {
+    display: inline-flex !important;
+    align-items: center !important;
+    vertical-align: middle;
+}
+
 /* 4. Căn giữa chuẩn xác cho Icon đầu nick (.znd-nick-icon) */
 .display-name .znd-nick-icon,
 .sub-user-box .znd-nick-icon,

@@ -2,7 +2,7 @@
 
 > **Plugin tùy biến màu sắc và icon hiển thị đầu nickname thời thượng dành cho thành viên Theme Zibll.**
 
-![Version](https://img.shields.io/badge/version-v1.0.44-blue.svg)
+![Version](https://img.shields.io/badge/version-v1.0.45-blue.svg)
 ![WordPress](https://img.shields.io/badge/WordPress-5.6%2B-blue.svg)
 ![PHP](https://img.shields.io/badge/PHP-7.2%2B-green.svg)
 
@@ -130,6 +130,17 @@ Plugin cung cấp hệ thống Cửa hàng (Shop) và Tủ đồ (Wardrobe) cá 
 ---
 
 ## Lịch sử thay đổi
+
+### v1.0.45 — 2026-10-22
+- Thêm tính năng: Hiển thị icon nick và màu nick trong Widget Bình luận mới nhất:
+  - Phía máy chủ (PHP):
+    - Tích hợp bộ lọc `csf_widget_ui_new_comment_args` can thiệp vào callback hiển thị của widget bình luận mới nhất (`widget_ui_new_comment` / `zib_widget_ui_new_comment`), bọc cơ chế Output Buffering để trang trí icon và màu nick cho các bình luận.
+    - Phương thức `filter_comment_widget_html`: Phân tích HTML của từng mục bình luận (`.comment-widget-item`), trích xuất ID người dùng từ `avatar-id-{user_id}` hoặc đường dẫn tác giả `/author/{slug}`, tra cứu trang bị icon SVG và màu nick tương ứng qua `ZND_User`, sau đó trang trí vào thẻ `<name><a class="...text-ellipsis font-bold...">`.
+    - Hỗ trợ đầy đủ biểu tượng Khóa cấm tài khoản (`lock_banned`) và màu xám gạch ngang (`color_banned`) nếu người dùng đang trong trạng thái bị khóa tài khoản.
+  - Phía giao diện (CSS):
+    - Bổ sung quy tắc CSS cho `.comment-mini-lists` và `.comment-widget-item`, đặt `max-width: fit-content !important` cho thẻ `a.has-znd-icon` và căn giữa thẳng hàng theo trục ngang `inline-flex` với icon SVG đầu nick.
+  - Phía trình duyệt (JavaScript):
+    - Mở rộng hàm `updateUserDecorOnPage`: Tự động tìm kiếm và cập nhật diện mạo (Icon SVG và Class màu) của các mục bình luận trong `.comment-mini-lists` thuộc về người dùng hiện tại ngay khi thao tác Trang bị hoặc Tháo trang bị trong Tủ đồ / Shop theo thời gian thực (Reactive DOM).
 
 ### v1.0.44 — 2026-10-21
 - Sửa lỗi hiển thị nhầm Màu & Icon bên dưới các tab cá nhân (Bảo mật, Hồ sơ...):
