@@ -2,7 +2,7 @@
 
 > **Plugin tùy biến màu sắc và icon hiển thị đầu nickname thời thượng dành cho thành viên Theme Zibll.**
 
-![Version](https://img.shields.io/badge/version-v1.0.46-blue.svg)
+![Version](https://img.shields.io/badge/version-v1.0.47-blue.svg)
 ![WordPress](https://img.shields.io/badge/WordPress-5.6%2B-blue.svg)
 ![PHP](https://img.shields.io/badge/PHP-7.2%2B-green.svg)
 
@@ -130,6 +130,19 @@ Plugin cung cấp hệ thống Cửa hàng (Shop) và Tủ đồ (Wardrobe) cá 
 ---
 
 ## Lịch sử thay đổi
+
+### v1.0.47 — 2026-10-22
+- Thêm tính năng: Hiển thị icon nick và màu nick trong khu vực bình luận bài viết:
+  - Phía máy chủ (PHP):
+    - Tái cấu trúc bộ lọc `comment_header`: Thay thế biểu thức regex cũ phụ thuộc vào thứ tự thuộc tính `href` / `class` bằng bộ phân tích cú pháp linh hoạt theo cấu trúc thẻ `<name>` và `<a>` của Theme Zibll.
+    - Hỗ trợ đầy đủ việc chèn biểu tượng vector SVG (`.znd-nick-icon`), class nhận diện (`.has-znd-icon`), class màu sắc động (`.znd-color-...`) cùng hiệu ứng chuyển động (`.znd-anim-...`) vào tên tác giả của mọi bình luận trong bài viết.
+    - Tích hợp kiểm tra tùy chọn cấu hình `znd_apply_locations` trong trang Quản trị, tôn trọng cài đặt bật/tắt khu vực hiển thị bình luận (`comments`).
+    - Hỗ trợ đầy đủ trạng thái tài khoản bị khóa: Tự động hiển thị biểu tượng Khóa cấm (`lock_banned`) và màu xám gạch ngang (`color_banned`) cho thành viên bị cấm.
+  - Phía giao diện (CSS):
+    - Bổ sung quy tắc căn chỉnh cho thẻ tác giả bên trong `.comment-header`: Thiết lập `display: inline-flex !important`, `align-items: center !important`, `vertical-align: middle` và `max-width: fit-content !important`, giúp icon SVG và nickname luôn thẳng hàng và đồng bộ hoàn hảo với các huy hiệu cấp độ, xác minh và tác giả của Theme Zibll.
+  - Phía trình duyệt (JavaScript):
+    - Mở rộng hàm `updateUserDecorOnPage`: Tự động tìm kiếm và cập nhật tức thì diện mạo (Icon SVG và màu sắc) của toàn bộ bình luận của người dùng hiện tại trên trang ngay khi thực hiện thao tác Trang bị hoặc Tháo trang bị trong Tủ đồ / Cửa hàng theo thời gian thực (Reactive DOM).
+    - Tự động gắn class `has-znd-icon` và theo dõi sự kiện AJAX tải thêm bình luận (`post_ajax.ed`, `comment.ajax.done`, `ajax_loaded`) để đảm bảo các bình luận tải thêm qua phân trang hoặc IAS luôn hiển thị chuẩn xác.
 
 ### v1.0.46 — 2026-10-22
 - Sửa lỗi 500 do xung đột hàm function_exists() trong Codestar Framework (CSF Widget):

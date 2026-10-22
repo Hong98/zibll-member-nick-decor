@@ -127,6 +127,7 @@
             // Gắn class has-znd-icon cho các thẻ name hoặc display-name có icon nick
             $('.znd-nick-icon').each(function () {
                 var $icon = $(this);
+                $icon.closest('a').addClass('has-znd-icon');
                 $icon.closest('name, .display-name, .comment-header, .user-info').addClass('has-znd-icon');
             });
         },
@@ -352,6 +353,38 @@
                                    $item.find('a[href*="/author/' + znd_vars.user_id + '"]').length > 0;
                     if (hasAuthor) {
                         var $a = $item.find('name a.text-ellipsis, name a');
+                        if ($a.length) {
+                            var rawClass = $a.attr('class') || '';
+                            var keptClasses = rawClass.split(/\s+/).filter(function (cls) {
+                                return cls && !cls.startsWith('znd-color-') && !cls.startsWith('znd-anim-');
+                            });
+                            if (colorClass) {
+                                keptClasses.push(colorClass);
+                            }
+                            $a.attr('class', keptClasses.join(' '));
+
+                            $a.find('.znd-nick-icon').remove();
+                            if (iconHtml) {
+                                $a.addClass('has-znd-icon');
+                                $a.closest('name').addClass('has-znd-icon');
+                                var freshSvg = self.prepareSvg(iconHtml);
+                                $a.prepend(freshSvg);
+                            } else {
+                                $a.removeClass('has-znd-icon');
+                                $a.closest('name').removeClass('has-znd-icon');
+                            }
+                        }
+                    }
+            }
+
+            // Cập nhật tên trong Danh sách Bình luận bài viết (.comment-header)
+            if (typeof znd_vars !== 'undefined' && znd_vars.user_id) {
+                $('.comment-header').each(function () {
+                    var $header = $(this);
+                    var hasAuthor = $header.find('.avatar-id-' + znd_vars.user_id).length > 0 ||
+                                   $header.find('a[href*="/author/' + znd_vars.user_id + '"]').length > 0;
+                    if (hasAuthor) {
+                        var $a = $header.find('name a.text-ellipsis, name a');
                         if ($a.length) {
                             var rawClass = $a.attr('class') || '';
                             var keptClasses = rawClass.split(/\s+/).filter(function (cls) {
@@ -762,6 +795,11 @@
 
                 // Cơ chế phòng thủ: Loại bỏ nội dung Shop nếu bị gán nhầm vào các tab cá nhân khác
                 $('.tab-pane:not(#author-tab-nick_decor):not(#user-tab-nick_decor)').find('.znd-shop-wrapper, .znd-tab-ajax-item').remove();
+            });
+
+            // Lắng nghe khi Zibll tải thêm bình luận hoặc nội dung qua AJAX (IAS, post_ajax, comment submit)
+            $(document).on('post_ajax.ed comment.ajax.done auto_fun ajax_loaded', function () {
+                self.autoExpandIconContainers();
             });
 
             // =====================================================================

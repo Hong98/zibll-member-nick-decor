@@ -206,10 +206,16 @@ name.has-znd-icon {
     max-width: 100% !important;
 }
 
-/* Trong tiêu đề bình luận (Comment Header) */
+/* Trong tiêu đề bình luận bài viết (Comment Header) */
 .comment-header a.has-znd-icon,
-.comment-header:has(.znd-nick-icon) a.text-ellipsis {
+.comment-header:has(.znd-nick-icon) a.text-ellipsis,
+.comment-header name a.has-znd-icon,
+.comment-header name:has(.znd-nick-icon) a,
+.comment-header name.has-znd-icon a {
     max-width: fit-content !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    vertical-align: middle;
 }
 
 /* Trong widget bình luận gần đây (Comment Widget Mini Lists) */

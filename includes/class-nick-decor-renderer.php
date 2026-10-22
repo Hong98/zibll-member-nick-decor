@@ -382,6 +382,19 @@ class ZND_Renderer {
             return $html;
         }
 
+        // Kiểm tra tùy chọn cấu hình khu vực hiển thị
+        if (function_exists('_pz')) {
+            $locations = _pz('znd_apply_locations', array('posts', 'comments', 'bbs', 'widgets'));
+            if (is_array($locations) && !empty($locations) && !in_array('comments', $locations)) {
+                return $html;
+            }
+        }
+
+        // Nếu đã được trang trí icon nick thì tránh chèn trùng
+        if (strpos($html, 'znd-nick-icon') !== false) {
+            return $html;
+        }
+
         $user_id  = $comment->user_id;
         if (ZND_Defaults::is_user_banned($user_id)) {
             $icon_id  = 'lock_banned';
@@ -415,22 +428,65 @@ class ZND_Renderer {
             }
         }
 
-        // Tìm thẻ <a class="...text-ellipsis..." trong header bình luận
-        if (preg_match('/(<a[^>]*href=["\'][^"\']*["\'][^>]*class=["\'][^"\']*(?:text-ellipsis|font-bold)[^"\']*["\'][^>]*>)(.*?)(<\/a>)/is', $html, $matches)) {
+        $matched = false;
+        // 1. Tìm và thay thế thẻ tên người dùng bên trong <name>...</name>
+        if (strpos($html, '<name') !== false) {
+            $html = preg_replace_callback(
+                '/(<name[^>]*>)([\s\S]*?)(<a\b[^>]*>)(.*?)(<\/a>)/is',
+                function ($n_matches) use ($icon_html, $color_class, &$matched) {
+                    $matched     = true;
+                    $name_open   = $n_matches[1];
+                    $pre_a       = $n_matches[2];
+                    $a_open      = $n_matches[3];
+                    $inner_text  = $n_matches[4];
+                    $a_close     = $n_matches[5];
+
+                    if (!empty($icon_html)) {
+                        if (strpos($name_open, 'class=') !== false) {
+                            $name_open = preg_replace('/class=["\']([^"\']*)["\']/', 'class="$1 has-znd-icon"', $name_open);
+                        } else {
+                            $name_open = '<name class="has-znd-icon">';
+                        }
+                        if (strpos($a_open, 'class=') !== false) {
+                            $a_open = preg_replace('/class=["\']([^"\']*)["\']/', 'class="$1 has-znd-icon"', $a_open);
+                        } else {
+                            $a_open = preg_replace('/<a\b/i', '<a class="has-znd-icon"', $a_open);
+                        }
+                        if (strpos($inner_text, 'znd-nick-icon') === false) {
+                            $inner_text = $icon_html . $inner_text;
+                        }
+                    }
+
+                    if (!empty($color_class)) {
+                        if (strpos($a_open, 'class=') !== false) {
+                            $a_open = preg_replace('/class=["\']([^"\']*)["\']/', 'class="$1' . $color_class . '"', $a_open);
+                        } else {
+                            $a_open = preg_replace('/<a\b/i', '<a class="' . trim($color_class) . '"', $a_open);
+                        }
+                    }
+
+                    return $name_open . $pre_a . $a_open . $inner_text . $a_close;
+                },
+                $html,
+                1
+            );
+        }
+
+        // 2. Fallback nếu không có thẻ <name> hoặc cấu trúc tùy biến
+        if (!$matched && preg_match('/(<a\b[^>]*\bclass=["\'][^"\']*(?:text-ellipsis|font-bold)[^"\']*["\'][^>]*>)(.*?)(<\/a>)/is', $html, $matches)) {
             $open_tag  = $matches[1];
             $inner_con = $matches[2];
             $close_tag = $matches[3];
 
             if (!empty($icon_html)) {
                 $open_tag = preg_replace('/class=["\']([^"\']*)["\']/', 'class="$1 has-znd-icon"', $open_tag);
+                if (strpos($inner_con, 'znd-nick-icon') === false) {
+                    $inner_con = $icon_html . $inner_con;
+                }
             }
 
             if (!empty($color_class)) {
                 $open_tag = preg_replace('/class=["\']([^"\']*)["\']/', 'class="$1' . $color_class . '"', $open_tag);
-            }
-
-            if (!empty($icon_html)) {
-                $inner_con = $icon_html . $inner_con;
             }
 
             $new_a = $open_tag . $inner_con . $close_tag;
