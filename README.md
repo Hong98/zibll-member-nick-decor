@@ -2,7 +2,7 @@
 
 > **Plugin tùy biến màu sắc và icon hiển thị đầu nickname thời thượng dành cho thành viên Theme Zibll.**
 
-![Version](https://img.shields.io/badge/version-v1.0.45-blue.svg)
+![Version](https://img.shields.io/badge/version-v1.0.46-blue.svg)
 ![WordPress](https://img.shields.io/badge/WordPress-5.6%2B-blue.svg)
 ![PHP](https://img.shields.io/badge/PHP-7.2%2B-green.svg)
 
@@ -130,6 +130,12 @@ Plugin cung cấp hệ thống Cửa hàng (Shop) và Tủ đồ (Wardrobe) cá 
 ---
 
 ## Lịch sử thay đổi
+
+### v1.0.46 — 2026-10-22
+- Sửa lỗi 500 do xung đột hàm function_exists() trong Codestar Framework (CSF Widget):
+  - Khắc phục lỗi `TypeError: function_exists(): Argument #1 ($function) must be of type string, array given` trong `inc/csf-framework/classes/widget-options.class.php`: Do CSF Widget kiểm tra trực tiếp `function_exists($this->args['callback'])`, việc truyền mảng `$args['callback'] = array($this, ...)` trên PHP 8.x kích hoạt Fatal Error làm sập trang có widget sidebar.
+  - Chuyển đổi callback của bộ lọc `csf_widget_ui_new_comment_args` sang chuỗi tên hàm toàn cục `'znd_widget_ui_new_comment'` chuẩn mực.
+  - Khởi tạo hàm toàn cục `znd_widget_ui_new_comment($args, $instance)` bọc luồng render của Zibll qua cơ chế Output Buffering và chuyển tiếp đến `filter_comment_widget_html`, khắc phục triệt để lỗi 500.
 
 ### v1.0.45 — 2026-10-22
 - Thêm tính năng: Hiển thị icon nick và màu nick trong Widget Bình luận mới nhất:

@@ -441,23 +441,16 @@ class ZND_Renderer {
     }
 
     /**
-     * Callback gốc của widget_ui_new_comment
-     *
-     * @var callable|string
-     */
-    private $original_comment_widget_callback = '';
-
-    /**
      * Lọc tham số Widget Bình luận mới nhất (csf_widget_ui_new_comment_args)
-     * Bọc callback hiển thị widget để trang trí icon và màu nick cho các bình luận
+     * Bọc callback hiển thị widget để trang trí icon và màu nick cho các bình luận.
+     * Lưu ý: CSF_Widget kiểm tra function_exists() nên callback bắt buộc là chuỗi tên hàm toàn cục.
      */
     public function filter_comment_widget_args($args) {
         if (!self::is_enabled()) {
             return $args;
         }
 
-        $this->original_comment_widget_callback = !empty($args['callback']) ? $args['callback'] : 'zib_widget_ui_new_comment';
-        $args['callback'] = array($this, 'render_comment_widget');
+        $args['callback'] = 'znd_widget_ui_new_comment';
 
         return $args;
     }
@@ -467,9 +460,7 @@ class ZND_Renderer {
      */
     public function render_comment_widget($args, $instance) {
         ob_start();
-        if (!empty($this->original_comment_widget_callback) && is_callable($this->original_comment_widget_callback)) {
-            call_user_func($this->original_comment_widget_callback, $args, $instance);
-        } elseif (function_exists('zib_widget_ui_new_comment')) {
+        if (function_exists('zib_widget_ui_new_comment')) {
             zib_widget_ui_new_comment($args, $instance);
         }
         $html = ob_get_clean();
@@ -1266,5 +1257,17 @@ class ZND_Renderer {
             <?php
         }
         return ob_get_clean();
+    }
+}
+
+/**
+ * Callback hàm toàn cục bọc hiển thị widget bình luận mới nhất cho Theme Zibll (CSF Widget)
+ * Chú ý: CSF Widget kiểm tra function_exists() nên callback bắt buộc phải là chuỗi tên hàm toàn cục
+ */
+function znd_widget_ui_new_comment($args, $instance) {
+    if (class_exists('ZND_Renderer')) {
+        ZND_Renderer::get_instance()->render_comment_widget($args, $instance);
+    } elseif (function_exists('zib_widget_ui_new_comment')) {
+        zib_widget_ui_new_comment($args, $instance);
     }
 }
