@@ -2,7 +2,7 @@
 
 > **Plugin tùy biến màu sắc và icon hiển thị đầu nickname thời thượng dành cho thành viên Theme Zibll.**
 
-![Version](https://img.shields.io/badge/version-v1.0.47-blue.svg)
+![Version](https://img.shields.io/badge/version-v1.0.48-blue.svg)
 ![WordPress](https://img.shields.io/badge/WordPress-5.6%2B-blue.svg)
 ![PHP](https://img.shields.io/badge/PHP-7.2%2B-green.svg)
 
@@ -130,6 +130,20 @@ Plugin cung cấp hệ thống Cửa hàng (Shop) và Tủ đồ (Wardrobe) cá 
 ---
 
 ## Lịch sử thay đổi
+
+### v1.0.48 — 2026-10-24
+- Sửa lỗi cú pháp JavaScript khiến toàn bộ tính năng frontend bị tê liệt:
+  - Khắc phục lỗi `SyntaxError: missing ) after argument list` trong `frontend.js`: Đóng đầy đủ khối hàm lặp `.each()` và điều kiện `if` trong hàm `updateUserDecorOnPage` cho widget bình luận. Lỗi này trước đó đã làm trình duyệt ngừng thực thi toàn bộ script frontend, dẫn đến 3 triệu chứng: không bấm được icon cọ vẽ trên Header PC, mất nút "Màu & Icon" trong menu thả xuống và mất biểu tượng trên thiết bị di động.
+  - Phía trình duyệt (JavaScript):
+    - Đảm bảo khởi chạy hoàn hảo các hàm `injectUserMenuButton`, `injectMobileButtons` và bộ lắng nghe sự kiện mở modal `openModal`.
+    - Tự động đóng Menu trượt di động (`mobile-navbar-show`) khi người dùng nhấp mở modal Shop hoặc Tủ đồ, tránh tình trạng menu trượt che khuất popup.
+    - Bổ sung cơ chế phòng thủ gán class `logged-in` cho thẻ `body` khi đã đăng nhập, bảo đảm icon và menu không bị ẩn do cache HTML.
+    - Đồng bộ kiểm tra tùy chọn cấu hình `enable_user_menu_btn` trước khi chèn hàng phím tắt vào menu thả xuống.
+  - Phía máy chủ (PHP & Cài đặt):
+    - Phân tách độc lập 2 tùy chọn trong Cài đặt Theme Zibll: Bổ sung tùy chọn riêng cho "Biểu tượng mở shop trên Header máy tính" (`znd_enable_header_btn`) và chuẩn hóa tùy chọn "Nút mở nhanh trong menu người dùng" (`znd_enable_user_menu_btn`).
+    - Cập nhật bộ lọc `filter_nav_radius_button`, xuất CSS động và biến bản địa hóa `znd_vars` đồng bộ với 2 tùy chọn riêng biệt này.
+  - Phía giao diện (CSS):
+    - Bổ sung `display: inline-flex !important` cho nút mở shop trên Header di động (`.navbar-toggle.znd-mobile-header-btn`), ngăn chặn Bootstrap `.visible-xs` ghi đè thành `display: block`.
 
 ### v1.0.47 — 2026-10-22
 - Thêm tính năng: Hiển thị icon nick và màu nick trong khu vực bình luận bài viết:

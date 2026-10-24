@@ -164,6 +164,8 @@ class ZND_Renderer {
             'user_color_class'         => $user_color_class,
             'currency_name'            => ZND_User::get_currency_name(),
             'user_balance'             => ZND_User::get_user_currency_balance($current_user_id),
+            'enable_header_btn'        => function_exists('_pz') ? (_pz('znd_enable_header_btn', _pz('znd_enable_user_menu_btn', true)) ? 1 : 0) : 1,
+            'enable_user_menu_btn'     => function_exists('_pz') ? (_pz('znd_enable_user_menu_btn', true) ? 1 : 0) : 1,
             'enable_mobile_header_btn' => function_exists('_pz') ? (_pz('znd_enable_mobile_header_btn', true) ? 1 : 0) : 1,
             'enable_mobile_drawer_btn' => function_exists('_pz') ? (_pz('znd_enable_mobile_drawer_btn', true) ? 1 : 0) : 1,
             'i18n'                     => array(
@@ -200,6 +202,12 @@ class ZND_Renderer {
 
         // Tùy biến CSS nâng cao từ Admin
         if (function_exists('_pz')) {
+            if (!_pz('znd_enable_header_btn', _pz('znd_enable_user_menu_btn', true))) {
+                echo "body .navbar .toggle-radius.open-nick-decor-modal { display: none !important; }\n";
+            }
+            if (!_pz('znd_enable_user_menu_btn', true)) {
+                echo "body .sub-user-box .znd-user-shortcuts-section { display: none !important; }\n";
+            }
             if (!_pz('znd_enable_mobile_header_btn', true)) {
                 echo "body .navbar-header .znd-mobile-header-btn, body .navbar-toggle.znd-mobile-header-btn, a.navbar-toggle.znd-mobile-header-btn { display: none !important; }\n";
             }
@@ -641,7 +649,7 @@ class ZND_Renderer {
             return $radius_but;
         }
 
-        $show_btn = function_exists('_pz') ? _pz('znd_enable_user_menu_btn', true) : true;
+        $show_btn = function_exists('_pz') ? _pz('znd_enable_header_btn', _pz('znd_enable_user_menu_btn', true)) : true;
         if (!$show_btn) {
             return $radius_but;
         }

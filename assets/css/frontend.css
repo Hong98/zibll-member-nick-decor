@@ -1187,7 +1187,7 @@ body.modal-open .footer-tabbar {
         padding: 0 !important;
         width: 36px !important;
         height: 36px !important;
-        display: inline-flex;
+        display: inline-flex !important;
         align-items: center !important;
         justify-content: center !important;
         position: relative !important;

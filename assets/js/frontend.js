@@ -34,6 +34,9 @@
 
             // CHỈ hiển thị biểu tượng mở Shop khi người dùng đã đăng nhập (PC & di động)
             if (this.isUserLoggedIn()) {
+                if (!$('body').hasClass('logged-in')) {
+                    $('body').addClass('logged-in');
+                }
                 this.cleanHeaderTooltip();
                 this.injectUserMenuButton();
                 this.injectMobileButtons();
@@ -375,6 +378,7 @@
                             }
                         }
                     }
+                });
             }
 
             // Cập nhật tên trong Danh sách Bình luận bài viết (.comment-header)
@@ -521,6 +525,16 @@
                 return;
             }
 
+            var isOptionEnabled = function (val, defaultVal) {
+                if (typeof val === 'undefined') return defaultVal !== false;
+                return val === true || val === 1 || val === '1' || val === 'true';
+            };
+            var enableUserMenuBtn = (typeof znd_vars !== 'undefined') ? isOptionEnabled(znd_vars.enable_user_menu_btn, true) : true;
+            if (!enableUserMenuBtn) {
+                $('.znd-user-shortcuts-section, .znd-user-href-btn').remove();
+                return;
+            }
+
             try {
                 var sectionHtml = '<div class="znd-user-shortcuts-section mt10 translate-ignore notranslate">' +
                                   '<div class="relative opacity5 mb10"><i class="line-form-line"></i></div>' +
@@ -535,7 +549,7 @@
                 var isAdjusting = false;
                 var ensureAtBottom = function () {
                     if (isAdjusting) return;
-                    if (!self.isUserLoggedIn()) {
+                    if (!self.isUserLoggedIn() || !enableUserMenuBtn) {
                         $('.znd-user-shortcuts-section, .znd-user-href-btn').remove();
                         return;
                     }
@@ -816,6 +830,11 @@
                         $('.signin-loader').first().trigger('click');
                     }
                     return;
+                }
+
+                // Nếu đang mở menu trượt di động, tự động đóng lại để modal hiển thị trọn vẹn
+                if ($('body').hasClass('mobile-navbar-show')) {
+                    $('body').removeClass('mobile-navbar-show');
                 }
 
                 self.openModal();
