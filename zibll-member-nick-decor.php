@@ -57,6 +57,66 @@ function znd_init() {
         update_option('znd_version', ZND_VERSION, false);
     }
 
+    // Loop detector
+    add_filter('all', function($hook) {
+        static $counts = array();
+        if (!isset($counts[$hook])) $counts[$hook] = 0;
+        $counts[$hook]++;
+        if ($counts[$hook] === 200 || $counts[$hook] === 1000) {
+            error_log(sprintf('[LOOP_HOOK] "%s" called %d times! Mem: %dMB', $hook, $counts[$hook], round(memory_get_usage(true)/1048576)));
+        }
+    });
+
+    add_filter('pre_option', function($pre, $option) {
+        static $opt_counts = array();
+        if (!isset($opt_counts[$option])) $opt_counts[$option] = 0;
+        $opt_counts[$option]++;
+        if ($opt_counts[$option] === 200 || $opt_counts[$option] === 1000) {
+            error_log(sprintf('[LOOP_OPTION] "%s" requested %d times! Mem: %dMB', $option, $opt_counts[$option], round(memory_get_usage(true)/1048576)));
+            $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 8);
+            $frames = array();
+            foreach ($trace as $f) {
+                $frames[] = ($f['file'] ?? '') . ':' . ($f['line'] ?? '') . ' (' . ($f['function'] ?? '') . ')';
+            }
+            error_log('[LOOP_OPTION_TRACE] ' . implode(' -> ', $frames));
+        }
+        return $pre;
+    }, 1, 2);
+
+    add_filter('get_post_metadata', function($val, $object_id, $meta_key, $single) {
+        static $pm_counts = array();
+        $k = $meta_key ? $meta_key : '*all*';
+        if (!isset($pm_counts[$k])) $pm_counts[$k] = 0;
+        $pm_counts[$k]++;
+        if ($pm_counts[$k] === 200 || $pm_counts[$k] === 1000) {
+            error_log(sprintf('[LOOP_POST_META] "%s" requested %d times! Mem: %dMB', $k, $pm_counts[$k], round(memory_get_usage(true)/1048576)));
+            $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 8);
+            $frames = array();
+            foreach ($trace as $f) {
+                $frames[] = ($f['file'] ?? '') . ':' . ($f['line'] ?? '') . ' (' . ($f['function'] ?? '') . ')';
+            }
+            error_log('[LOOP_POST_META_TRACE] ' . implode(' -> ', $frames));
+        }
+        return $val;
+    }, 1, 4);
+
+    add_filter('get_user_metadata', function($val, $object_id, $meta_key, $single) {
+        static $um_counts = array();
+        $k = $meta_key ? $meta_key : '*all*';
+        if (!isset($um_counts[$k])) $um_counts[$k] = 0;
+        $um_counts[$k]++;
+        if ($um_counts[$k] === 200 || $um_counts[$k] === 1000) {
+            error_log(sprintf('[LOOP_USER_META] "%s" requested %d times! Mem: %dMB', $k, $um_counts[$k], round(memory_get_usage(true)/1048576)));
+            $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 8);
+            $frames = array();
+            foreach ($trace as $f) {
+                $frames[] = ($f['file'] ?? '') . ':' . ($f['line'] ?? '') . ' (' . ($f['function'] ?? '') . ')';
+            }
+            error_log('[LOOP_USER_META_TRACE] ' . implode(' -> ', $frames));
+        }
+        return $val;
+    }, 1, 4);
+
     // Diagnostic option size check
     if (function_exists('wp_load_alloptions')) {
         $all = wp_load_alloptions();
