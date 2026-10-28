@@ -31,6 +31,14 @@ class ZND_User {
             return $cache[$user_id];
         }
 
+        // Chống đệ quy tuyệt đối khi kiểm tra vật phẩm hết hạn hoặc quyền hạn
+        static $is_processing = array();
+        if (!empty($is_processing[$user_id])) {
+            $raw = get_user_meta($user_id, self::META_INVENTORY, true);
+            return is_array($raw) ? $raw : array('icons' => array(), 'colors' => array());
+        }
+        $is_processing[$user_id] = true;
+
         $inv = get_user_meta($user_id, self::META_INVENTORY, true);
         if (!is_array($inv)) {
             $inv = array('icons' => array(), 'colors' => array());
@@ -47,16 +55,22 @@ class ZND_User {
         $now = time();
         $changed = false;
 
+        $raw_equipped_icon  = get_user_meta($user_id, self::META_EQUIPPED_ICON, true);
+        $raw_equipped_color = get_user_meta($user_id, self::META_EQUIPPED_COLOR, true);
+
         foreach (array('icons', 'colors') as $type) {
             foreach ($inv[$type] as $item_id => $data) {
                 if (!empty($data['expires_at']) && $data['expires_at'] <= $now) {
                     unset($inv[$type][$item_id]);
                     $changed = true;
 
-                    // Nếu đang trang bị item này thì tự động tháo
-                    $equipped = ($type === 'icons') ? self::get_equipped_icon($user_id) : self::get_equipped_color($user_id);
-                    if ($equipped === $item_id) {
-                        self::unequip_item($user_id, $type);
+                    // Nếu đang trang bị item này thì tự động tháo trực tiếp từ meta, TUYỆT ĐỐI không gọi hàm đệ quy
+                    if ($type === 'icons' && $raw_equipped_icon === $item_id) {
+                        delete_user_meta($user_id, self::META_EQUIPPED_ICON);
+                        $raw_equipped_icon = '';
+                    } elseif ($type === 'colors' && $raw_equipped_color === $item_id) {
+                        delete_user_meta($user_id, self::META_EQUIPPED_COLOR);
+                        $raw_equipped_color = '';
                     }
                 }
             }
@@ -138,6 +152,7 @@ class ZND_User {
             update_user_meta($user_id, self::META_INVENTORY, $inv);
         }
 
+        $is_processing[$user_id] = false;
         $cache[$user_id] = $inv;
         return $inv;
     }
