@@ -2,7 +2,7 @@
 
 > **Plugin tùy biến màu sắc và icon hiển thị đầu nickname thời thượng dành cho thành viên Theme Zibll.**
 
-![Version](https://img.shields.io/badge/version-v1.0.48-blue.svg)
+![Version](https://img.shields.io/badge/version-v1.0.49-blue.svg)
 ![WordPress](https://img.shields.io/badge/WordPress-5.6%2B-blue.svg)
 ![PHP](https://img.shields.io/badge/PHP-7.2%2B-green.svg)
 
@@ -130,6 +130,13 @@ Plugin cung cấp hệ thống Cửa hàng (Shop) và Tủ đồ (Wardrobe) cá 
 ---
 
 ## Lịch sử thay đổi
+
+### v1.0.49 — 2026-10-29
+- **Tối ưu hóa: Khắc phục triệt để lỗi tràn bộ nhớ (Allowed memory size exhausted) và tăng tốc độ tải trang**:
+  - Bổ sung bộ nhớ đệm tĩnh (static cache) cho toàn bộ các hàm cốt lõi: `get_default_icons()`, `get_default_colors()`, `get_all_icons()`, `get_all_colors()`, loại bỏ hoàn toàn việc khởi tạo lại hàng chục mảng SVG và bộ lọc chuỗi trùng lặp trên mỗi lượt duyệt tên thành viên.
+  - Tích hợp bộ nhớ đệm tĩnh theo `user_id` cho các phương thức kiểm tra quyền hạn và trang bị: `is_user_admin()`, `is_user_mod()`, `is_user_banned()`, `get_inventory()`, `get_equipped_icon()`, `get_equipped_color()`.
+  - Tối ưu hóa tính toán giá và chu kỳ trong `get_duration_options()`: Lưu đệm tĩnh tỷ lệ nhân giá (`znd_price_multiplier_*`), ngăn chặn gọi truy vấn `_pz()` lặp lại hàng trăm lần trong vòng lặp render Modal shop.
+  - Tắt cờ `autoload` (`autoload = false`) cho các option dữ liệu lớn `znd_icons_list` và `znd_colors_list` trong `wp_options`, ngăn chặn nạp hàng chục KB SVG vào `alloptions` trên mọi truy vấn máy chủ.
 
 ### v1.0.48 — 2026-10-24
 - Sửa lỗi cú pháp JavaScript khiến toàn bộ tính năng frontend bị tê liệt:

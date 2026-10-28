@@ -26,6 +26,11 @@ class ZND_User {
             return array('icons' => array(), 'colors' => array());
         }
 
+        static $cache = array();
+        if (isset($cache[$user_id])) {
+            return $cache[$user_id];
+        }
+
         $inv = get_user_meta($user_id, self::META_INVENTORY, true);
         if (!is_array($inv)) {
             $inv = array('icons' => array(), 'colors' => array());
@@ -133,6 +138,7 @@ class ZND_User {
             update_user_meta($user_id, self::META_INVENTORY, $inv);
         }
 
+        $cache[$user_id] = $inv;
         return $inv;
     }
 
@@ -174,22 +180,31 @@ class ZND_User {
             return '';
         }
 
+        static $cache = array();
+        if (isset($cache[$user_id])) {
+            return $cache[$user_id];
+        }
+
         // Tài khoản bị khóa / bị BAN: Bắt buộc hiển thị icon ổ khóa cấm, không thể tháo
         if (ZND_Defaults::is_user_banned($user_id)) {
+            $cache[$user_id] = 'lock_banned';
             return 'lock_banned';
         }
 
         $icon_id = get_user_meta($user_id, self::META_EQUIPPED_ICON, true);
         if (empty($icon_id)) {
+            $cache[$user_id] = '';
             return '';
         }
 
         // Kiểm tra quyền sở hữu
         if (!self::has_item($user_id, 'icon', $icon_id)) {
             delete_user_meta($user_id, self::META_EQUIPPED_ICON);
+            $cache[$user_id] = '';
             return '';
         }
 
+        $cache[$user_id] = $icon_id;
         return $icon_id;
     }
 
@@ -204,22 +219,31 @@ class ZND_User {
             return '';
         }
 
+        static $cache = array();
+        if (isset($cache[$user_id])) {
+            return $cache[$user_id];
+        }
+
         // Tài khoản bị khóa / bị BAN: Bắt buộc hiển thị màu xám gạch ngang, không thể tháo
         if (ZND_Defaults::is_user_banned($user_id)) {
+            $cache[$user_id] = 'color_banned';
             return 'color_banned';
         }
 
         $color_id = get_user_meta($user_id, self::META_EQUIPPED_COLOR, true);
         if (empty($color_id)) {
+            $cache[$user_id] = '';
             return '';
         }
 
         // Kiểm tra quyền sở hữu
         if (!self::has_item($user_id, 'color', $color_id)) {
             delete_user_meta($user_id, self::META_EQUIPPED_COLOR);
+            $cache[$user_id] = '';
             return '';
         }
 
+        $cache[$user_id] = $color_id;
         return $color_id;
     }
 

@@ -15,7 +15,11 @@ class ZND_Defaults {
      * Danh sách 16 icon đầu nick tạo sẵn siêu đẹp với SVG vector chuẩn
      */
     public static function get_default_icons() {
-        return array(
+        static $cached = null;
+        if ($cached !== null) {
+            return $cached;
+        }
+        $cached = array(
             'admin_supreme' => array(
                 'id'             => 'admin_supreme',
                 'name'           => 'Huy hiệu Quản trị tối cao',
@@ -361,13 +365,18 @@ class ZND_Defaults {
                 'svg'            => '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="znd-svg"><path d="M7 11V7a5 5 0 0 1 10 0v4" stroke="#e02424" stroke-width="2" stroke-linecap="round"/><rect x="4" y="11" width="16" height="11" rx="2.5" fill="#f05252"/><circle cx="12" cy="16" r="1.5" fill="#FFF"/><path d="M12 17.5v2" stroke="#FFF" stroke-width="1.5" stroke-linecap="round"/></svg>',
             ),
         );
+        return $cached;
     }
 
     /**
      * Danh sách các màu nick tạo sẵn siêu đẹp với Gradient & Glow (tránh màu đỏ & xanh lá của BQT)
      */
     public static function get_default_colors() {
-        return array(
+        static $cached = null;
+        if ($cached !== null) {
+            return $cached;
+        }
+        $cached = array(
             'color_ruby_glow' => array(
                 'id'             => 'color_ruby_glow',
                 'name'           => 'Đỏ Ruby phát sáng',
@@ -732,12 +741,17 @@ class ZND_Defaults {
                 'status'      => true,
             ),
         );
+        return $cached;
     }
 
     /**
      * Lấy danh sách icon hiện hành (từ cấu hình theme hoặc mặc định)
      */
     public static function get_all_icons() {
+        static $cached = null;
+        if ($cached !== null) {
+            return $cached;
+        }
         $defaults = self::get_default_icons();
         $saved = null;
         if (function_exists('_pz')) {
@@ -777,13 +791,18 @@ class ZND_Defaults {
             }
         }
 
-        return !empty($result) ? $result : $defaults;
+        $cached = !empty($result) ? $result : $defaults;
+        return $cached;
     }
 
     /**
      * Lấy danh sách màu hiện hành (từ cấu hình theme hoặc mặc định)
      */
     public static function get_all_colors() {
+        static $cached = null;
+        if ($cached !== null) {
+            return $cached;
+        }
         $saved = null;
         if (function_exists('_pz')) {
             $saved = _pz('znd_colors_list');
@@ -826,7 +845,8 @@ class ZND_Defaults {
             }
         }
 
-        return !empty($result) ? $result : $defaults;
+        $cached = !empty($result) ? $result : $defaults;
+        return $cached;
     }
 
     /**
@@ -855,18 +875,22 @@ class ZND_Defaults {
         $base_price    = (float)$base_price;
         $currency_name = class_exists('ZND_User') ? ZND_User::get_currency_name() : __('Điểm', 'zibll-nick-decor');
 
-        $multiplier_7       = 10;
-        $multiplier_30      = 20;
-        $multiplier_forever = 30;
-
-        if (function_exists('_pz')) {
-            $m7  = (int)_pz('znd_price_multiplier_7', 10);
-            $m30 = (int)_pz('znd_price_multiplier_30', 20);
-            $mf  = (int)_pz('znd_price_multiplier_forever', 30);
-            if ($m7 > 0) $multiplier_7 = $m7;
-            if ($m30 > 0) $multiplier_30 = $m30;
-            if ($mf > 0) $multiplier_forever = $mf;
+        static $cached_multipliers = null;
+        if ($cached_multipliers === null) {
+            $m7  = 10;
+            $m30 = 20;
+            $mf  = 30;
+            if (function_exists('_pz')) {
+                $v7  = (int)_pz('znd_price_multiplier_7', 10);
+                $v30 = (int)_pz('znd_price_multiplier_30', 20);
+                $vf  = (int)_pz('znd_price_multiplier_forever', 30);
+                if ($v7 > 0)  $m7  = $v7;
+                if ($v30 > 0) $m30 = $v30;
+                if ($vf > 0)  $mf  = $vf;
+            }
+            $cached_multipliers = array($m7, $m30, $mf);
         }
+        list($multiplier_7, $multiplier_30, $multiplier_forever) = $cached_multipliers;
 
         $price_7       = ($base_price > 0) ? round($base_price * $multiplier_7) : 0;
         $price_30      = ($base_price > 0) ? round($base_price * $multiplier_30) : 0;
@@ -926,7 +950,12 @@ class ZND_Defaults {
         if (!$user_id) {
             return false;
         }
-        return is_super_admin($user_id) || user_can($user_id, 'manage_options');
+        static $cache = array();
+        if (isset($cache[$user_id])) {
+            return $cache[$user_id];
+        }
+        $cache[$user_id] = is_super_admin($user_id) || user_can($user_id, 'manage_options');
+        return $cache[$user_id];
     }
 
     /**
@@ -939,21 +968,29 @@ class ZND_Defaults {
         if (!$user_id) {
             return false;
         }
+        static $cache = array();
+        if (isset($cache[$user_id])) {
+            return $cache[$user_id];
+        }
         // Nếu đã là admin thì không tính là mod (admin là cấp cao nhất)
         if (self::is_user_admin($user_id)) {
+            $cache[$user_id] = false;
             return false;
         }
         // Kiểm tra quyền kiểm duyệt hoặc chỉnh sửa
         if (user_can($user_id, 'moderate_comments') || user_can($user_id, 'edit_others_posts')) {
+            $cache[$user_id] = true;
             return true;
         }
         $user = get_userdata($user_id);
         if ($user && !empty($user->roles)) {
             $mod_roles = array('editor', 'moderator', 'bbp_moderator', 'zib_moderator');
             if (array_intersect($mod_roles, (array)$user->roles)) {
+                $cache[$user_id] = true;
                 return true;
             }
         }
+        $cache[$user_id] = false;
         return false;
     }
 
@@ -967,8 +1004,13 @@ class ZND_Defaults {
         if (!$user_id) {
             return false;
         }
+        static $cache = array();
+        if (isset($cache[$user_id])) {
+            return $cache[$user_id];
+        }
         // 1. Kiểm tra qua hàm zib_user_is_ban của Theme Zibll
         if (function_exists('zib_user_is_ban') && zib_user_is_ban($user_id)) {
+            $cache[$user_id] = true;
             return true;
         }
         // 2. Kiểm tra trực tiếp qua user meta của Theme Zibll
@@ -976,10 +1018,13 @@ class ZND_Defaults {
         if (!empty($banned)) {
             $ban_time = get_user_meta($user_id, 'banned_time', true);
             if ($ban_time && strtotime($ban_time) < time()) {
+                $cache[$user_id] = false;
                 return false;
             }
+            $cache[$user_id] = true;
             return true;
         }
+        $cache[$user_id] = false;
         return false;
     }
 
