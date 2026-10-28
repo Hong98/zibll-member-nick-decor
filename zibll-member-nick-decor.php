@@ -52,6 +52,21 @@ function znd_init() {
         update_option('znd_version', ZND_VERSION, false);
     }
 
+    // Diagnostic option size check
+    if (function_exists('wp_load_alloptions')) {
+        $all = wp_load_alloptions();
+        $sizes = array();
+        $total = 0;
+        foreach ($all as $k => $v) {
+            $len = strlen(is_string($v) ? $v : serialize($v));
+            $sizes[$k] = $len;
+            $total += $len;
+        }
+        arsort($sizes);
+        $top5 = array_slice($sizes, 0, 5, true);
+        error_log(sprintf('[ZND_MEM_CHECK] Memory: %dMB / %s | Total alloptions: %dKB | Top: %s', round(memory_get_usage(true)/1048576), ini_get('memory_limit'), round($total/1024), json_encode($top5)));
+    }
+
     // Khởi tạo Admin Options Codestar Framework
     ZND_Options::init();
 
