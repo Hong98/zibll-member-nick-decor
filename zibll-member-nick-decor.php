@@ -16,6 +16,11 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
+// Nâng giới hạn bộ nhớ tối thiểu lên 512M cho Theme Zibll và các module hoạt động mượt mà
+if (function_exists('ini_set')) {
+    @ini_set('memory_limit', '512M');
+}
+
 // Định nghĩa các hằng số plugin
 define('ZND_VERSION', '1.0.49');
 define('ZND_FILE', __FILE__);
